@@ -2,6 +2,7 @@ package GameScenes;
 
 import GUI_beam.Animate;
 import components.ScoreBoard;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,20 +18,28 @@ public class InGameScene {
     private Scene scene;
 
     //physics setting
-    private final double gravity = 10;
-    private final double jumpSpeed = 30;
+    private final double groundH = 80;
+    private final double gravity = 0.4;
+    private final double jumpSpeed = -15;
+    private double velocity;
+    private boolean onGround;
 
-    private void handlePlayerJump() {
-
+    public void handlePlayerJump() {
+        if(!onGround) return;
+        velocity = jumpSpeed;
+        onGround = false;
     }
 
     public InGameScene() {
-        AnchorPane root = new AnchorPane();
+        StackPane root = new StackPane();
+        AnchorPane gameLayer = new AnchorPane();
+        AnchorPane uiLayer = new AnchorPane();
         ScoreBoard scoreBoard = new ScoreBoard();
         root.setPrefSize(800, 600);
         AnchorPane.setTopAnchor(scoreBoard, 10.0);
         AnchorPane.setRightAnchor(scoreBoard, 20.0);
-        root.getChildren().add(scoreBoard);
+        uiLayer.getChildren().add(scoreBoard);
+        root.getChildren().addAll(gameLayer, uiLayer);
         this.scene = new Scene(root);
         Image backgroundImg = new Image(Objects.requireNonNull(getClass().getResource("/Maps/stage_background2.png")).toExternalForm());
         BackgroundSize size = new BackgroundSize(
@@ -49,15 +58,44 @@ public class InGameScene {
 
         //ground
         Rectangle ground = new Rectangle();
-        ground.setHeight(80);
+        ground.setHeight(groundH);
         ground.setLayoutX(0);
         ground.widthProperty().bind(root.widthProperty());
-        ground.layoutYProperty().bind(root.heightProperty().subtract(80));
-        ground.setFill(Color.BLACK);
-        root.getChildren().add(ground);
+        ground.layoutYProperty().bind(root.heightProperty().subtract(groundH));
+        ground.setFill(Color.LIGHTGRAY);
+        gameLayer.getChildren().add(ground);
 
         Animate player = new Animate(new Image("imgSC.png"), 0,5,120,139);
-        root.getChildren().add(player);
+//        player.setLayoutX(root.getWidth()/2-player.getBoundsInParent().getWidth()/2);
+        player.setLayoutX(800/2 - 120/2); // make player at the center with fixed position, will fix later
+        gameLayer.getChildren().add(player);
+
+        AnimationTimer playerAnimations = new AnimationTimer() {
+            long last = 0;
+            @Override
+            public void handle(long now) {
+                if(last==0) {
+                    last = now;
+                    return;
+                }
+                double dt = (now-last)/1e9;
+                last = now;
+                velocity += gravity;
+                player.setLayoutY(player.getLayoutY()+velocity);
+                double groundY = root.getHeight()-groundH;
+                double playerFeet = player.getLayoutY()+player.getBoundsInParent().getHeight();
+                if(playerFeet>groundY) {
+                    player.setLayoutY(groundY-player.getBoundsInParent().getHeight());
+                    velocity = 0;
+                    onGround = true;
+                } else {
+                    onGround = false;
+                }
+                player.update(dt);
+            }
+        };
+
+        playerAnimations.start();
 
         scene.setOnKeyPressed(e -> {
             if(e.getCode()==KeyCode.SPACE) {

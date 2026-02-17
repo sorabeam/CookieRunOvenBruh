@@ -24,6 +24,8 @@ public class Animate extends ImageView implements Animatable{
     private AnimationTimer animator;
     private ObjectProperty<AnimationType> state;
 
+    private double sum;
+
     public Animate(Image image,int maxRow,int maxFramePerRow,int frameWidth,int frameHeight){
 
         super(image);
@@ -42,7 +44,7 @@ public class Animate extends ImageView implements Animatable{
         });
 
         DrawAnimation();
-        PlayAnimation();
+//        PlayAnimation();
     }
 
     @Override
@@ -79,6 +81,16 @@ public class Animate extends ImageView implements Animatable{
         animator.start();
     }
 
+    public void update(double deltaTime) {
+        sum += deltaTime;
+        if(sum>=frameDuration) {
+            sum = 0;
+            currentFrame++;
+            if(currentFrame>=maxFramePerRow) currentFrame = 0;
+            DrawAnimation();
+        }
+    }
+
     @Override
     public void DrawAnimation() {
 
@@ -95,7 +107,7 @@ public class Animate extends ImageView implements Animatable{
         return state.get();
     }
 
-    public void setFrameDuration(int fd){
+    public void setFrameDuration(double fd){
         this.frameDuration = fd;
     }
 
