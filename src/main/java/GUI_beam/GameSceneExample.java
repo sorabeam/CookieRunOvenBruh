@@ -1,6 +1,7 @@
 package GUI_beam;
 
 import Media.JooxBox;
+import components.ScoreBoard;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -29,28 +30,10 @@ public class GameSceneExample extends Application {
         JooxBox sportify = new JooxBox();
         sportify.play("MainMenuMusic",true,100);
 
-//        DropShadow dropShadow = new DropShadow();
-//        dropShadow.setRadius(50.0);
-//        dropShadow.setColor(Color.rgb(254, 244, 153, 0.41));
 
-//        ImageView backGround = new ImageView(new Image(BackGround));
-//
-//        ImageView PlayerImage = new ImageView(new Image(PlayerStrI));
-//        PlayerImage.setFitHeight(100);
-//        PlayerImage.setFitWidth(100);
-//        PlayerImage.setX(400);
-//        PlayerImage.setY(300);
-//        PlayerImage.setEffect(dropShadow);
-
-
-//        root.getChildren().add(backGround);
-//        root.getChildren().add(PlayerImage);
         Animate player = new Animate( new Image("imgSC.png"),
                 0,5,120,139);
         root.getChildren().add(player);
-
-//        backGround.fitWidthProperty().bind(root.widthProperty());
-//        backGround.fitHeightProperty().bind(root.heightProperty());
 
         // press detection
 
@@ -61,8 +44,16 @@ public class GameSceneExample extends Application {
 
         // Game Loop Test Simutlator
 
-        stage.setTitle("Simple JavaFX Game Scene");
+//        stage.setTitle("Simple JavaFX Game Scene");
+//        stage.setScene(scene);
+//        stage.show();
+
+        //
+
+        ScoreBoard scoreBoard = new ScoreBoard();
+        root.getChildren().add(scoreBoard);
         stage.setScene(scene);
+
         stage.show();
 
     }

@@ -34,7 +34,11 @@ javafx {
 }
 
 application {
-    mainClass = 'GUI_beam.GameSceneExample' // path to your main class
+//    mainClass = 'GUI_beam.GameSceneExample' // path to your main class
+    mainClass = "Test.TestInGame"
+    applicationDefaultJvmArgs = [
+            "--enable-native-access=javafx.graphics"
+    ]
 }
 
 test {

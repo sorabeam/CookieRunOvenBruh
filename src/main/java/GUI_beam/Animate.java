@@ -1,6 +1,5 @@
 package GUI_beam;
 
-import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
