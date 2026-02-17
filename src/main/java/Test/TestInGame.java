@@ -1,6 +1,7 @@
 package Test;
 
 import GUI_beam.Animate;
+import GameLogic.*;
 import GameScenes.GameOverScene;
 import GameScenes.InGameScene;
 import GameScenes.IntroScene;
@@ -26,6 +27,20 @@ public class TestInGame extends Application {
     @Override
     public void start(Stage stage) {
         initScenes();
+        GameLogic.gameStateProperty().addListener((obs, oldState, newState) -> {
+            switch (newState) {
+                case INTRO -> {
+                    stage.setScene(introScene);
+                }
+                case INGAME -> {
+                    stage.setScene(inGameScene);
+                }
+                case GAMEOVER -> {
+                    stage.setScene(gameOverScene);
+                }
+            }
+        });
+        GameLogic.setGameState(GameState.INTRO);
         stage.setScene(introScene);
         stage.show();
     }

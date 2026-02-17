@@ -1,9 +1,13 @@
 package GameLogic;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+
 public class GameLogic {
     private static int score;
     private static int bestScore;
-    private static GameState gameState;
+//    private static GameState gameState;
+    private static final ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(GameState.INTRO);
     //score
 
     public static int getScore() {
@@ -24,7 +28,7 @@ public class GameLogic {
     }
 
     public static void addScore(int val) {
-        if(gameState!=GameState.INGAME) return;
+        if(gameState.get()!=GameState.INGAME) return;
         score += val;
         bestScore = Math.max(score, bestScore);
     }
@@ -32,16 +36,14 @@ public class GameLogic {
     //game state
 
     public static GameState getGameState() {
+        return gameState.get();
+    }
+
+    public static void setGameState(GameState state) {
+        gameState.set(state);
+    }
+
+    public static ObjectProperty<GameState> gameStateProperty() {
         return gameState;
     }
-
-    public static void setGameState(GameState gameState) {
-        GameLogic.gameState = gameState;
-    }
-
-    public static void startGame() {
-        score = 0;
-        gameState = GameState.GAMEOVER;
-    }
-
 }
