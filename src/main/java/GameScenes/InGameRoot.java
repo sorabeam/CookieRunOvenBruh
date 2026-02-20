@@ -3,6 +3,7 @@ package GameScenes;
 import GUI_beam.Animate;
 import components.ScoreBoard;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -13,8 +14,6 @@ import javafx.scene.shape.Rectangle;
 import java.util.Objects;
 
 public class InGameRoot extends StackPane {
-    private Scene scene;
-
     //physics setting
     private final double groundH = 80;
     private final double gravity = 0.4;
@@ -30,7 +29,7 @@ public class InGameRoot extends StackPane {
 
     public InGameRoot() {
 //        StackPane root = new StackPane();
-        AnchorPane gameLayer = new AnchorPane();
+        Pane gameLayer = new Pane();
         AnchorPane uiLayer = new AnchorPane();
         ScoreBoard scoreBoard = new ScoreBoard();
         this.setPrefSize(800, 600);
@@ -57,12 +56,12 @@ public class InGameRoot extends StackPane {
         Rectangle ground = new Rectangle();
         ground.setHeight(groundH);
         ground.setLayoutX(0);
-        ground.widthProperty().bind(this.widthProperty());
-        ground.layoutYProperty().bind(this.heightProperty().subtract(groundH));
+        ground.widthProperty().bind(gameLayer.widthProperty());
+        ground.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH));
         ground.setFill(Color.LIGHTGRAY);
         gameLayer.getChildren().add(ground);
 
-        Animate player = new Animate(new Image("imgSC.png"), 0,5,120,139);
+        Animate player = new Animate(new Image(Objects.requireNonNull(getClass().getResource("/imgSC.png")).toExternalForm()), 0,5,120,139);
 //        player.setLayoutX(root.getWidth()/2-player.getBoundsInParent().getWidth()/2);
         player.setLayoutX(800/2 - 120/2); // make player at the center with fixed position, will fix later
         gameLayer.getChildren().add(player);
@@ -99,5 +98,8 @@ public class InGameRoot extends StackPane {
                 handlePlayerJump();
             }
         });
+
+        setFocusTraversable(true);
+        Platform.runLater(this::requestFocus);
     }
 }
