@@ -27,6 +27,8 @@ public class CookieSelectionScene extends BaseRoot{
     GridPane characterBoard = new GridDisplay(B1,B2,B3,B4,B5);
 
     public  CookieSelectionScene(){
+        super();
+
         HBox Setting = new SettingZone(root,spacer('H'));
 
         initCDBtn();

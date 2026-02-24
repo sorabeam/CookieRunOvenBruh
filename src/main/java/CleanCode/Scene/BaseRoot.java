@@ -1,5 +1,7 @@
 package CleanCode.Scene;
 
+import Got.GameLogic.GameLogic;
+import Got.GameLogic.TestInGame2;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.*;
@@ -10,7 +12,8 @@ public abstract class BaseRoot extends StackPane{
     protected StackPane root = this;
 
     public BaseRoot(){
-        scene = getScene();
+        scene = GameLogic.getCurScene();
+        System.out.println(scene);
     }
 
     public Region spacer(char c){

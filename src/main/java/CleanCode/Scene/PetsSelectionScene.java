@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 public class PetsSelectionScene extends BaseRoot{
 
     public PetsSelectionScene(){
+        super();
 
         PetSelectionBtn petSelectionBtn = new PetSelectionBtn(spacer('H'));
         SettingZone settingZone = new SettingZone(root,spacer('H'));

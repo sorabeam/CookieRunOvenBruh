@@ -10,12 +10,14 @@ import javafx.scene.layout.StackPane;
 public class MainMenuScene extends BaseRoot {
 
     public MainMenuScene() {
+        super();
         playMusic();
 
         StackPane profile = new MainMenuProfile("White Lilly", "102,455,353");
         HBox Setting = new SettingZone(root,spacer('H'));
         StackPane MainMenuButtons = new MainMenuButtons();
         StackPane GlassDecoration = new GlassDecoration();
+
 
         root.getChildren().addAll(
                 new MainMenuBG(scene),

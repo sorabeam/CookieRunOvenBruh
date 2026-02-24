@@ -24,8 +24,9 @@ public class MainMenuBG extends StackPane {
 
         ImageView MBg = Asset.createImageView("BgLobby",1,1);
 
-        MBg.fitWidthProperty().bind(scene.widthProperty());
-        MBg.fitHeightProperty().bind(scene.heightProperty());
+        //  bind กับตัวเองแทน scene
+        MBg.fitWidthProperty().bind(widthProperty());
+        MBg.fitHeightProperty().bind(heightProperty());
 
         getChildren().addAll(MBg,fade,name);
 

@@ -16,6 +16,7 @@ public class InGameScene extends BaseRoot{
     LastRecord lastRecord = new LastRecord();
 
     public InGameScene(){
+        super();
 
         root.getChildren().addAll(
                 new InGameBG(scene),
