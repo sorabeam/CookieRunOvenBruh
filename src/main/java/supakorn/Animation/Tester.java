@@ -1,5 +1,6 @@
 package supakorn.Animation;
 
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -21,7 +22,28 @@ public class Tester extends Application {
         root.setPrefSize(800, 600);
         scene = new Scene(root);
 
-        Animate Tester = new Animate(asset.getImage("Boba_Milk_Tea_Cookie"),6,4,400,400);
+        Animate Tester = new Animate(Asset.getImage("Boba_Milk_Tea_Cookie"),6,4,1,1,5,4,1,1,5,400,400);
+        Tester.changeAnimationState(AnimationType.SLIDE);
+        AnimationTimer at = new AnimationTimer() {
+
+            private long lastTime = 0;
+
+            @Override
+            public void handle(long now) {
+
+                if (lastTime == 0) {
+                    lastTime = now;
+                    return;
+                }
+
+                double deltaTime = (now - lastTime) / 1_000_000_000.0;
+                lastTime = now;
+
+                Tester.update(deltaTime);
+                System.out.println("1");
+            }
+        };
+        at.start();
 
         root.getChildren().add(Tester);
         stage.setTitle("CEDT Cookie Run -main");

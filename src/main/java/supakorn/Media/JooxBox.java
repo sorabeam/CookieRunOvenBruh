@@ -12,16 +12,16 @@ public class JooxBox {
 
     public JooxBox(){
         playlist = new HashMap<>();
-        playlist.put( "MainMenuMusic" , "/HeatWaves.mp3" );
+        playlist.put( "MainMenuMusic" , "/GoodBoy.mp3" );
     }
 
-    public MediaPlayer play(String path, boolean isLoop,float volum) {
+    public MediaPlayer play(String path, boolean isLoop,float volume) {
         path = playlist.get(path);
         Media media = new Media(Objects.requireNonNull(getClass().getResource(path)).toExternalForm());
         MediaPlayer mp = new MediaPlayer(media);
 
         if(isLoop) mp.setCycleCount(MediaPlayer.INDEFINITE);
-        mp.setVolume(Math.max(0,volum / 100.0));
+        mp.setVolume(Math.max(0,volume / 100.0));
         mp.play();
 
         return mp;

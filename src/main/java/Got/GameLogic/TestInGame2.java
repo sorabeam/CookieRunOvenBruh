@@ -4,6 +4,7 @@ import CleanCode.Scene.CookieSelectionScene;
 import CleanCode.Scene.InGameScene;
 import CleanCode.Scene.MainMenuScene;
 import CleanCode.Scene.PetsSelectionScene;
+import SceneRoots.InGameRoot;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
@@ -24,7 +25,9 @@ public class TestInGame2 extends Application {
                     scene.setRoot(new CookieSelectionScene());
                 }
                 case INGAME -> {
-                    scene.setRoot(new InGameScene());
+                    System.out.println("Bruh");
+                    scene.setRoot(new InGameRoot());
+
                 }
                 case SELECTPET -> {
                     scene.setRoot(new PetsSelectionScene());
