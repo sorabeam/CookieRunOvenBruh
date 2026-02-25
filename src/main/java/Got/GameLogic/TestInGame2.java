@@ -1,9 +1,9 @@
 package Got.GameLogic;
 
-import CleanCode.Scene.CookieSelectionScene;
-import CleanCode.Scene.InGameScene;
-import CleanCode.Scene.MainMenuScene;
-import CleanCode.Scene.PetsSelectionScene;
+import Beam.Scene.CookieSelectionScene;
+import Beam.Scene.InGameScene;
+import Beam.Scene.MainMenuScene;
+import Beam.Scene.PetsSelectionScene;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
