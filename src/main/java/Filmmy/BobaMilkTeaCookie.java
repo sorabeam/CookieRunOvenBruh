@@ -28,7 +28,13 @@ public class BobaMilkTeaCookie extends Player{
     }
 
     private void shootPearl() {
-        //Later
+        Pearl pearl = new Pearl(
+                getLayoutX() + getFitWidth(),
+                getLayoutY() + getFitHeight() * 0.6
+        );
+
+        getParentLayer().getChildren().add(pearl);
+
         playSkill(0.3);
         changeAnimationState(AnimationType.SKILL);
     }

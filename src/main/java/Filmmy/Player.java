@@ -1,10 +1,21 @@
 package Filmmy;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import supakorn.Animation.Animate;
 import supakorn.Animation.AnimationType;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.paint.Color;
 
 public abstract class Player extends Animate {
+
+    protected Pane gameLayer;
+    protected Rectangle hitbox;
+
+    private DoubleProperty hitboxRatio = new SimpleDoubleProperty(0.85);
+    private final double slideHitboxRatio = 0.45;
 
     private double velocity;
     private int jumpCount;
@@ -47,6 +58,24 @@ public abstract class Player extends Animate {
 
         this.name = name;
         this.desc = desc;
+
+        hitbox = new Rectangle();
+        hitbox.widthProperty().bind(fitWidthProperty().multiply(0.6));
+        hitbox.heightProperty().bind(
+                fitHeightProperty().multiply(hitboxRatio)
+        );
+
+        // DEBUG MODE (เปิดดู hitbox)
+        hitbox.setStroke(Color.RED);
+        hitbox.setFill(Color.TRANSPARENT);
+
+        // bind ตำแหน่งกับ player
+        hitbox.layoutXProperty().bind(layoutXProperty().add(fitWidthProperty().multiply(0.2)));
+        hitbox.layoutYProperty().bind(
+                layoutYProperty().add(
+                        fitHeightProperty().subtract(hitbox.heightProperty())
+                )
+        );
     }
 
     public void update(double dt, double groundY) {
@@ -133,12 +162,25 @@ public abstract class Player extends Animate {
 
         isSliding = sliding;
 
+        if (sliding) {
+            hitboxRatio.set(slideHitboxRatio);
+        } else {
+            hitboxRatio.set(0.85);
+        }
+
         if (!isPerformingSkill()) {
 
             if (sliding) {
+
                 changeAnimationState(AnimationType.SLIDE);
+
             } else if (onGround) {
+
                 changeAnimationState(AnimationType.RUN);
+
+            } else if (isDoubleJumping) {
+
+                changeAnimationState(AnimationType.DOUBLE_JUMP);
             }
         }
     }
@@ -155,6 +197,14 @@ public abstract class Player extends Animate {
         changeAnimationState(AnimationType.SKILL);
     }
 
+    protected Pane getParentLayer() {
+        return gameLayer;
+    }
+
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
+
     // ---------- Jump Config ----------
     protected int getMaxJump() {
         return 2;
@@ -162,7 +212,7 @@ public abstract class Player extends Animate {
 
     // ---------- Hook Method ----------
     protected void onUpdate(double dt) {
-        // default → do nothing
+        // default
     }
 
     // ---------- Getters ----------
@@ -177,6 +227,10 @@ public abstract class Player extends Animate {
     // ---------- Stats ----------
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setGameLayer(Pane layer) {
+        this.gameLayer = layer;
     }
 
     public void takeDamage(int damage) {

@@ -1,6 +1,8 @@
 package SceneRoots;
 
 import Filmmy.BobaMilkTeaCookie;
+import Filmmy.Pearl;
+import javafx.scene.Node;
 import supakorn.Animation.Animate;
 import Filmmy.Player;
 import Components.ScoreBoard;
@@ -15,6 +17,8 @@ import javafx.scene.shape.Rectangle;
 import supakorn.Animation.AnimationType;
 import supakorn.Asset;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class InGameRoot extends StackPane {
@@ -55,8 +59,21 @@ public class InGameRoot extends StackPane {
         ground.setFill(Color.LIGHTGRAY);
         gameLayer.getChildren().add(ground);
 
+        //Dummy obstacle
+        Rectangle obstacle = new Rectangle(80, 120);
+        obstacle.setFill(Color.BLUE);
+
+        obstacle.setLayoutX(600);
+        obstacle.layoutYProperty().bind(
+                gameLayer.heightProperty().subtract(groundH + 120)
+        );
+
+        gameLayer.getChildren().add(obstacle);
+
         Player player = new BobaMilkTeaCookie();
+        player.setGameLayer(gameLayer);
         gameLayer.getChildren().add(player);
+        gameLayer.getChildren().add(player.getHitbox());
         player.setFitWidth(200);
         player.setFitHeight(200);
         player.setLayoutX(200);
@@ -80,6 +97,40 @@ public class InGameRoot extends StackPane {
 
                 player.update(dt, groundY);          // physics + movement
                 player.update(dt);         // animation frames
+
+                //Pew-Pew Pearl And Obstacle
+
+                List<Node> toRemove = new ArrayList<>();
+                double screenWidth = getWidth();
+
+                for (Node node : gameLayer.getChildren()) {
+
+                    if (node instanceof Pearl pearl) {
+
+                        pearl.update(dt);
+
+                        if (gameLayer.getChildren().contains(obstacle)) {
+
+                            if (pearl.getBoundsInParent().intersects(obstacle.getBoundsInParent())) {
+
+                                System.out.println("BOOM 😏🔥");
+
+                                scoreBoard.addScore(100);
+
+                                toRemove.add(pearl);
+                                toRemove.add(obstacle);
+                                continue; //No need to check
+                            }
+                        }
+
+                        if (pearl.getLayoutX() > screenWidth - 50) {
+                            toRemove.add(pearl);
+                        }
+                    }
+                }
+
+                // 3️⃣ ลบทีเดียวหลัง loop
+                gameLayer.getChildren().removeAll(toRemove);
             }
         };
 
