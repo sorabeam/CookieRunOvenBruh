@@ -1,12 +1,15 @@
+
 package Beam.Scene;
 
 import Beam.Button.CDBtn;
 import Beam.Button.SelectPBtn;
 import Beam.UI.PetsUI.*;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+
 import Beam.CharactorData;
 import Beam.Image.OutlineText;
 

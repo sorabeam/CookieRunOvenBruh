@@ -4,7 +4,6 @@ import Beam.Scene.CookieSelectionScene;
 import Beam.Scene.InGameScene;
 import Beam.Scene.MainMenuScene;
 import Beam.Scene.PetsSelectionScene;
-import SceneRoots.InGameRoot;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;

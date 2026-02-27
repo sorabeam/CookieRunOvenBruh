@@ -2,6 +2,7 @@ package Beam.Scene;
 
 import Beam.UI.MainUI.*;
 import Beam.Media.JooxBox;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;

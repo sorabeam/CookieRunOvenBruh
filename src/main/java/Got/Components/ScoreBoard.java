@@ -1,4 +1,4 @@
-package Components;
+package Got.Components;
 
 import Got.GameLogic.GameLogic;
 import javafx.geometry.Pos;

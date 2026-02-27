@@ -4,6 +4,7 @@ import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
+import Pors.ObsticleAndItem.Spawner;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -57,7 +58,14 @@ public class InGameScene extends BaseRoot{
         StackPane.setAlignment(settingZone,Pos.TOP_RIGHT);
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
-        getStage().setResizable(true);
+        Spawner spawner =
+                new Spawner(
+                        gameLayer,
+                        scene.getWidth(),
+                        scene.getHeight()
+                );
+
+        spawner.start();
 
         //ground
         Rectangle ground = new Rectangle();
