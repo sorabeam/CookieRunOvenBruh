@@ -1,68 +1,59 @@
-package Beam.Scene;
+package SceneRoots;
 
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
-import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
+import javafx.scene.Node;
+import Components.ScoreBoard;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import static Got.GameLogic.GameLogic.getStage;
-
-public class InGameScene extends BaseRoot{
-
-    Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
-    StackPane uiLayer = new StackPane(); // สำหรับ UI
-
-    SettingZone settingZone = new SettingZone(this,spacer('H'));
-    HpDisplayZone hpzone = new HpDisplayZone();
-    ShowScore sc = new ShowScore();
-    LastRecord lastRecord = new LastRecord();
-
+public class InGameRoot extends StackPane {
+    //physics setting
     private final double groundH = 80;
     public static double groundY;
 
-    public InGameScene(){
-        super();
+    public InGameRoot() {
 
-        root.getChildren().add(new InGameBG(scene));
-
-        uiLayer.getChildren().addAll(
-                new ExpBar(scene),
-                settingZone,
-                lastRecord,
-                hpzone,
-                sc
+        Pane gameLayer = new Pane();
+        AnchorPane uiLayer = new AnchorPane();
+        ScoreBoard scoreBoard = new ScoreBoard();
+        this.setPrefSize(800, 600);
+        AnchorPane.setTopAnchor(scoreBoard, 10.0);
+        AnchorPane.setRightAnchor(scoreBoard, 20.0);
+        uiLayer.getChildren().add(scoreBoard);
+        this.getChildren().addAll(gameLayer, uiLayer);
+        Image backgroundImg = new Image(Objects.requireNonNull(getClass().getResource("/Maps/ParadiseBG.png")).toExternalForm());
+        BackgroundSize size = new BackgroundSize(
+                100, 100,
+                true, true,
+                false, true
         );
-
-        StackPane.setMargin(lastRecord,new Insets(120,60,0,0));
-        StackPane.setAlignment(lastRecord,Pos.TOP_RIGHT);
-        StackPane.setAlignment(sc,Pos.CENTER_RIGHT);
-        StackPane.setMargin(sc,new Insets(200,0,0,0));
-        StackPane.setAlignment(hpzone,Pos.TOP_CENTER);
-        settingZone.setMaxWidth(50);
-        StackPane.setAlignment(settingZone,Pos.TOP_RIGHT);
-        StackPane.setMargin(settingZone,new Insets(20,20,0,0));
-
-        getStage().setResizable(true);
+        BackgroundImage backgroundImage = new BackgroundImage(
+                backgroundImg,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.CENTER,
+                size
+        );
+        this.setBackground(new Background(backgroundImage));
 
         //ground
         Rectangle ground = new Rectangle();
         ground.setHeight(groundH);
         ground.setLayoutX(0);
-        ground.widthProperty().bind(scene.widthProperty());
-        ground.layoutYProperty().bind(root.heightProperty().subtract(groundH));
+        ground.widthProperty().bind(gameLayer.widthProperty());
+        ground.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH));
         ground.setFill(Color.LIGHTGRAY);
         gameLayer.getChildren().add(ground);
 
@@ -80,16 +71,11 @@ public class InGameScene extends BaseRoot{
         Cookie player = new BobaCookie();
         player.setGameLayer(gameLayer);
         player.createCookie();
-
         gameLayer.getChildren().add(player.getCookie());
         gameLayer.getChildren().add(player.getHitbox());
-
         player.getCookie().setFitWidth(200);
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
-
-        root.getChildren().add(gameLayer);
-        root.getChildren().add(uiLayer);
 
         AnimationTimer timer = new AnimationTimer() {
 
@@ -124,6 +110,9 @@ public class InGameScene extends BaseRoot{
                         if (gameLayer.getChildren().contains(obstacle)) {
 
                             if (pearl.getBoundsInParent().intersects(obstacle.getBoundsInParent())) {
+
+
+                                scoreBoard.addScore(100);
 
                                 toRemove.add(pearl);
                                 toRemove.add(obstacle);
@@ -163,4 +152,3 @@ public class InGameScene extends BaseRoot{
 
     }
 }
-

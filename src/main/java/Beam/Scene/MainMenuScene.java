@@ -36,6 +36,6 @@ public class MainMenuScene extends BaseRoot {
 
     private void playMusic() {
         JooxBox sportify = new JooxBox();
-        sportify.play("MainMenuMusic", true, 10);
+        sportify.play("MainMenuMusic", true, 100);
     }
 }
