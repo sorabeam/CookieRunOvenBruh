@@ -25,6 +25,8 @@ public class InGameScene extends BaseRoot{
     Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
     StackPane uiLayer = new StackPane(); // สำหรับ UI
 
+    private boolean shiftHeld = false;
+
     SettingZone settingZone = new SettingZone(this,spacer('H'));
     HpDisplayZone hpzone = new HpDisplayZone();
     ShowScore sc = new ShowScore();
@@ -110,8 +112,13 @@ public class InGameScene extends BaseRoot{
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
-                //Pew-Pew Pearl And Obstacle
 
+                if (shiftHeld && player.isOnGround()) {
+                    player.slide();
+                    System.out.println("fwesdfcd");
+                }
+
+                //Pew-Pew Pearl And Obstacle
                 List<Node> toRemove = new ArrayList<>();
                 double screenWidth = getWidth();
 
@@ -147,12 +154,16 @@ public class InGameScene extends BaseRoot{
         setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case SPACE -> player.jump();
-                case SHIFT -> player.slide();
+                case SHIFT -> {
+                    shiftHeld = true;
+                    player.slide();
+                }
             }
         });
 
         setOnKeyReleased(e -> {
             if (e.getCode() == KeyCode.SHIFT ) {
+                shiftHeld = false;
                 player.upFromSlide();
             }
         });

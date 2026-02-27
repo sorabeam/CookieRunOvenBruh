@@ -3,7 +3,6 @@ package Beam.Cookies;
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
-import SceneRoots.InGameRoot;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
@@ -179,6 +178,7 @@ public abstract class Cookie {
             cookie.changeAnimationState(AnimationType.DOUBLE_JUMP);
         }
 
+        setHitbox();
         velocity = jumpSpeed;
         jumpCount++;
         onGround = false;
@@ -186,19 +186,24 @@ public abstract class Cookie {
 
     public void slide() {
 
-        if ( isPerformingSkill() || !onGround) { return; }
+        setHitbox();
+
+        if ( isPerformingSkill() || !onGround || cookie.getAnimationState().equals(AnimationType.SLIDE)) { return; }
 
         cookie.changeAnimationState(AnimationType.SLIDE);
-        setHitbox();
 
     }
 
     public void upFromSlide() {
 
-        if ( isPerformingSkill() || !onGround) { return; }
 
+        if ( isPerformingSkill() || !onGround) {
+            setHitbox();
+            return;
+        }
         cookie.changeAnimationState(AnimationType.RUN);
         setHitbox();
+
     }
 
     public void setHitbox(){
@@ -241,5 +246,13 @@ public abstract class Cookie {
 
     public void setCookie(Animate cookie) {
         this.cookie = cookie;
+    }
+
+    public boolean isOnGround() {
+        return onGround;
+    }
+
+    public void setOnGround(boolean onGround) {
+        this.onGround = onGround;
     }
 }
