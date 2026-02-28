@@ -69,7 +69,7 @@ public class InGameRoot extends StackPane {
 
         AnimationTimer playerAnimations = new AnimationTimer() {
             long last = 0;
-            @Override`
+            @Override
             public void handle(long now) {
                 if(last==0) {
                     last = now;
