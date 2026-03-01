@@ -1,4 +1,4 @@
-package Pors.ObsticleAndItem;
+package Pors.ObjectInGame;
 
 import Beam.Cookies.Cookie;
 

@@ -1,9 +1,7 @@
-package Pors.ObsticleAndItem;
+package Pors.ObjectInGame.Items;
 
-import Pors.ObsticleAndItem.Items.HealingPotion;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import Pors.ObsticleAndItem.Items.BaseItem;
 
 public class ItemView extends ImageView {
 

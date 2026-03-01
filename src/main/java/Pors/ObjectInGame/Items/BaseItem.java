@@ -1,6 +1,6 @@
-package Pors.ObsticleAndItem.Items;
+package Pors.ObjectInGame.Items;
 
-import Pors.ObsticleAndItem.Interactable;
+import Pors.ObjectInGame.Interactable;
 
 public abstract class BaseItem implements Interactable {
     private String name;

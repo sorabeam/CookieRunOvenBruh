@@ -1,4 +1,4 @@
-package Pors.ObsticleAndItem.Items;
+package Pors.ObjectInGame.Items;
 
 public class CroissantButter extends SpeedBoost {
 

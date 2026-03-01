@@ -4,7 +4,7 @@ import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
-import Pors.ObsticleAndItem.Spawner;
+import Pors.ObjectInGame.Spawner;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.geometry.Insets;

@@ -1,4 +1,4 @@
-package Pors.ObsticleAndItem.Items;
+package Pors.ObjectInGame.Items;
 
 import Beam.Cookies.Cookie;
 import Got.GameLogic.GameLogic;
