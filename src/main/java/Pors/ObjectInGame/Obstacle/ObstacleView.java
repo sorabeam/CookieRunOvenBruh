@@ -1,4 +1,4 @@
-package Pors.ObsticleAndItem;
+package Pors.ObjectInGame.Obstacle;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

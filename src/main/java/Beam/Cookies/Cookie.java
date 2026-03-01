@@ -83,6 +83,11 @@ public abstract class Cookie {
         System.out.println("Cookie get " + healunit + " heathPoint");
     }
 
+    public void addScore(int score){
+        setScore(get_Score() + score);
+        System.out.println("Cookie get " + score + " score");
+    }
+
     public void die(){
     }
 
