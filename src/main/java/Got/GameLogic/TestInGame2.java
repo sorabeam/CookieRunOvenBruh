@@ -2,11 +2,13 @@ package Got.GameLogic;
 
 import Beam.Scene.*;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class TestInGame2 extends Application {
@@ -14,8 +16,11 @@ public class TestInGame2 extends Application {
     private StackPane gameRoot;
     private Scene scene;
 
-    private final double BASE_WIDTH = 1440;
-    private final double BASE_HEIGHT = 900;
+
+    Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+
+    private final double BASE_WIDTH = bounds.getWidth();
+    private final double BASE_HEIGHT = bounds.getHeight();
 
     @Override
     public void start(Stage stage) {
