@@ -2,6 +2,7 @@ package Beam.Scene;
 
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
+import Beam.Cookies.CrossiantCookie;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Pors.ObjectInGame.Spawner;
@@ -66,7 +67,8 @@ public class InGameScene extends BaseRoot{
         StackPane.setAlignment(settingZone,Pos.TOP_RIGHT);
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
-        Cookie player = new BobaCookie();
+//        Cookie player = new BobaCookie();
+        Cookie player = new CrossiantCookie();
 
         Spawner spawner =
                 new Spawner(
@@ -175,6 +177,9 @@ public class InGameScene extends BaseRoot{
                 case SHIFT -> {
                     shiftHeld = true;
                     player.slide();
+                }
+                case Q -> {
+                    player.useSkill();
                 }
             }
         });
