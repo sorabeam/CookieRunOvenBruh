@@ -5,12 +5,12 @@ import Beam.Animation.Animate;
 public class CrossiantCookie extends Cookie {
     private boolean skillReady = true;
     private boolean isUsingSkill = false;
-    private final int coolDown = 7000; // this is in miliseconds unit, becareful
+    private final int coolDown = 1000; // this is in miliseconds unit, becareful test
     public CrossiantCookie() {
         super(2, "CrossiantCookie", 140, "");
-
         setImgURL("crossiant_sheet");
-        skillcoodown = 10;
+        skillcoodown = 3;
+
     }
 
     @Override
@@ -23,8 +23,10 @@ public class CrossiantCookie extends Cookie {
         if(!skillReady) return;
         Thread countDownSkill = new Thread(() -> {
             try {
+                setUsingSkill(true);
                 setSkillReady(false);
                 Thread.sleep(coolDown);
+                setUsingSkill(false);
                 setSkillReady(true);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
