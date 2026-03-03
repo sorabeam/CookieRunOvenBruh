@@ -24,26 +24,61 @@ public class Spawner {
     private long lastUpdateTime = 0;
 
     private List<List<SpawnAction>> spawnSets = List.of(
+
+            List.of(
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650)
+            ),
+
+            List.of(
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly2", 100,650)
+            ),
             //SET1
             List.of(
-                    new SpawnAction(SpawnAction.Type.JELLY, 2_000_000_000L, "Jelly1", 100,650),
+                    new SpawnAction(SpawnAction.Type.JELLY, 200_000_000L, "Jelly1", 100,650),
                     new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,650),
+
                     new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,650),
-                    new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,525),
+                    new SpawnAction(SpawnAction.Type.JELLY, 125_000_000L, "Jelly1", 100,575),
+                    new SpawnAction(SpawnAction.Type.JELLY, 125_000_000L, "Jelly1", 100,525),
+
+                    new SpawnAction(SpawnAction.Type.JELLY, 225_000_000L, "Jelly2", 100,500),
                     new SpawnAction(SpawnAction.Type.OBSTACLE, 0L, "ObsTest", 10,650),
-                    new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,650),
-                    new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,650),
-                    new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,525),
-                    new SpawnAction(SpawnAction.Type.OBSTACLE, 0L, "ObsTest", 10,650),
-                    new SpawnAction(SpawnAction.Type.ITEM,     2_000_000_000L, "HealingPotion", 100,650)
+
+                    new SpawnAction(SpawnAction.Type.JELLY, 225_000_000L, "Jelly1", 100,525),
+                    new SpawnAction(SpawnAction.Type.JELLY, 125_000_000L, "Jelly1", 100,575),
+                    new SpawnAction(SpawnAction.Type.JELLY, 125_000_000L, "Jelly1", 100,650)
+
+                    //new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,650),
+                    //new SpawnAction(SpawnAction.Type.JELLY, 500_000_000L, "Jelly1", 100,525),
+                    //new SpawnAction(SpawnAction.Type.OBSTACLE, 0L, "ObsTest", 10,650),
+                    //new SpawnAction(SpawnAction.Type.ITEM,     2_000_000_000L, "HealingPotion", 100,650)
             ),
 
             //SET2
             List.of(
                     new SpawnAction(SpawnAction.Type.OBSTACLE, 1_000_000_000L, "ObsTest", 15,650),
-                    new SpawnAction(SpawnAction.Type.ITEM,     1_000_000_000L, "HealingPotion", 50,650),
-                    new SpawnAction(SpawnAction.Type.OBSTACLE, 2_000_000_000L, "ObsTest", 20,650),
-                    new SpawnAction(SpawnAction.Type.JELLY, 2_000_000_000L, "Jelly1", 100,650)
+                    new SpawnAction(SpawnAction.Type.OBSTACLE, 2_000_000_000L, "Obs_1_1", 15,650),
+                    new SpawnAction(SpawnAction.Type.OBSTACLE, 2_000_000_000L, "Obs_1_2", 15,475),
+                    new SpawnAction(SpawnAction.Type.OBSTACLE, 2_000_000_000L, "Obs_1_3", 15,650),
+                    new SpawnAction(SpawnAction.Type.OBSTACLE, 2_000_000_000L, "Obs_1_4", 15,0)
             )
     );
 

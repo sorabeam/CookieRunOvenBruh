@@ -1,9 +1,9 @@
 package Pors.ObjectInGame.Jelly;
 
-import Pors.ObjectInGame.Items.BaseItem;
-import Pors.ObjectInGame.Obstacle.BaseObstacle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+
+import java.util.Objects;
 
 public class JellyView extends ImageView {
 
@@ -17,8 +17,16 @@ public class JellyView extends ImageView {
         this.vy = vy;
 
         setImage(new Image("/Image/Jelly/" + jelly.getName() + ".png"));
-        setFitWidth(50);
-        setFitHeight(50);
+        if(Objects.equals(jelly.getName(), "Jelly1"))
+        {
+            setFitWidth(50);
+            setFitHeight(50);
+        }
+        else
+        {
+            setFitWidth(60);
+            setFitHeight(60);
+        }
     }
 
     public void update(double deltaTime) {
