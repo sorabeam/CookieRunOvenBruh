@@ -152,7 +152,6 @@ public class InGameScene extends BaseRoot{
                         } else if(currentRoll >= 0) { //test !!! change back
                             croissantSummon = new CroissantStrawberry(20);
                             //Test scoreboard
-                            System.out.println("tryeheutrj");
                             Platform.runLater(() -> {
                                 sc.addScore(5000);
                             });
