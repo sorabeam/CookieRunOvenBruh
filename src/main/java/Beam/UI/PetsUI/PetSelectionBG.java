@@ -16,10 +16,14 @@ public class PetSelectionBG extends StackPane {
         MBg.fitWidthProperty().bind(widthProperty());
         MBg.fitHeightProperty().bind(heightProperty());
 
+        ImageView ryd = Asset.createImageView("Royaldec",250 ,100);
+        ryd.fitWidthProperty().bind(widthProperty());
+
         FloorFade fade = new FloorFade(200);
         StackPane.setAlignment(fade, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(ryd, Pos.BOTTOM_CENTER);
 
-        getChildren().addAll(MBg, fade);
+        getChildren().addAll(MBg , ryd , fade);
     }
 
 }

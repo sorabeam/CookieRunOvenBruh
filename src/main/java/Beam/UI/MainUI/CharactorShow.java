@@ -1,0 +1,40 @@
+package Beam.UI.MainUI;
+
+import Beam.Animation.Animate;
+import Beam.Animation.AnimationType;
+import Beam.CharactorData;
+import Beam.Image.OutlineText;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
+
+public class CharactorShow extends StackPane {
+
+    private final Animate cookieView = CharactorData.getCurrent_Cookie().createCookie();
+
+    public CharactorShow() {
+        cookieView.setFitWidth(400);
+        cookieView.setPreserveRatio(true);
+        cookieView.changeAnimationState(AnimationType.IDLE);
+        cookieView.setStyle(
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0.7, 0, 5);"
+        );
+        setMargin(cookieView, new Insets( -100,-50,0,0));
+
+        ImageView petView = CharactorData.getCurrent_Pet().getView();
+        petView.setFitHeight(100);
+        petView.setStyle(
+                "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0.7, 0, 5);"
+        );
+        setAlignment(petView, Pos.TOP_RIGHT);
+        setMargin(petView, new Insets(60,0,0,0));
+
+        setMaxSize(600,600);
+        getChildren().addAll(petView, cookieView);
+    }
+
+    public Animate getCookie(){
+        return cookieView;
+    }
+}

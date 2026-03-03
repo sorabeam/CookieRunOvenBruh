@@ -2,10 +2,13 @@ package Beam.UI.PetsUI;
 
 import Beam.CharactorData;
 import javafx.geometry.Insets;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import Beam.Asset;
 import Beam.Button.SelectPBtn;
+import javafx.scene.paint.Color;
 
 public class PetsShow extends HBox {
     public PetsShow(Region spacer,SelectPBtn ins1,SelectPBtn ins2,SelectPBtn ins3,SelectPBtn ins4){

@@ -66,16 +66,11 @@ public class CookieSelectionScene extends BaseRoot{
 
         button.setOnAction(e -> {
 
-            Integer col = GridPane.getColumnIndex(button);
-            Integer row = GridPane.getRowIndex(button);
-
             SkillVideo.setImage(button.getImg());
             name.setText(button.getN());
             Description.setText(button.getD());
             Record.setText(button.getR());
 
-            characterBoard.getChildren().remove(button);
-            characterBoard.add(selectButton, col, row);
             selectButton = button;
 
         });

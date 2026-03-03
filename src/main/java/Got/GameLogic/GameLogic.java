@@ -11,12 +11,21 @@ public class GameLogic {
     private static final ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(null);
     private static Scene curScene;
     private static Stage stage;
+    private static TestInGame2 app;
 
     private static double multiplier = 1;
     //score
 
     public static int getScore() {
         return score;
+    }
+
+    public static void setApp(TestInGame2 application){
+        app = application;
+    }
+
+    public static TestInGame2 getApp(){
+        return app;
     }
 
     public static void setScore(int score) {

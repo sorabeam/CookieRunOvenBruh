@@ -15,9 +15,9 @@ import static javafx.geometry.Pos.*;
 public class SelectingView extends StackPane {
     public SelectingView(StackPane root){
 
-        setPrefSize(400, 865);
+        setPrefSize(600, 1000);
         setMinSize(400, 550);
-        setMaxSize(400, 865);
+        setMaxSize(600, 1000);
 
         ImageView Show = CharactorData.getCurrent_Pet().getView();
         ImageView SelectingBg = CharactorData.getCurrent_Pet().getBg();
@@ -32,6 +32,8 @@ public class SelectingView extends StackPane {
         OutlineText description = new OutlineText(CharactorData.getCurrent_Pet().getDesc(),'M',20);
         description.setTextAlignment(TextAlignment.CENTER);
 
+        Show.setFitWidth(450);
+        Show.setFitHeight(450);
         VBox vbox = new VBox(Show,PName,DeployBtn,description);
 
         vbox.setAlignment(Pos.CENTER);

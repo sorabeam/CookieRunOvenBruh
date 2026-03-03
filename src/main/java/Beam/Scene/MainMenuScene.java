@@ -1,8 +1,10 @@
 package Beam.Scene;
 
+import Beam.Animation.Animate;
 import Beam.UI.MainUI.*;
 import Beam.Media.JooxBox;
 
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
@@ -19,10 +21,35 @@ public class MainMenuScene extends BaseRoot {
         StackPane MainMenuButtons = new MainMenuButtons();
         StackPane GlassDecoration = new GlassDecoration();
 
+        CharactorShow imgShow = new CharactorShow();
+        Animate cookie = imgShow.getCookie();
+
+        AnimationTimer timer = new AnimationTimer() {
+
+            long last = 0;
+
+            @Override
+            public void handle(long now) {
+
+                if (last == 0) {
+                    last = now;
+                    return;
+                }
+
+                double dt = (now - last) / 1e9;
+                last = now;
+
+                cookie.update(dt);
+            }
+        };
+
+        timer.start();
+
         root.getChildren().addAll(
                 new MainMenuBG(),
                 profile,
                 Setting,
+                imgShow,
                 MainMenuButtons,
                 GlassDecoration
         );

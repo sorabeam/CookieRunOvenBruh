@@ -17,6 +17,10 @@ public class SelectPBtn extends BaseButton{
 
         super(img);
 
+        img.setFitWidth(270);
+
+        super.setGraphic(img);
+
         OutlineText txt = setText(name,txtSize,MarginBtm);
         FavBtn fav = BuildFav();
         StackPane newImg = new StackPane(fav,img,txt);

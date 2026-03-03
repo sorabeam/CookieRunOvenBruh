@@ -6,6 +6,7 @@ public class CrossiantCookie extends Cookie {
     private boolean skillReady = true;
     private boolean isUsingSkill = false;
     private final int coolDown = 1000; // this is in miliseconds unit, becareful test
+
     public CrossiantCookie() {
         super(2, "CrossiantCookie", 140, "");
         setImgURL("crossiant_sheet");

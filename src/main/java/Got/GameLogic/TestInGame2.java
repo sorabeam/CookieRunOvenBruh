@@ -15,7 +15,7 @@ public class TestInGame2 extends Application {
 
     private StackPane gameRoot;
     private Scene scene;
-
+    private StackPane scalableLayer;
 
     Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
 
@@ -32,7 +32,7 @@ public class TestInGame2 extends Application {
         gameRoot.setPrefSize(BASE_WIDTH, BASE_HEIGHT);
 
         // 🔥 ชั้นที่เอาไว้ scale ทั้งเกม
-        StackPane scalableLayer = new StackPane(gameRoot);
+        scalableLayer = new StackPane(gameRoot);
 
         // 🔥 root จริงของ Scene
         StackPane root = new StackPane(scalableLayer);
@@ -40,6 +40,7 @@ public class TestInGame2 extends Application {
 
         scene = new Scene(root, BASE_WIDTH, BASE_HEIGHT);
         stage.setScene(scene);
+        GameLogic.setApp(this);
 
         // 🔥 ทำให้ scale ตามขนาดหน้าต่าง
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
@@ -85,4 +86,10 @@ public class TestInGame2 extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+    public void callUpdateScale(){
+        updateScale(scalableLayer);
+    }
 }
+
+

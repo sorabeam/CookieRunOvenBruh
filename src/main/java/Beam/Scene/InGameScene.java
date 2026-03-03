@@ -43,9 +43,7 @@ public class InGameScene extends BaseRoot{
 
     public InGameScene(){
         super();
-
-        getStage().setMinWidth(1440);
-        getStage().setMinHeight(940);
+        
         getStage().setResizable(false);
 
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
