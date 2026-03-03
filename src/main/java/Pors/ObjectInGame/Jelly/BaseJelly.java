@@ -1,6 +1,7 @@
 package Pors.ObjectInGame.Jelly;
 
 import Beam.Cookies.Cookie;
+import Got.GameLogic.GameLogic;
 import Pors.ObjectInGame.Interactable;
 
 public class BaseJelly implements Interactable {
@@ -15,7 +16,7 @@ public class BaseJelly implements Interactable {
 
     @Override
     public void interact(Cookie cookie) {
-        cookie.addScore(getScore());
+        GameLogic.addScore(getScore());
     }
 
     public String getName() {

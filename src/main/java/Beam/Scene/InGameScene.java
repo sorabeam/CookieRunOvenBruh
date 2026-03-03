@@ -5,7 +5,7 @@ import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
-import GameLogic.GameLogic;
+import Got.GameLogic.GameLogic;
 import Pors.ObjectInGame.Items.*;
 import Pors.ObjectInGame.Spawner;
 import javafx.animation.AnimationTimer;
@@ -153,7 +153,7 @@ public class InGameScene extends BaseRoot{
                             croissantSummon = new CroissantStrawberry(20);
                             //Test scoreboard
                             Platform.runLater(() -> {
-                                sc.addScore(5000);
+                                GameLogic.addScore(5000);
                             });
                         }
 

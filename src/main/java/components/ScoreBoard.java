@@ -1,8 +1,7 @@
 package components;
 
-import GameLogic.GameLogic;
+import Got.GameLogic.GameLogic;
 import javafx.geometry.Pos;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.paint.Color;

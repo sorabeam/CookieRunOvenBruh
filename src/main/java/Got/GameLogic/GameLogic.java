@@ -1,53 +1,54 @@
 package Got.GameLogic;
 
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class GameLogic {
-    private static int score;
-    private static int bestScore;
-    private static final ObjectProperty<GameState> gameState = new SimpleObjectProperty<>(null);
-    private static Scene curScene;
-    private static Stage stage;
-    private static TestInGame2 app;
 
+    // ===== SCORE =====
+    private static final IntegerProperty score = new SimpleIntegerProperty(0);
+    private static int bestScore;
     private static double multiplier = 1;
-    //score
+    private static TestInGame2 app;
+    private static int cookieCountMod = 0;
 
     public static int getScore() {
+        return score.get();
+    }
+
+    public static void setScore(int value) {
+        bestScore = Math.max(value, bestScore);
+        score.set(value);
+    }
+
+    public static void addScore(int amount) {
+        if (amount <= 0) return;
+
+        int finalAmount = (int) (amount * multiplier);
+        score.set(score.get() + finalAmount);
+        bestScore = Math.max(score.get(), bestScore);
+    }
+
+    public static IntegerProperty scoreProperty() {
         return score;
     }
 
-    public static void setApp(TestInGame2 application){
-        app = application;
-    }
-
-    public static TestInGame2 getApp(){
-        return app;
-    }
-
-    public static void setScore(int score) {
-        bestScore = Math.max(score, bestScore);
-        GameLogic.score = score;
-    }
-
     public static int getBestScore() {
-        return GameLogic.bestScore;
+        return bestScore;
     }
 
-    public static void setBestScore(int bestScore) {
-        GameLogic.bestScore = bestScore;
+    public static void resetScore() {
+        score.set(0);
+        multiplier = 1;
     }
 
-    public static void addScore(int val) {
-        if(gameState.get()!=GameState.INGAME) return;
-        score += val;
-        bestScore = Math.max(score, bestScore);
-    }
-
-    //game state
+    // ===== GAME STATE =====
+    private static final ObjectProperty<GameState> gameState =
+            new SimpleObjectProperty<>(null);
 
     public static GameState getGameState() {
         return gameState.get();
@@ -61,28 +62,51 @@ public class GameLogic {
         return gameState;
     }
 
+    // ===== SCENE / STAGE =====
+    private static Scene curScene;
+    private static Stage stage;
+
+    public static void setStage(Stage primaryStage) {
+        stage = primaryStage;
+    }
+
+    public static void setCurScene(Scene scene) {
+        curScene = scene;
+        if (stage != null) {
+            stage.setScene(scene);
+        }
+    }
+
     public static Scene getCurScene() {
         return curScene;
-    }
-
-    public static void setCurScene(Scene curScene) {
-        GameLogic.curScene = curScene;
-        stage.setScene(curScene);
-    }
-
-    public static void setStage(Stage primaryStage){
-        stage = primaryStage;
     }
 
     public static Stage getStage() {
         return stage;
     }
 
+    // ===== MULTIPLIER =====
     public static double getMultiplier() {
         return multiplier;
     }
 
-    public static void setMultiplier(double multiplier) {
-        GameLogic.multiplier = multiplier;
+    public static void setMultiplier(double value) {
+        multiplier = value;
+    }
+
+    public static void setApp(TestInGame2 application){
+        app = application;
+    }
+
+    public static TestInGame2 getApp(){
+        return app;
+    }
+
+    public static int getCookieCountMod() {
+        return cookieCountMod;
+    }
+
+    public static void setCookieCountMod(int cookieCountMod) {
+        GameLogic.cookieCountMod = cookieCountMod;
     }
 }

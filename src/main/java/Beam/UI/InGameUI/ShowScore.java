@@ -1,7 +1,6 @@
 package Beam.UI.InGameUI;
 
 import Got.GameLogic.GameLogic;
-
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -21,6 +20,13 @@ public class ShowScore extends StackPane {
         score.setMaxSize(1,1);
         score.setPadding(new Insets(-5,30,0,0));
 
+        GameLogic.scoreProperty().addListener((obs, oldVal, newVal) -> {
+            score.setText(newVal + " Score");
+        });
+
+        // set ค่าเริ่มต้น
+        score.setText(GameLogic.getScore() + " Score");
+
         getChildren().addAll(
                 fadeBg,
                 score
@@ -29,13 +35,6 @@ public class ShowScore extends StackPane {
 
     public void setScore(int nscore){
         iscore = nscore;
-        GameLogic.setScore(nscore);
-        score.setText(GameLogic.getScore() + " Score");
-    }
-
-    public void addScore(int nscore){
-        iscore = nscore;
-        GameLogic.setScore(GameLogic.getScore()+nscore);
         score.setText(GameLogic.getScore() + " Score");
     }
 }
