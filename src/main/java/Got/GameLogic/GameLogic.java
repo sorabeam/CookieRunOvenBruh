@@ -15,6 +15,7 @@ public class GameLogic {
     private static double multiplier = 1;
     private static TestInGame2 app;
     private static int cookieCountMod = 0;
+    private static int Map;
 
     public static int getScore() {
         return score.get();
@@ -108,5 +109,13 @@ public class GameLogic {
 
     public static void setCookieCountMod(int cookieCountMod) {
         GameLogic.cookieCountMod = cookieCountMod;
+    }
+
+    public static int getMap() {
+        return Map;
+    }
+
+    public static void setMap(int map) {
+        Map = Math.max(1,map);
     }
 }

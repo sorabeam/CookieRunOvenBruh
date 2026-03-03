@@ -1,12 +1,13 @@
 package Beam.UI.MainUI;
 
+import Beam.Button.SettingPopUpBtn;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import Beam.Asset;
-import Beam.Button.SettingBtn;
+import Beam.Button.NavSettingBtn;
 
 public class SettingZone extends HBox {
 
@@ -15,14 +16,14 @@ public class SettingZone extends HBox {
         ImageView SettingImg = Asset.createImageView("SettingBtn",80,0);
         ImageView WifiImg = Asset.createImageView("WiFi",0,25);
 
-        SettingBtn SettingBtn =new SettingBtn(SettingImg,root);
+        SettingPopUpBtn NavSettingBtn =new SettingPopUpBtn(SettingImg,root);
         setMargin(WifiImg,new Insets(10,0,0,0));
 
         setMaxHeight(80);
         setMaxWidth(500);
 
         setSpacing(10);
-        getChildren().addAll(spacer,WifiImg,SettingBtn);
+        getChildren().addAll(spacer,WifiImg, NavSettingBtn);
 
     }
 }

@@ -1,5 +1,6 @@
 package Beam.Scene;
 
+import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
@@ -65,7 +66,7 @@ public class InGameScene extends BaseRoot{
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
 //       Cookie player = new BobaCookie();
-        Cookie player = new CrossiantCookie();
+        Cookie player = CharactorData.getCurrent_Cookie();
 
         Spawner spawner =
                 new Spawner(

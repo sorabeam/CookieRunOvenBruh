@@ -15,7 +15,7 @@ public class MainMenuScene extends BaseRoot {
     public MainMenuScene() {
         super();
 
-        StackPane profile = new MainMenuProfile("White Lilly", "102,455,353");
+        StackPane profile = new MainMenuProfile("White Lilly", "102,455,353",root);
         HBox Setting = new SettingZone(root,spacer('H'));
         StackPane MainMenuButtons = new MainMenuButtons();
         StackPane GlassDecoration = new GlassDecoration();
