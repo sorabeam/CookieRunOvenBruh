@@ -1,5 +1,6 @@
 package Beam.Button;
 
+import Beam.Media.JooxBox;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
 import javafx.scene.image.ImageView;
@@ -20,8 +21,10 @@ public class NavBtn extends BaseButton{
     public void handleClick() {
         super.handleClick();
 
-        GameLogic.getApp().callUpdateScale();
-
+        if(switchState.equals(GameState.INGAME)){
+            //test
+            JooxBox.getInstance().ChangeMusic("MS1",true,100);
+        }
         getStage().setResizable(true);
         GameLogic.setGameState(switchState);
         System.out.println(switchState);

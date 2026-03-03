@@ -27,8 +27,8 @@ public class CharactorShow extends StackPane {
         petView.setStyle(
                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0.7, 0, 5);"
         );
-        setAlignment(petView, Pos.TOP_RIGHT);
-        setMargin(petView, new Insets(60,0,0,0));
+        setAlignment(petView, Pos.TOP_LEFT);
+        setMargin(petView, new Insets(90,0,0,100));
 
         setMaxSize(600,600);
         getChildren().addAll(petView, cookieView);

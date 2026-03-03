@@ -43,9 +43,6 @@ public class InGameScene extends BaseRoot{
 
     public InGameScene(){
         super();
-        
-        getStage().setResizable(false);
-
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
 
         root.getChildren().add(new InGameBG(root));
@@ -67,7 +64,7 @@ public class InGameScene extends BaseRoot{
         StackPane.setAlignment(settingZone,Pos.TOP_RIGHT);
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
-//        Cookie player = new BobaCookie();
+//       Cookie player = new BobaCookie();
         Cookie player = new CrossiantCookie();
 
         Spawner spawner =
@@ -142,6 +139,7 @@ public class InGameScene extends BaseRoot{
                 List<Node> toRemove = new ArrayList<>();
                 double screenWidth = getWidth();
                 if(player instanceof CrossiantCookie) {
+
                     if(((CrossiantCookie) player).isUsingSkill()) {
                         ((CrossiantCookie) player).setUsingSkill(false);
                         BaseItem croissantSummon = null;
@@ -153,6 +151,11 @@ public class InGameScene extends BaseRoot{
                             croissantSummon = new CroissantButter(5);
                         } else if(currentRoll >= 0) { //test !!! change back
                             croissantSummon = new CroissantStrawberry(20);
+                            //Test scoreboard
+                            System.out.println("tryeheutrj");
+                            Platform.runLater(() -> {
+                                sc.addScore(5000);
+                            });
                         }
 
                         ItemView croissantSummonView = new ItemView(croissantSummon, 0, 15);

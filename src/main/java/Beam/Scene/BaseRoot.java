@@ -13,22 +13,21 @@ public abstract class BaseRoot extends StackPane{
     protected Scene scene;
     protected StackPane root = this;
 
+    private static final double BASE_WIDTH = 1440;
+    private static final double BASE_HEIGHT = 900;
+
     public BaseRoot() {
 
-        Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
-
-        double screenWidth = bounds.getWidth();
-        double screenHeight = bounds.getHeight();
-
-        setMaxSize(screenWidth, screenHeight);
         scene = GameLogic.getCurScene();
-        Rectangle clip = new Rectangle(screenWidth, screenHeight);
-        clip.setArcWidth(0);
-        clip.setArcHeight(0);
+
+        setMinSize(BASE_WIDTH, BASE_HEIGHT);
+        setPrefSize(BASE_WIDTH, BASE_HEIGHT);
+        setMaxSize(BASE_WIDTH, BASE_HEIGHT);
+
+        Rectangle clip = new Rectangle(BASE_WIDTH, BASE_HEIGHT);
+        setClip(clip);
 
         setBackground(new Background(new BackgroundFill(Color.GREEN,null,null)));
-
-        setClip(clip);
     }
 
     public Region spacer(char c){

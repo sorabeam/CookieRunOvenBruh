@@ -1,11 +1,15 @@
 package Got.GameLogic;
 
+import Beam.Media.JooxBox;
 import Beam.Scene.*;
 import javafx.application.Application;
+import javafx.collections.ObservableList;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Screen;
@@ -17,10 +21,10 @@ public class TestInGame2 extends Application {
     private Scene scene;
     private StackPane scalableLayer;
 
-    Rectangle2D bounds = Screen.getPrimary().getVisualBounds();
+    private final double BASE_WIDTH = 1600;
+    private final double BASE_HEIGHT = 900;
 
-    private final double BASE_WIDTH = bounds.getWidth();
-    private final double BASE_HEIGHT = bounds.getHeight();
+    private boolean scaleLocked = false;
 
     @Override
     public void start(Stage stage) {
@@ -53,6 +57,7 @@ public class TestInGame2 extends Application {
 
         // เปลี่ยน scene ตาม game state
         GameLogic.gameStateProperty().addListener((obs, oldState, newState) -> {
+
             switch (newState) {
                 case INTRO -> gameRoot.getChildren().setAll(new MainMenuScene());
                 case SELECTCHAR -> gameRoot.getChildren().setAll(new CookieSelectionScene());
@@ -66,6 +71,7 @@ public class TestInGame2 extends Application {
         GameLogic.setGameState(GameState.GAMEOVER);
 
         stage.show();
+        playMusic();
 
         // scale ครั้งแรก
         updateScale(scalableLayer);
@@ -89,7 +95,10 @@ public class TestInGame2 extends Application {
 
     public void callUpdateScale(){
         updateScale(scalableLayer);
+        System.out.println("utjyhrgbfvsuikgjyhfntb,kumjyhfngbdvkhi,lujmghnfbvjkh,mng vbgv");
+    }
+
+    private void playMusic() {
+        JooxBox.getInstance().play("HeatWave", true, 100);
     }
 }
-
-
