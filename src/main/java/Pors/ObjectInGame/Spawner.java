@@ -23,6 +23,8 @@ public class Spawner {
 
     private long lastUpdateTime = 0;
 
+    //private AnimationTimer timer;
+
     private List<List<SpawnAction>> spawnSets = List.of(
 
             List.of(
@@ -82,6 +84,7 @@ public class Spawner {
             )
     );
 
+    //private int currentSetIndex = spawnSets.size() - 1;
     private int currentSetIndex = 0;
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
@@ -93,8 +96,18 @@ public class Spawner {
         this.cookie = cookie;
     }
 
-    public void start() {
-        AnimationTimer timer = new AnimationTimer() {
+    public void update(long now, double deltaTime) {
+        spawnBySet(now);
+        updateObstacles(deltaTime);
+        updateItem(deltaTime);
+        updateJelly(deltaTime);
+        checkCollision(cookie);
+    }
+
+    /*public void start() {
+        if (timer != null) return;
+
+        timer = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (lastUpdateTime == 0) {
@@ -113,7 +126,7 @@ public class Spawner {
             }
         };
         timer.start();
-    }
+    }*/
 
     private void spawnBySet(long now) {
 
@@ -264,4 +277,14 @@ public class Spawner {
             }
         }
     }
+
+    /*public void stop() {
+        if (timer != null) {
+            timer.stop();
+            timer = null;
+        }
+
+        lastUpdateTime = 0;
+        lastSpawnTime = 0;
+    }*/
 }

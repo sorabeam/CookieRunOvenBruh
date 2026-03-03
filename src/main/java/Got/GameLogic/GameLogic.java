@@ -1,5 +1,6 @@
 package Got.GameLogic;
 
+import Beam.Scene.*;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -48,6 +49,8 @@ public class GameLogic {
     }
 
     // ===== GAME STATE =====
+    private static InGameScene currentGameScene;
+
     private static final ObjectProperty<GameState> gameState =
             new SimpleObjectProperty<>(null);
 
@@ -56,7 +59,17 @@ public class GameLogic {
     }
 
     public static void setGameState(GameState state) {
+        if (gameState.get() == state) return;
+        if (currentGameScene != null) {
+            currentGameScene.stopGame();
+            currentGameScene = null;
+        }
+
         gameState.set(state);
+    }
+
+    public static void setCurrentGameScene(InGameScene scene) {
+        currentGameScene = scene;
     }
 
     public static ObjectProperty<GameState> gameStateProperty() {
