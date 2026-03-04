@@ -17,6 +17,8 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -51,6 +53,10 @@ public class InGameScene extends BaseRoot{
     public InGameScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
+        DropShadow shadow = new DropShadow();
+        shadow.setBlurType(BlurType.GAUSSIAN);
+        shadow.setColor(Color.LIME);
+        shadow.setRadius(20);
 
         root.getChildren().add(new InGameBG(root));
 
@@ -127,6 +133,7 @@ public class InGameScene extends BaseRoot{
 
             long last = 0;
             double petCooldownTimer = pet.getCooldowntime()/1000.0;
+            double tarPetPosY = 0;
 
             @Override
             public void handle(long now) {
@@ -153,7 +160,13 @@ public class InGameScene extends BaseRoot{
 
                 if(pet.isUsingSkill()) {
                     double tarPetPosX = Math.max(player.getCookie().getLayoutX()+100, getWidth()-100);
-                    double tarPetPosY = player.getCookie().getLayoutY();
+
+                    if(tarPetPosY == 0){
+                        tarPetPosY = Math.max(400,player.getCookie().getLayoutY());
+                        pet.getView().setEffect(shadow);
+                    }
+
+                    System.out.println(player.getCookie().getLayoutY());
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                     if(pet.hasArrived()) {
                         pet.updateIndex();
@@ -165,12 +178,15 @@ public class InGameScene extends BaseRoot{
                         spawnItem.setTranslateY(petY);
                         spawnItem.setSpeed(-350, 0);
                         pet.setUsingSkill(false);
+                        tarPetPosY = 0;
+                        pet.getView().setEffect(null);
                     }
                 } else {
                     double tarPetPosX = player.getCookie().getLayoutX()-30;
                     double tarPetPosY = player.getCookie().getLayoutY()+30;
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                 }
+
                 pet.update(dt);
 
                 spawner.update(now, dt);
