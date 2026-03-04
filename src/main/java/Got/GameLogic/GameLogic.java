@@ -16,7 +16,7 @@ public class GameLogic {
     private static double multiplier = 1;
     private static TestInGame2 app;
     private static int cookieCountMod = 0;
-    private static int Map;
+    private static int Map = 1;
 
     public static int getScore() {
         return score.get();

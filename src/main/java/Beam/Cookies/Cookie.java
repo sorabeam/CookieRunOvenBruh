@@ -3,6 +3,9 @@ package Beam.Cookies;
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
+import Beam.Media.JooxBox;
+import Got.GameLogic.GameLogic;
+import Got.GameLogic.GameState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.ImageView;
@@ -46,6 +49,7 @@ public abstract class Cookie {
     String desc;
 
     public Cookie(int id,String name,int hp, String desc) {
+
         this.id = id;
         this.hp = hp;
         Bid = "B" + id;
@@ -70,8 +74,14 @@ public abstract class Cookie {
     public abstract void useSkill();
 
     public void takeDamage(int damage){
+
         hp -= damage;
         System.out.println("Cookie take " + damage + " damage");
+        JooxBox.getInstance().playSFX("Hit",100);
+
+        if(hp <= 0){
+            die();
+        }
     }
 
     public void setHp(int hp) {
@@ -84,6 +94,7 @@ public abstract class Cookie {
     }
 
     public void die(){
+        GameLogic.setGameState(GameState.GAMEOVER);
     }
 
     protected void playSkill(double duration) {
