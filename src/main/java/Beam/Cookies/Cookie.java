@@ -19,7 +19,7 @@ public abstract class Cookie {
     protected ImageView cookieImg;
     protected String imgURL;
     protected double accumulator;
-    protected double skillcoodown;
+    protected double skillcooldown;
     protected double cdvalues = 10;
 
     protected Pane gameLayer;
@@ -39,6 +39,7 @@ public abstract class Cookie {
     private final double maxFallSpeed = 12;
 
     int id;
+    int maxhp;
     int hp;
     int score = 0;
     double skillTimer=0;
@@ -52,6 +53,7 @@ public abstract class Cookie {
 
         this.id = id;
         this.hp = hp;
+        this.maxhp = hp;
         Bid = "B" + id;
         Sid = "S" + id;
         this.name = name;
@@ -85,11 +87,11 @@ public abstract class Cookie {
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp = Math.min(maxhp,hp);
     }
 
     public void heal(int healunit){
-        hp += healunit;
+        hp = Math.min(maxhp,hp + healunit);;
         System.out.println("Cookie get " + healunit + " heathPoint");
     }
 
@@ -162,7 +164,7 @@ public abstract class Cookie {
         double feet = cookie.getLayoutY() + cookie.getBoundsInParent().getHeight();
 
         // ---------- Ground Check ----------
-        double groundY = gameLayer.getHeight() - 80;
+        double groundY = gameLayer.getHeight() - 150;
 
         if (feet > groundY) {
 
@@ -192,6 +194,7 @@ public abstract class Cookie {
             cookie.changeAnimationState(AnimationType.DOUBLE_JUMP);
         }
 
+        JooxBox.getInstance().playSFX("JUMP",50);
         setHitbox();
         velocity = jumpSpeed;
         jumpCount++;
@@ -204,8 +207,8 @@ public abstract class Cookie {
 
         if ( isPerformingSkill() || !onGround || cookie.getAnimationState().equals(AnimationType.SLIDE)) { return; }
 
+        JooxBox.getInstance().playSFX("SLIDE",50);
         cookie.changeAnimationState(AnimationType.SLIDE);
-
     }
 
     public void upFromSlide() {

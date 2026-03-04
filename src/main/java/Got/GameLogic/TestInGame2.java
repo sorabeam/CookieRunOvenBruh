@@ -55,6 +55,8 @@ public class TestInGame2 extends Application {
             updateScale(scalableLayer);
         });
 
+        GameLogic.setGameroot(gameRoot);
+
         // เปลี่ยน scene ตาม game state
         GameLogic.gameStateProperty().addListener((obs, oldState, newState) -> {
 
@@ -66,7 +68,7 @@ public class TestInGame2 extends Application {
 
                 case SELECTCHAR -> {
                     gameRoot.getChildren().setAll(new CookieSelectionScene());
-                    playMusic("Lobby",50);
+                    playMusic("Cookies",50);
                 }
 
                 case INGAME -> {
@@ -80,7 +82,7 @@ public class TestInGame2 extends Application {
                 }
                 case SELECTPET -> {
                     gameRoot.getChildren().setAll(new PetsSelectionScene());
-                    playMusic("Lobby",50);
+                    playMusic("Pets",50);
                 }
 
                 case GAMEOVER -> {
@@ -117,4 +119,5 @@ public class TestInGame2 extends Application {
     private void playMusic(String key,int v) {
         JooxBox.getInstance().playBGM(key, true, 40);
     }
+
 }

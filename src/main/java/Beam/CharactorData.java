@@ -1,9 +1,6 @@
 package Beam;
 
-import Beam.Cookies.BobaCookie;
-import Beam.Cookies.Cookie;
-import Beam.Cookies.CrossiantCookie;
-import Beam.Cookies.SampleCookie;
+import Beam.Cookies.*;
 import Beam.Pets.Moji;
 import Beam.Pets.Pet;
 import Beam.Pets.SamplePet;
@@ -18,8 +15,7 @@ public class CharactorData {
 
     public static final Cookie CROSSIANT_COOKIE = new CrossiantCookie();
 
-    public static final Cookie TOMYUM_COOKIE =
-            new SampleCookie(2, "TOMYUMCOOKIE", 500, "Nihhen");
+    public static final Cookie TOMYUM_COOKIE =new TomYumCookie();
 
     public static final Cookie LOCKING_COOKIE =
             new SampleCookie(4, "Holly Berry", 500, "MeowMeow");

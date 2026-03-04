@@ -23,7 +23,7 @@ public class CookieSelectionScene extends BaseRoot{
 
     ImageView SkillVideo;
     OutlineText name,Description,Record;
-    private String txt = CharactorData.getCurrent_Cookie().get_Desc();
+    private String txt;
 
     Animate cookie;
 
@@ -32,7 +32,7 @@ public class CookieSelectionScene extends BaseRoot{
     CDBtn B3 = Asset.createGridButton(CharactorData.CROSSIANT_COOKIE,220,0);
 
     //LOCK WAI
-    BaseButton B4 = Asset.createGridButton(CharactorData.LOCKING_COOKIE,220,0);
+    BaseButton B4 = new BaseButton(Asset.createImageView("B4",220,0));
 
     CDBtn selectButton = B1;
     GridPane characterBoard = new GridDisplay(B1,B2,B3,B4);
@@ -41,7 +41,7 @@ public class CookieSelectionScene extends BaseRoot{
     public  CookieSelectionScene(){
         super();
         HBox Setting = new SettingZone(root,spacer('H'));
-
+        String txt = CharactorData.getCurrent_Cookie().get_Desc();
         initCDBtn();
 
         HBox MainHBox = new HBox(cd,new DataDisplay(txt,this),characterBoard);
@@ -97,7 +97,13 @@ public class CookieSelectionScene extends BaseRoot{
 
     private void enableSwap(CDBtn button) {
 
+        var oldAction = button.getOnAction();
+
         button.setOnAction(e -> {
+
+            if (oldAction != null) {
+                oldAction.handle(e);
+            }
 
             SkillVideo.setImage(button.getImg());
             name.setText(button.getN());
@@ -107,16 +113,23 @@ public class CookieSelectionScene extends BaseRoot{
 
             Animate newCookie = button.getCookie().createCookie();
 
-            System.out.println(button.getN());
-            cd.getChildren().remove(cookie);
-            cookie = newCookie;
-            cookie.changeAnimationState(AnimationType.IDLE);
-            cd.getChildren().add(cookie);
-            StackPane.setAlignment(cookie,BOTTOM_CENTER);
+            if (newCookie != null) {
 
-            CharactorData.setCurrent_Cookie(button.getCookie());
+                if (cookie != null) {
+                    cd.getChildren().remove(cookie);
+                }
 
+                cookie = newCookie;
+                cookie.changeAnimationState(AnimationType.IDLE);
+
+                cd.getChildren().add(cookie);
+                StackPane.setAlignment(cookie, BOTTOM_CENTER);
+
+                CharactorData.setCurrent_Cookie(button.getCookie());
+            }System.out.println("Current_Cookie change to " + CharactorData.getCurrent_Cookie().get_Name());
         });
+
+
     }
 
     public void setSkillVideo(ImageView skillVideo) {

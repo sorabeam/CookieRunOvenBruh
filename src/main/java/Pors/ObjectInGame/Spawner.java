@@ -1,6 +1,7 @@
 package Pors.ObjectInGame;
 
 import Beam.Cookies.Cookie;
+import Beam.Pets.Pet;
 import Beam.Cookies.CrossiantCookie;
 import Pors.ObjectInGame.Items.*;
 import Pors.ObjectInGame.Jelly.BaseJelly;
@@ -20,6 +21,7 @@ public class Spawner {
     private double sceneHeight;
     private Cookie cookie;
     private double speed = -350;
+    private Pet pet;
 
     private long lastUpdateTime = 0;
 
@@ -89,11 +91,12 @@ public class Spawner {
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
 
-    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie) {
+    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie, Pet pet) {
         this.gameLayer = gameLayer;
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         this.cookie = cookie;
+        this.pet = pet;
     }
 
     public void update(long now, double deltaTime) {
@@ -153,6 +156,7 @@ public class Spawner {
             );
             obs.setTranslateX(sceneWidth + 50);
             obs.setTranslateY(action.height);
+
             gameLayer.getChildren().add(obs);
 
         } else if (action.type == SpawnAction.Type.ITEM){
@@ -247,6 +251,34 @@ public class Spawner {
         view.setTranslateY(-50);
 
         gameLayer.getChildren().add(view);
+    }
+
+    public void spawnIngredientRain(){
+
+        String[] ingredients = {
+                "ShrimpJelly",
+                "GalangalJelly",
+                "LemongrassJelly",
+                "KaffirLeafJelly"
+        };
+
+        for(int i=0;i<20;i++){
+
+            String type = ingredients[(int)(Math.random()*ingredients.length)];
+
+            JellyView jelly = new JellyView(
+                    new BaseJelly(type,250),
+                    speed,
+                    0
+            );
+
+            jelly.setFalling(true);
+
+            jelly.setTranslateX(sceneWidth + Math.random()*300);
+            jelly.setTranslateY(0 - Math.random()*200);
+
+            gameLayer.getChildren().add(jelly);
+        }
     }
 
     private void checkCollision(Cookie cookie) {

@@ -4,9 +4,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Objects;
 
 public class JooxBox {
 
@@ -29,8 +27,12 @@ public class JooxBox {
         playlist.put("HeatWave", "/SOUND/HeatWaves.mp3");
         playlist.put("Hit", "/SOUND/Hit.mp3");
         playlist.put("JUMP", "/SOUND/JUMP.mp3");
-        playlist.put("Lobby", "/SOUND/Lobby.mp3");
+        playlist.put("Cookies", "/SOUND/Cookies.mp3");
         playlist.put("SLIDE", "/SOUND/SLIDE.mp3");
+        playlist.put("Click", "/SOUND/CLICK.mp3");
+        playlist.put("Lobby", "/SOUND/Lobby.mp3");
+        playlist.put("Pets", "/SOUND/PETS.mp3");
+
         playlist.put("SoundMAP1", "/SOUND/SOUNDMAP1.mp3");
         playlist.put("SoundMAP2", "/SOUND/SOUNDMAP2.mp3");
         playlist.put("SoundMAP3", "/SOUND/SOUNDMAP3.mp3");
@@ -39,6 +41,7 @@ public class JooxBox {
         preloadSFX("Hit");
         preloadSFX("JUMP");
         preloadSFX("SLIDE");
+        preloadSFX("Click");
     }
 
     private void preloadSFX(String key) {

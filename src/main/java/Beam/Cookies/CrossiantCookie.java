@@ -18,6 +18,7 @@ public class CrossiantCookie extends Cookie {
     public CrossiantCookie() {
         super(3, "CroissantCookie", 140, "");
         setImgURL("Croissant_Cookie_sheet");
+        setScore(256200);
     }
 
     @Override

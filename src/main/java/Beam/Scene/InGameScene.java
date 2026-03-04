@@ -4,6 +4,9 @@ import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
+import Beam.Cookies.TomYumCookie;
+import Beam.Pets.Pet;
+import Beam.Pets.Salad;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
@@ -15,6 +18,10 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -34,23 +41,30 @@ public class InGameScene extends BaseRoot{
     StackPane uiLayer = new StackPane(); // สำหรับ UI
 
     private boolean shiftHeld = false;
+    double groundSpeed = -350;
 
     SettingZone settingZone = new SettingZone(this,spacer('H'));
     HpDisplayZone hpzone = new HpDisplayZone();
     ShowScore sc = new ShowScore();
     LastRecord lastRecord = new LastRecord();
 
-    private final double groundH = 80;
+    private final double groundH = 150;
     public static double groundY;
 
     private AnimationTimer timer;
     private Spawner spawner;
+    private boolean isUpadate = true;
+    private InGameBG bg = new InGameBG(root);
 
     public InGameScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
+        DropShadow shadow = new DropShadow();
+        shadow.setBlurType(BlurType.GAUSSIAN);
+        shadow.setColor(Color.LIME);
+        shadow.setRadius(20);
 
-        root.getChildren().add(new InGameBG(root));
+        root.getChildren().add(bg);
 
         uiLayer.getChildren().addAll(
                 new ExpBar(root),
@@ -71,23 +85,49 @@ public class InGameScene extends BaseRoot{
 
 //       Cookie player = new BobaCookie();
         Cookie player = CharactorData.getCurrent_Cookie();
+//        Pet pet = CharactorData.getCurrent_Pet();
+        Pet pet = new Salad();
 
         spawner =
                 new Spawner(
                         gameLayer,
                         scene.getWidth(),
                         scene.getHeight(),
-                        player
+                        player,
+                        pet
                 );
 
+
         //ground
-        Rectangle ground = new Rectangle();
-        ground.setHeight(groundH);
-        ground.setLayoutX(0);
-        ground.widthProperty().bind(root.widthProperty());
-        ground.layoutYProperty().bind(root.heightProperty().subtract(groundH));
-        ground.setFill(Color.LIGHTGRAY);
-        gameLayer.getChildren().add(ground);
+        Image groundImg = new Image("/Image/BackGround/GroundLevel1.png");
+
+        ImageView ground1 = new ImageView(groundImg);
+        ImageView ground2 = new ImageView(groundImg);
+
+        ground1.setFitHeight(groundH);
+        ground2.setFitHeight(groundH);
+
+        ground1.setFitWidth(scene.getWidth());
+        ground2.setFitWidth(scene.getWidth());
+
+        ground1.setPreserveRatio(false);
+        ground2.setPreserveRatio(false);
+
+        ground1.setScaleY(1.5);
+        ground2.setScaleY(1.5);
+
+        // wait until layout pass to get real width
+        Platform.runLater(() -> {
+            double groundWidth = scene.getWidth();
+
+            ground1.setTranslateX(0);
+            ground2.setTranslateX(groundWidth);
+        });
+
+        ground1.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(60));
+        ground2.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(60));
+
+        gameLayer.getChildren().addAll(ground1, ground2);
 
         //Dummy obstacle
         Rectangle obstacle = new Rectangle(80, 120);
@@ -106,6 +146,11 @@ public class InGameScene extends BaseRoot{
         gameLayer.getChildren().add(player.getCookie());
         gameLayer.getChildren().add(player.getHitbox());
 
+//        pet.getView().setLayoutX(150);
+        pet.getView().setFitWidth(50);
+        pet.getView().setFitHeight(50);
+        gameLayer.getChildren().add(pet.getView());
+
         player.getCookie().setFitWidth(200);
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
@@ -116,9 +161,16 @@ public class InGameScene extends BaseRoot{
         timer = new AnimationTimer() {
 
             long last = 0;
+            double petCooldownTimer = pet.getCooldowntime()/1000.0;
+            double tarPetPosY = 0;
 
             @Override
             public void handle(long now) {
+
+                if (!isUpadate) {
+                    last = 0;
+                    return;
+                }
 
                 if (last == 0) {
                     last = now;
@@ -130,8 +182,59 @@ public class InGameScene extends BaseRoot{
 
                 groundY = gameLayer.getHeight() - groundH;
 
+                double groundWidth = scene.getWidth();
+
+                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
+                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);
+
+                if (ground1.getTranslateX() <= -groundWidth) {
+                    ground1.setTranslateX(ground2.getTranslateX() + groundWidth);
+                }
+
+                if (ground2.getTranslateX() <= -groundWidth) {
+                    ground2.setTranslateX(ground1.getTranslateX() + groundWidth);
+                }
+
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
+//                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
+
+                petCooldownTimer -= dt;
+                if(petCooldownTimer<=0) {
+                    pet.useSkill();
+                    petCooldownTimer = pet.getCooldowntime()/1000.0;
+                }
+
+                if(pet.isUsingSkill()) {
+                    double tarPetPosX = Math.max(player.getCookie().getLayoutX()+100, getWidth()-100);
+
+                    if(tarPetPosY == 0){
+                        tarPetPosY = Math.max(400,player.getCookie().getLayoutY());
+                        pet.getView().setEffect(shadow);
+                    }
+
+                    System.out.println(player.getCookie().getLayoutY());
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                    if(pet.hasArrived()) {
+                        pet.updateIndex();
+                        ItemView spawnItem = pet.getCurrentSpawnItem();
+                        gameLayer.getChildren().add(spawnItem);
+                        double petX = pet.getView().getLayoutX() + pet.getView().getTranslateX();
+                        double petY = pet.getView().getLayoutY() + pet.getView().getTranslateY();
+                        spawnItem.setTranslateX(petX);
+                        spawnItem.setTranslateY(petY);
+                        spawnItem.setSpeed(-350, 0);
+                        pet.setUsingSkill(false);
+                        tarPetPosY = 0;
+                        pet.getView().setEffect(null);
+                    }
+                } else {
+                    double tarPetPosX = player.getCookie().getLayoutX()-30;
+                    double tarPetPosY = player.getCookie().getLayoutY()+30;
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                }
+
+                pet.update(dt);
 
                 spawner.update(now, dt);
 
@@ -204,6 +307,18 @@ public class InGameScene extends BaseRoot{
                     }
                 }
 
+                if(player instanceof TomYumCookie tomyum){
+
+                    tomyum.updateSkill(dt);
+
+                    if(tomyum.isRainReady()){
+
+                        spawner.spawnIngredientRain();
+
+                        tomyum.consumeRain();
+                    }
+                }
+
                 // 3️⃣ ลบทีเดียวหลัง loop
                 gameLayer.getChildren().removeAll(toRemove);
             }
@@ -221,6 +336,9 @@ public class InGameScene extends BaseRoot{
                 case Q -> {
                     player.useSkill();
                 }
+//                case T -> {
+//                    pet.useSkill();
+//                }
             }
         });
 
@@ -240,7 +358,18 @@ public class InGameScene extends BaseRoot{
     public void stopGame() {
         if (timer != null) {
             timer.stop();
+            bg.stop();
         }
+    }
+
+    public void stopGameByBool() {
+        isUpadate = false;
+        bg.stop();
+    }
+
+    public void resumeGameByBool() {
+        isUpadate = true;
+        bg.start();
     }
 }
 
