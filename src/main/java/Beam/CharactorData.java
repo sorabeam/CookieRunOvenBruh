@@ -26,7 +26,7 @@ public class CharactorData {
 
     public static final Pet Chilly = new Chilly();
 
-    public static final Pet SALAD = new Salad();
+    //public static final Pet SALAD = new Salad();
 
     public static final Pet LOCKING =
             new SamplePet(4, "Lock","","UnSelect_Lock");

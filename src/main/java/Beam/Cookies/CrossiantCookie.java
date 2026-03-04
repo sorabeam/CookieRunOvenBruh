@@ -17,7 +17,7 @@ public class CrossiantCookie extends Cookie {
     private OutlineText counterText;
 
     public CrossiantCookie() {
-        super(3, "CroissantCookie", 140,
+        super(3, "Croissant", 140,
                 "Every 30 Jellies collected," + "\n" +
                         "a Croissant Jelly falls from the sky." + "\n" +
                         "Original grants bonus points," + "\n" +

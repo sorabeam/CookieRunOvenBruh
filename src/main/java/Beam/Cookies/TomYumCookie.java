@@ -9,7 +9,7 @@ public class TomYumCookie extends Cookie {
     private boolean rainReady = false;
 
     public TomYumCookie() {
-        super(2, "TomYumCookie", 170,
+        super(2, "TomYum", 170,
                 "Every 20 seconds, Tom Yum Cookie" + "\n" +
                         "summons Ingredient Rain." + "\n" +
                         "Shrimp, Galangal, Lemongrass," + "\n" +
