@@ -17,7 +17,12 @@ public class ObstacleView extends ImageView {
         this.vy = vy;
 
         setImage(new Image("/Image/Obstacle/" + obstacle.getName() + ".png"));
-        if(Objects.equals(obstacle.getName(), "Obs_1_2"))
+        if(Objects.equals(obstacle.getName(), "Obs_1_1"))
+        {
+            setFitWidth(150);
+            setPreserveRatio(true);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_1_2"))
         {
             //setFitWidth(200);
             //setFitHeight(400);
@@ -31,8 +36,8 @@ public class ObstacleView extends ImageView {
         }
         else
         {
-            setFitWidth(90);
-            setFitHeight(90);
+            setFitWidth(60);
+            setPreserveRatio(true);
         }
     }
 

@@ -153,6 +153,7 @@ public class Spawner {
             );
             obs.setTranslateX(sceneWidth + 50);
             obs.setTranslateY(action.height);
+
             gameLayer.getChildren().add(obs);
 
         } else if (action.type == SpawnAction.Type.ITEM){
@@ -247,6 +248,34 @@ public class Spawner {
         view.setTranslateY(-50);
 
         gameLayer.getChildren().add(view);
+    }
+
+    public void spawnIngredientRain(){
+
+        String[] ingredients = {
+                "ShrimpJelly",
+                "GalangalJelly",
+                "LemongrassJelly",
+                "KaffirLeafJelly"
+        };
+
+        for(int i=0;i<20;i++){
+
+            String type = ingredients[(int)(Math.random()*ingredients.length)];
+
+            JellyView jelly = new JellyView(
+                    new BaseJelly(type,250),
+                    speed,
+                    0
+            );
+
+            jelly.setFalling(true);
+
+            jelly.setTranslateX(sceneWidth + Math.random()*300);
+            jelly.setTranslateY(0 - Math.random()*200);
+
+            gameLayer.getChildren().add(jelly);
+        }
     }
 
     private void checkCollision(Cookie cookie) {

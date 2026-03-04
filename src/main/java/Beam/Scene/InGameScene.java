@@ -4,6 +4,7 @@ import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
+import Beam.Cookies.TomYumCookie;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
@@ -15,6 +16,8 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -34,13 +37,14 @@ public class InGameScene extends BaseRoot{
     StackPane uiLayer = new StackPane(); // สำหรับ UI
 
     private boolean shiftHeld = false;
+    double groundSpeed = -350;
 
     SettingZone settingZone = new SettingZone(this,spacer('H'));
     HpDisplayZone hpzone = new HpDisplayZone();
     ShowScore sc = new ShowScore();
     LastRecord lastRecord = new LastRecord();
 
-    private final double groundH = 80;
+    private final double groundH = 150;
     public static double groundY;
 
     private AnimationTimer timer;
@@ -80,14 +84,37 @@ public class InGameScene extends BaseRoot{
                         player
                 );
 
+
         //ground
-        Rectangle ground = new Rectangle();
-        ground.setHeight(groundH);
-        ground.setLayoutX(0);
-        ground.widthProperty().bind(root.widthProperty());
-        ground.layoutYProperty().bind(root.heightProperty().subtract(groundH));
-        ground.setFill(Color.LIGHTGRAY);
-        gameLayer.getChildren().add(ground);
+        Image groundImg = new Image("/Image/BackGround/GroundLevel1.png");
+
+        ImageView ground1 = new ImageView(groundImg);
+        ImageView ground2 = new ImageView(groundImg);
+
+        ground1.setFitHeight(groundH);
+        ground2.setFitHeight(groundH);
+
+        ground1.setFitWidth(scene.getWidth());
+        ground2.setFitWidth(scene.getWidth());
+
+        ground1.setPreserveRatio(false);
+        ground2.setPreserveRatio(false);
+
+        ground1.setScaleY(1.5);
+        ground2.setScaleY(1.5);
+
+        // wait until layout pass to get real width
+        Platform.runLater(() -> {
+            double groundWidth = scene.getWidth();
+
+            ground1.setTranslateX(0);
+            ground2.setTranslateX(groundWidth);
+        });
+
+        ground1.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(60));
+        ground2.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(60));
+
+        gameLayer.getChildren().addAll(ground1, ground2);
 
         //Dummy obstacle
         Rectangle obstacle = new Rectangle(80, 120);
@@ -129,6 +156,19 @@ public class InGameScene extends BaseRoot{
                 last = now;
 
                 groundY = gameLayer.getHeight() - groundH;
+
+                double groundWidth = scene.getWidth();
+
+                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
+                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);
+
+                if (ground1.getTranslateX() <= -groundWidth) {
+                    ground1.setTranslateX(ground2.getTranslateX() + groundWidth);
+                }
+
+                if (ground2.getTranslateX() <= -groundWidth) {
+                    ground2.setTranslateX(ground1.getTranslateX() + groundWidth);
+                }
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
@@ -201,6 +241,18 @@ public class InGameScene extends BaseRoot{
                                 croissant.vy = 0;
                             }
                         }
+                    }
+                }
+
+                if(player instanceof TomYumCookie tomyum){
+
+                    tomyum.updateSkill(dt);
+
+                    if(tomyum.isRainReady()){
+
+                        spawner.spawnIngredientRain();
+
+                        tomyum.consumeRain();
                     }
                 }
 

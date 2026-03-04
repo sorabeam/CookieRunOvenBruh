@@ -17,7 +17,7 @@ public class BobaCookie extends Cookie{
                       "and earning bonus points.?");
 
         setImgURL("Boba_Milk_Tea_Cookie");
-        skillcoodown = 10;
+        skillcooldown = 10;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class BobaCookie extends Cookie{
 
             if (cdvalues <= 0) {
                 useSkill();
-                cdvalues = skillcoodown;
+                cdvalues = skillcooldown;
                 System.out.println(cdvalues);
             }
         }

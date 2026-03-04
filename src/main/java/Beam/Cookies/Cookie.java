@@ -16,7 +16,7 @@ public abstract class Cookie {
     protected ImageView cookieImg;
     protected String imgURL;
     protected double accumulator;
-    protected double skillcoodown;
+    protected double skillcooldown;
     protected double cdvalues = 10;
 
     protected Pane gameLayer;
@@ -151,7 +151,7 @@ public abstract class Cookie {
         double feet = cookie.getLayoutY() + cookie.getBoundsInParent().getHeight();
 
         // ---------- Ground Check ----------
-        double groundY = gameLayer.getHeight() - 80;
+        double groundY = gameLayer.getHeight() - 150;
 
         if (feet > groundY) {
 
