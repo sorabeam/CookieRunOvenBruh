@@ -1,5 +1,6 @@
 package Beam.Media;
 
+import Got.GameLogic.GameLogic;
 import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -55,7 +56,7 @@ public class JooxBox {
         sfxCache.put(key, new AudioClip(url.toExternalForm()));
     }
 
-    public void playBGM(String key, boolean loop, float volume) {
+    public void playBGM(String key, boolean loop) {
 
         if (bgmPlayer != null) {
             bgmPlayer.stop();
@@ -74,11 +75,11 @@ public class JooxBox {
         if (loop)
             bgmPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 
-        bgmPlayer.setVolume(volume / 100.0);
+        bgmPlayer.setVolume(GameLogic.getMusicVolume() / 100.0);
         bgmPlayer.play();
     }
 
-    public void playSFX(String key, float volume) {
+    public void playSFX(String key) {
 
         AudioClip clip = sfxCache.get(key);
         if (clip == null) {
@@ -86,7 +87,19 @@ public class JooxBox {
             return;
         }
 
-        clip.setVolume(volume / 100.0);
+        clip.setVolume(GameLogic.getSFXVolume() / 100.0);
         clip.play();
+    }
+
+    public void updateBGMVolume() {
+        if (bgmPlayer != null) {
+            bgmPlayer.setVolume(GameLogic.getMusicVolume() / 100.0);
+        }
+    }
+
+    public void updateSFXVolume() {
+        for (AudioClip clip : sfxCache.values()) {
+            clip.setVolume(GameLogic.getSFXVolume() / 100.0);
+        }
     }
 }
