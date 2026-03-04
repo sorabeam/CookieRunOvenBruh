@@ -1,6 +1,7 @@
 package Pors.ObjectInGame;
 
 import Beam.Cookies.Cookie;
+import Beam.Pets.Pet;
 import Beam.Cookies.CrossiantCookie;
 import Pors.ObjectInGame.Items.*;
 import Pors.ObjectInGame.Jelly.BaseJelly;
@@ -20,6 +21,7 @@ public class Spawner {
     private double sceneHeight;
     private Cookie cookie;
     private double speed = -350;
+    private Pet pet;
 
     private long lastUpdateTime = 0;
 
@@ -89,11 +91,12 @@ public class Spawner {
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
 
-    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie) {
+    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie, Pet pet) {
         this.gameLayer = gameLayer;
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         this.cookie = cookie;
+        this.pet = pet;
     }
 
     public void update(long now, double deltaTime) {

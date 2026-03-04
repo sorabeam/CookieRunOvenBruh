@@ -5,6 +5,8 @@ import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
 import Beam.Cookies.TomYumCookie;
+import Beam.Pets.Pet;
+import Beam.Pets.Salad;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
@@ -16,6 +18,8 @@ import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -53,6 +57,10 @@ public class InGameScene extends BaseRoot{
     public InGameScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
+        DropShadow shadow = new DropShadow();
+        shadow.setBlurType(BlurType.GAUSSIAN);
+        shadow.setColor(Color.LIME);
+        shadow.setRadius(20);
 
         root.getChildren().add(new InGameBG(root));
 
@@ -75,13 +83,16 @@ public class InGameScene extends BaseRoot{
 
 //       Cookie player = new BobaCookie();
         Cookie player = CharactorData.getCurrent_Cookie();
+//        Pet pet = CharactorData.getCurrent_Pet();
+        Pet pet = new Salad();
 
         spawner =
                 new Spawner(
                         gameLayer,
                         scene.getWidth(),
                         scene.getHeight(),
-                        player
+                        player,
+                        pet
                 );
 
 
@@ -133,6 +144,11 @@ public class InGameScene extends BaseRoot{
         gameLayer.getChildren().add(player.getCookie());
         gameLayer.getChildren().add(player.getHitbox());
 
+//        pet.getView().setLayoutX(150);
+        pet.getView().setFitWidth(50);
+        pet.getView().setFitHeight(50);
+        gameLayer.getChildren().add(pet.getView());
+
         player.getCookie().setFitWidth(200);
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
@@ -143,6 +159,8 @@ public class InGameScene extends BaseRoot{
         timer = new AnimationTimer() {
 
             long last = 0;
+            double petCooldownTimer = pet.getCooldowntime()/1000.0;
+            double tarPetPosY = 0;
 
             @Override
             public void handle(long now) {
@@ -172,6 +190,44 @@ public class InGameScene extends BaseRoot{
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
+//                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
+
+                petCooldownTimer -= dt;
+                if(petCooldownTimer<=0) {
+                    pet.useSkill();
+                    petCooldownTimer = pet.getCooldowntime()/1000.0;
+                }
+
+                if(pet.isUsingSkill()) {
+                    double tarPetPosX = Math.max(player.getCookie().getLayoutX()+100, getWidth()-100);
+
+                    if(tarPetPosY == 0){
+                        tarPetPosY = Math.max(400,player.getCookie().getLayoutY());
+                        pet.getView().setEffect(shadow);
+                    }
+
+                    System.out.println(player.getCookie().getLayoutY());
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                    if(pet.hasArrived()) {
+                        pet.updateIndex();
+                        ItemView spawnItem = pet.getCurrentSpawnItem();
+                        gameLayer.getChildren().add(spawnItem);
+                        double petX = pet.getView().getLayoutX() + pet.getView().getTranslateX();
+                        double petY = pet.getView().getLayoutY() + pet.getView().getTranslateY();
+                        spawnItem.setTranslateX(petX);
+                        spawnItem.setTranslateY(petY);
+                        spawnItem.setSpeed(-350, 0);
+                        pet.setUsingSkill(false);
+                        tarPetPosY = 0;
+                        pet.getView().setEffect(null);
+                    }
+                } else {
+                    double tarPetPosX = player.getCookie().getLayoutX()-30;
+                    double tarPetPosY = player.getCookie().getLayoutY()+30;
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                }
+
+                pet.update(dt);
 
                 spawner.update(now, dt);
 
@@ -273,6 +329,9 @@ public class InGameScene extends BaseRoot{
                 case Q -> {
                     player.useSkill();
                 }
+//                case T -> {
+//                    pet.useSkill();
+//                }
             }
         });
 
