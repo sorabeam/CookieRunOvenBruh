@@ -52,7 +52,7 @@ public class InGameScene extends BaseRoot{
         root.getChildren().add(new InGameBG(root));
 
         uiLayer.getChildren().addAll(
-                //new ExpBar(root),
+                new ExpBar(root),
                 settingZone,
                 lastRecord,
                 hpzone,
