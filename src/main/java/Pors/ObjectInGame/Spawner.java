@@ -231,6 +231,7 @@ public class Spawner {
             javafx.scene.Node node = it.next();
 
             if (node instanceof JellyView i) {
+
                 i.update(deltaTime);
 
                 if (i.getTranslateX() < -100 ||
@@ -334,6 +335,10 @@ public class Spawner {
 
     public static void resetSpeed() {
         Spawner.speed = defaultSpeed;
+    }
+
+    public static double getDefaultSpeed() {
+        return defaultSpeed;
     }
 
     /*public void stop() {

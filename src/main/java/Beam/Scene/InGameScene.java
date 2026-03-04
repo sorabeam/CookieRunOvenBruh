@@ -43,7 +43,7 @@ public class InGameScene extends BaseRoot{
 
     private boolean shiftHeld = false;
 //    double groundSpeedDefault = Spawner.getSpeed();
-    double groundSpeed = Spawner.getSpeed();
+//    double groundSpeed = Spawner.getSpeed();
 
     SettingZone settingZone = new SettingZone(this,spacer('H'));
     HpDisplayZone hpzone = new HpDisplayZone();
@@ -179,6 +179,7 @@ public class InGameScene extends BaseRoot{
                 groundY = gameLayer.getHeight() - groundH;
 
                 double groundWidth = scene.getWidth();
+                double groundSpeed = Spawner.getSpeed();
 
                 ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
                 ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);

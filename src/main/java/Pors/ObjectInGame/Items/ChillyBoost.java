@@ -4,9 +4,9 @@ import Beam.Cookies.Cookie;
 import Pors.ObjectInGame.Spawner;
 
 public class ChillyBoost extends BaseItem {
-    private double speedMul = 3;
-//    private int boostTime = 3000;
-private int boostTime = 50000;
+    private double speedMul = 2;
+    private int boostTime = 3000;
+//    private int boostTime = 50000;
 
     public ChillyBoost() {
         super("ChillyBoost");
@@ -15,7 +15,7 @@ private int boostTime = 50000;
 
     public void interact(Cookie player) {
         Thread speedBoostThread = new Thread(() -> {
-            Spawner.setSpeed(Spawner.getSpeed()*speedMul);
+            Spawner.setSpeed(Spawner.getDefaultSpeed()*speedMul);
             try {
                 Thread.sleep(boostTime);
             } catch (InterruptedException e) {
