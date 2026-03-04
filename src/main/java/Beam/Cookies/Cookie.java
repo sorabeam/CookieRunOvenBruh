@@ -8,6 +8,8 @@ import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -19,15 +21,18 @@ public abstract class Cookie {
     protected Animate cookie;
     protected ImageView cookieImg;
     protected String imgURL;
-    protected double accumulator;
-    protected double skillcooldown;
-    protected double cdvalues = 10;
+
+    protected boolean invincible = false;
+    protected double invincibleTimer = 0;
+    protected double invincibleDuration = 0;
 
     protected Pane gameLayer;
     protected Rectangle hitbox;
 
     private DoubleProperty hitboxRatio = new SimpleDoubleProperty(0.7);
     private final double slideHitboxRatio = 0.3;
+
+    protected Rectangle boostAura;
 
     private double velocity;
     private int jumpCount;
@@ -38,6 +43,8 @@ public abstract class Cookie {
     private final double gravity = 0.4;
     private final double jumpSpeed = -13;
     private final double maxFallSpeed = 12;
+
+    protected double damageTimer = 0;
 
     int id;
     int maxhp;
@@ -86,6 +93,11 @@ public abstract class Cookie {
         System.out.println(hp);
         JooxBox.getInstance().playSFX("Hit");
 
+        cookie.changeAnimationState(AnimationType.TAKE_DAMAGE);
+        damageTimer = 0.5;
+        setInvincible(1);
+
+
         if(hp <= 0){
             die();
         }
@@ -131,7 +143,7 @@ public abstract class Cookie {
         );
 
         // DEBUG MODE (เปิดดู hitbox)
-        hitbox.setStroke(Color.RED);
+        //hitbox.setStroke(Color.RED);
         hitbox.setFill(Color.TRANSPARENT);
 
         // bind ตำแหน่งกับ player
@@ -177,6 +189,10 @@ public abstract class Cookie {
 
         double scale = deltaTime * 60;
 
+        if (damageTimer > 0) {
+            damageTimer -= deltaTime;
+        }
+
         // ---------- Physics ----------
 
         velocity += gravity * scale;
@@ -197,12 +213,27 @@ public abstract class Cookie {
             jumpCount = 0;
             onGround = true;
 
-            if (!usingSkill) {
+            if (!usingSkill && damageTimer <= 0) {
                 if (cookie.getAnimationState().equals(AnimationType.SLIDE)) {
                     cookie.changeAnimationState(AnimationType.SLIDE);
                 } else {
                     cookie.changeAnimationState(AnimationType.RUN);
                 }
+            }
+        }
+
+        if(invincible){
+            invincibleTimer += deltaTime;
+
+            if((int)(invincibleTimer * 10) % 2 == 0){
+                cookie.setOpacity(0.3);
+            } else {
+                cookie.setOpacity(0.7);
+            }
+
+            if(invincibleTimer >= invincibleDuration){
+                invincible = false;
+                cookie.setOpacity(1);
             }
         }
     }
@@ -255,8 +286,22 @@ public abstract class Cookie {
         }
     }
 
+    public void setInvincible(double duration){
+        invincible = true;
+        invincibleDuration = duration;
+        invincibleTimer = 0;
+    }
+
+    public boolean isInvincible(){
+        return invincible;
+    }
+
     private boolean isPerformingSkill() {
         return cookie.getAnimationState().equals(AnimationType.SKILL);
+    }
+
+    public boolean hasCooldownBar(){
+        return true;
     }
 
     protected Pane getParentLayer() {
@@ -278,6 +323,10 @@ public abstract class Cookie {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public double getCooldownProgress(){
+        return 0;
     }
 
     public Animate getCookie() {

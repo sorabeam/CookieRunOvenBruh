@@ -18,7 +18,9 @@ public class CharactorData {
     public static final Cookie LOCKING_COOKIE =
             new SampleCookie(4, "Holly Berry", 500, "MeowMeow");
 
+    public static final Pet SALAD = new Salad();
 
+    public static final Pet CHILLY = new Chilly();
 
     public static final Pet MOJINIGA = new Moji();
 

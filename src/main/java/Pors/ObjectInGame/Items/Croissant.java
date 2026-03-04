@@ -77,11 +77,11 @@ public class Croissant extends BaseItem {
 
             case BUTTER:
                 GameLogic.addScore(1000);
-                //player.addSpeedBoost(3);
+                new ChillyBoost().interact(player);
                 break;
 
             case STRAWBERRY:
-                player.heal(30);
+                player.heal(20);
                 GameLogic.addScore(1000);
                 break;
         }
