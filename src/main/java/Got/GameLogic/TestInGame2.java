@@ -97,12 +97,7 @@ public class TestInGame2 extends Application {
         launch();
     }
 
-    public void callUpdateScale(){
-        updateScale(scalableLayer);
-        System.out.println("utjyhrgbfvsuikgjyhfntb,kumjyhfngbdvkhi,lujmghnfbvjkh,mng vbgv");
-    }
-
     private void playMusic() {
-        JooxBox.getInstance().play("HeatWave", true, 100);
+        JooxBox.getInstance().play("HeatWave", true, 40);
     }
 }
