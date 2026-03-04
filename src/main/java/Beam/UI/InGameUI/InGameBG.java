@@ -3,6 +3,7 @@ package Beam.UI.InGameUI;
 import Beam.Asset;
 import Beam.Image.FloorFade;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -28,6 +29,11 @@ public class InGameBG extends StackPane {
 
         bg2.fitWidthProperty().bind(root.widthProperty());
         bg2.fitHeightProperty().bind(root.heightProperty());
+
+        Platform.runLater(() -> {
+            width = root.getWidth();
+            recalculatePositions();
+        });
 
         bgLayer.getChildren().addAll(bg1, bg2);
 

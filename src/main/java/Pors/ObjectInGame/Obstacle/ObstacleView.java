@@ -3,6 +3,8 @@ package Pors.ObjectInGame.Obstacle;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Objects;
+
 public class ObstacleView extends ImageView {
 
     private BaseObstacle obstacle;
@@ -15,14 +17,24 @@ public class ObstacleView extends ImageView {
         this.vy = vy;
 
         setImage(new Image("/Image/Obstacle/" + obstacle.getName() + ".png"));
-        setFitWidth(75);
-        setFitHeight(90);
+        if(Objects.equals(obstacle.getName(), "Obs_1_2"))
+        {
+            //setFitWidth(200);
+            //setFitHeight(400);
+            setFitWidth(125);
+            setFitHeight(250);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_1_4"))
+        {
+            setFitWidth(200);
+            setFitHeight(625);
+        }
+        else
+        {
+            setFitWidth(90);
+            setFitHeight(90);
+        }
     }
-
-    /*public void update() {
-        setTranslateX(getTranslateX() + vx);
-        setTranslateY(getTranslateY() + vy);
-    }*/
 
     public void update(double deltaTime) {
         setTranslateX(getTranslateX() + vx * deltaTime);

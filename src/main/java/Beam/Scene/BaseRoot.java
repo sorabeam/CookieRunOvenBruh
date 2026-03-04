@@ -18,7 +18,8 @@ public abstract class BaseRoot extends StackPane{
 
     public BaseRoot() {
 
-        scene = GameLogic.getCurScene();
+        //scene = GameLogic.getCurScene();
+        scene = new Scene(this, BASE_WIDTH, BASE_HEIGHT);
 
         setMinSize(BASE_WIDTH, BASE_HEIGHT);
         setPrefSize(BASE_WIDTH, BASE_HEIGHT);
@@ -38,5 +39,9 @@ public abstract class BaseRoot extends StackPane{
             HBox.setHgrow(space, Priority.ALWAYS);
         }
         return space;
+    }
+
+    public Scene getRootScene() {
+        return scene;
     }
 }
