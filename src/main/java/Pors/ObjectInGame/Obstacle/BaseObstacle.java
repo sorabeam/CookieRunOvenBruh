@@ -15,6 +15,9 @@ public class BaseObstacle implements Interactable {
 
     @Override
     public void interact(Cookie player) {
+        if(player.isInvincible()){
+            return;
+        }
         //player.takeDamage(damage);
     }
 

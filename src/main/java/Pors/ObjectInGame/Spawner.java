@@ -190,7 +190,7 @@ public class Spawner {
             if (node instanceof ObstacleView o) {
                 o.update(deltaTime);
 
-                if (o.getTranslateX() < -100 ||
+                if (o.getTranslateX() < -200 ||
                         o.getTranslateY() > sceneHeight + 100) {
                     it.remove();
                 }
@@ -292,7 +292,7 @@ public class Spawner {
             if (node instanceof ObstacleView obs) {
                 if (cookie.getHitbox()
                         .getBoundsInParent()
-                        .intersects(obs.getBoundsInParent())) {
+                        .intersects(obs.getBoundsInParent()) && !cookie.isInvincible()) {
                     cookie.takeDamage(obs.getDamage());
                     it.remove();
                 }

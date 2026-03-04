@@ -7,9 +7,12 @@ import Beam.Asset;
 
 public class BobaCookie extends Cookie{
 
+    protected double cooldownTimer = 0;
+    protected double skillCooldown = 10;
+
     public BobaCookie(){
 
-        super(1, "BobaCookie" , 500,
+        super(1, "BobaCookie" , 150,
                 "Boba Milk Tea Cookie is a laid-back spirit " +"\n"+
                       "and the true queen of the boba world." +"\n"+
                       "Every 10 seconds, she launches the Pearl "+ " \n " +
@@ -17,7 +20,6 @@ public class BobaCookie extends Cookie{
                       "and earning bonus points.?");
 
         setImgURL("Boba_Milk_Tea_Cookie");
-        skillcooldown = 10;
     }
 
     @Override
@@ -29,23 +31,18 @@ public class BobaCookie extends Cookie{
     public void update(double deltaTime) {
         super.update(deltaTime);
 
-        accumulator += deltaTime;
+        cooldownTimer += deltaTime;
 
-        if (accumulator >= 1) {
-
-            accumulator = 0;
-            cdvalues -= 1;
-
-            if (cdvalues <= 0) {
-                useSkill();
-                cdvalues = skillcooldown;
-                System.out.println(cdvalues);
-            }
+        if (cooldownTimer >= skillCooldown) {
+            useSkill();
+            cooldownTimer = 0;
         }
     }
 
     @Override
     public void useSkill() {
+        setInvincible(2.0);
+
         Pearl pearl = new Pearl(
                 cookie.getLayoutX() + cookie.getFitWidth(),
                 cookie.getLayoutY() + cookie.getFitHeight() * 0.6
@@ -55,6 +52,11 @@ public class BobaCookie extends Cookie{
 
         playSkill(0.3);
         cookie.changeAnimationState(AnimationType.SKILL);
+    }
+
+    @Override
+    public double getCooldownProgress(){
+        return Math.min(cooldownTimer / skillCooldown, 1.0);
     }
 
 }
