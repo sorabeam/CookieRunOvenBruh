@@ -4,6 +4,8 @@ import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
+import Beam.Pets.Pet;
+import Beam.Pets.Salad;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
@@ -71,13 +73,16 @@ public class InGameScene extends BaseRoot{
 
 //       Cookie player = new BobaCookie();
         Cookie player = CharactorData.getCurrent_Cookie();
+//        Pet pet = CharactorData.getCurrent_Pet();
+        Pet pet = new Salad();
 
         spawner =
                 new Spawner(
                         gameLayer,
                         scene.getWidth(),
                         scene.getHeight(),
-                        player
+                        player,
+                        pet
                 );
 
         //ground
@@ -87,7 +92,7 @@ public class InGameScene extends BaseRoot{
         ground.widthProperty().bind(root.widthProperty());
         ground.layoutYProperty().bind(root.heightProperty().subtract(groundH));
         ground.setFill(Color.LIGHTGRAY);
-        gameLayer.getChildren().add(ground);
+        gameLayer.getChildren().addAll(ground);
 
         //Dummy obstacle
         Rectangle obstacle = new Rectangle(80, 120);
@@ -106,6 +111,11 @@ public class InGameScene extends BaseRoot{
         gameLayer.getChildren().add(player.getCookie());
         gameLayer.getChildren().add(player.getHitbox());
 
+//        pet.getView().setLayoutX(150);
+        pet.getView().setFitWidth(50);
+        pet.getView().setFitHeight(50);
+        gameLayer.getChildren().add(pet.getView());
+
         player.getCookie().setFitWidth(200);
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
@@ -116,6 +126,7 @@ public class InGameScene extends BaseRoot{
         timer = new AnimationTimer() {
 
             long last = 0;
+            double petCooldownTimer = pet.getCooldowntime()/1000.0;
 
             @Override
             public void handle(long now) {
@@ -132,6 +143,35 @@ public class InGameScene extends BaseRoot{
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
+//                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
+
+                petCooldownTimer -= dt;
+                if(petCooldownTimer<=0) {
+                    pet.useSkill();
+                    petCooldownTimer = pet.getCooldowntime()/1000.0;
+                }
+
+                if(pet.isUsingSkill()) {
+                    double tarPetPosX = Math.max(player.getCookie().getLayoutX()+100, getWidth()-100);
+                    double tarPetPosY = player.getCookie().getLayoutY();
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                    if(pet.hasArrived()) {
+                        pet.updateIndex();
+                        ItemView spawnItem = pet.getCurrentSpawnItem();
+                        gameLayer.getChildren().add(spawnItem);
+                        double petX = pet.getView().getLayoutX() + pet.getView().getTranslateX();
+                        double petY = pet.getView().getLayoutY() + pet.getView().getTranslateY();
+                        spawnItem.setTranslateX(petX);
+                        spawnItem.setTranslateY(petY);
+                        spawnItem.setSpeed(-350, 0);
+                        pet.setUsingSkill(false);
+                    }
+                } else {
+                    double tarPetPosX = player.getCookie().getLayoutX()-30;
+                    double tarPetPosY = player.getCookie().getLayoutY()+30;
+                    pet.setTargetPos(tarPetPosX, tarPetPosY);
+                }
+                pet.update(dt);
 
                 spawner.update(now, dt);
 
@@ -221,6 +261,9 @@ public class InGameScene extends BaseRoot{
                 case Q -> {
                     player.useSkill();
                 }
+//                case T -> {
+//                    pet.useSkill();
+//                }
             }
         });
 
