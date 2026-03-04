@@ -32,6 +32,8 @@ public class JooxBox {
         playlist.put("Click", "/SOUND/CLICK.mp3");
         playlist.put("Lobby", "/SOUND/Lobby.mp3");
         playlist.put("Pets", "/SOUND/PETS.mp3");
+        playlist.put("Jelly", "/SOUND/JellyCollectedSound.mp3");
+        playlist.put("Item", "/SOUND/ItemCollectedSound.mp3");
 
         playlist.put("SoundMAP1", "/SOUND/SOUNDMAP1.mp3");
         playlist.put("SoundMAP2", "/SOUND/SOUNDMAP2.mp3");
@@ -42,6 +44,8 @@ public class JooxBox {
         preloadSFX("JUMP");
         preloadSFX("SLIDE");
         preloadSFX("Click");
+        preloadSFX("Jelly");
+        preloadSFX("Item");
     }
 
     private void preloadSFX(String key) {

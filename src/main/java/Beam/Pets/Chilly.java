@@ -9,14 +9,14 @@ import java.util.Arrays;
 
 public class Chilly extends Pet {
     public Chilly() {
-        super(1, "Chilly", " au ai ah ");
+        super(2, "Chilly", " au ai ah ");
 
         setView(Asset.createImageView("Chilly",0,480));
         setViewImage(Asset.getImage("Chilly"));
         setBgImage(Asset.getImage("Selecting_Chilly"));
         setBtnImage(Asset.getImage("UnSelect_Chilly"));
 //        setCooldowntime(30000);
-        setCooldowntime(5000);
+        setCooldowntime(20000);
         setSkillReady(true);
         setUsingSkill(false);
         setSpeed(500);

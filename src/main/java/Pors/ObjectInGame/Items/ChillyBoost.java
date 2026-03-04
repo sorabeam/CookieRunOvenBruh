@@ -1,12 +1,13 @@
 package Pors.ObjectInGame.Items;
 
 import Beam.Cookies.Cookie;
+import Got.GameLogic.GameLogic;
 import Pors.ObjectInGame.Spawner;
 
 public class ChillyBoost extends BaseItem {
-    private double speedMul = 2;
+    private double speedMul = 3;
 //    private int boostTime = 3000;
-    private int boostTime = 30000;
+    private int boostTime = 5000;
 
     public ChillyBoost() {
         super("ChillyBoost");
@@ -14,6 +15,9 @@ public class ChillyBoost extends BaseItem {
 
 
     public void interact(Cookie player) {
+        GameLogic.addScore(1000);
+        player.setInvincible(5.0);
+
         Thread speedBoostThread = new Thread(() -> {
             Spawner.setSpeed(Spawner.getDefaultSpeed()*speedMul);
             try {
@@ -22,6 +26,7 @@ public class ChillyBoost extends BaseItem {
                 throw new RuntimeException(e);
             }
             Spawner.resetSpeed();
+
         });
         speedBoostThread.start();
     }

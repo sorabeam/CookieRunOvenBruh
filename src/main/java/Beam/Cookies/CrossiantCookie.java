@@ -17,7 +17,12 @@ public class CrossiantCookie extends Cookie {
     private OutlineText counterText;
 
     public CrossiantCookie() {
-        super(3, "Croissant", 140, "");
+        super(3, "CroissantCookie", 140,
+                "Every 30 Jellies collected," + "\n" +
+                        "a Croissant Jelly falls from the sky." + "\n" +
+                        "Original grants bonus points," + "\n" +
+                        "Butter gives a Speed Boost," + "\n" +
+                        "and Strawberry restores 20 HP.");
         setImgURL("Croissant_Cookie_sheet");
         setProfileImg(Asset.getImage("Profile_Cross"));
         setScore(256200);
@@ -70,8 +75,8 @@ public class CrossiantCookie extends Cookie {
             jellyCollected = 0;
             croissantReady = true;
 
-            playSkill(0.3);
-            cookie.changeAnimationState(AnimationType.SKILL);
+//            playSkill(0.3);
+//            cookie.changeAnimationState(AnimationType.SKILL);
 
             if (counterText != null) {
                 counterText.setText("0/30");
@@ -81,6 +86,11 @@ public class CrossiantCookie extends Cookie {
 
     public boolean isCroissantReady() {
         return croissantReady;
+    }
+
+    @Override
+    public boolean hasCooldownBar(){
+        return false;
     }
 
     public CroissantType consumeCroissant() {
