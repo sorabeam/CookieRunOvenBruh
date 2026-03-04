@@ -189,6 +189,8 @@ public class Spawner {
             javafx.scene.Node node = it.next();
 
             if (node instanceof ObstacleView o) {
+                //set speed
+                o.setSpeed(getSpeed(), 0);
                 o.update(deltaTime);
 
                 if (o.getTranslateX() < -100 ||
@@ -205,6 +207,7 @@ public class Spawner {
             javafx.scene.Node node = it.next();
 
             if (node instanceof ItemView i) {
+                i.setSpeed(getSpeed(), 0);
                 if (i.getItem() instanceof Croissant croissant) {
 
                     croissant.updatePhysics(
@@ -231,6 +234,8 @@ public class Spawner {
             javafx.scene.Node node = it.next();
 
             if (node instanceof JellyView i) {
+                //update speed
+                i.setSpeedX(getSpeed());
 
                 i.update(deltaTime);
 

@@ -5,8 +5,8 @@ import Pors.ObjectInGame.Spawner;
 
 public class ChillyBoost extends BaseItem {
     private double speedMul = 2;
-    private int boostTime = 3000;
-//    private int boostTime = 50000;
+//    private int boostTime = 3000;
+    private int boostTime = 30000;
 
     public ChillyBoost() {
         super("ChillyBoost");
