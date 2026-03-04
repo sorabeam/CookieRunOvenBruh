@@ -152,9 +152,9 @@ public class InGameScene extends BaseRoot{
                         } else if(currentRoll >= 0) { //test !!! change back
                             croissantSummon = new CroissantStrawberry(20);
                             //Test scoreboard
-                            Platform.runLater(() -> {
-                                GameLogic.addScore(5000);
-                            });
+//                            Platform.runLater(() -> {
+//                                GameLogic.addScore(5000);
+//                            });
                         }
 
                         ItemView croissantSummonView = new ItemView(croissantSummon, 0, 15);

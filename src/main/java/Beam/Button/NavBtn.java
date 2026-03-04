@@ -25,7 +25,7 @@ public class NavBtn extends BaseButton{
 
             //test
             GameLogic.setScore(0);
-            JooxBox.getInstance().ChangeMusic("MS1",true,100);
+            JooxBox.getInstance().ChangeMusic("MS1",true,50);
         }
         getStage().setResizable(true);
         GameLogic.setGameState(switchState);

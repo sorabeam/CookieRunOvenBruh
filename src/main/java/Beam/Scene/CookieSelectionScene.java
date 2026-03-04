@@ -19,13 +19,12 @@ public class CookieSelectionScene extends BaseRoot{
     private String txt = CharactorData.getCurrent_Cookie().get_Desc();
 
     CDBtn B1 = Asset.createGridButton(CharactorData.BOBACOOKIE,220,0);
-    CDBtn B2 = Asset.createGridButton(CharactorData.SHADOW_MILK,220,0);
-    CDBtn B3 = Asset.createGridButton(CharactorData.PURE_VANILLA,220,0);
+    CDBtn B2 = Asset.createGridButton(CharactorData.PURE_VANILLA,220,0);
+    CDBtn B3 = Asset.createGridButton(CharactorData.CROSSIANTCOOKIE,220,0);
     CDBtn B4 = Asset.createGridButton(CharactorData.HOLLY_BERRY,220,0);
-    CDBtn B5 = Asset.createGridButton(CharactorData.WHITE_LILY,220,0);
 
-    CDBtn selectButton = B5;
-    GridPane characterBoard = new GridDisplay(B1,B2,B3,B4,B5);
+    CDBtn selectButton = B1;
+    GridPane characterBoard = new GridDisplay(B1,B2,B3,B4);
 
     public  CookieSelectionScene(){
         super();
@@ -59,7 +58,6 @@ public class CookieSelectionScene extends BaseRoot{
         enableSwap(B2);
         enableSwap(B3);
         enableSwap(B4);
-        enableSwap(B5);
     }
 
     private void enableSwap(CDBtn button) {

@@ -18,6 +18,7 @@ public class BobaCookie extends Cookie{
 
         setImgURL("Boba_Milk_Tea_Cookie");
         skillcoodown = 10;
+        setScore(23500);
     }
 
     @Override

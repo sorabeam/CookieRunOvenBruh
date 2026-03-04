@@ -8,10 +8,10 @@ public class CrossiantCookie extends Cookie {
     private final int coolDown = 1000; // this is in miliseconds unit, becareful test
 
     public CrossiantCookie() {
-        super(2, "CrossiantCookie", 140, "");
+        super(3, "CrossiantCookie", 140, "fakayouki");
         setImgURL("crossiant_sheet");
         skillcoodown = 3;
-
+        setScore(13700);
     }
 
     @Override
