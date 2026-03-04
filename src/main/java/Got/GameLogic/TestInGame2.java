@@ -61,7 +61,11 @@ public class TestInGame2 extends Application {
             switch (newState) {
                 case INTRO -> gameRoot.getChildren().setAll(new MainMenuScene());
                 case SELECTCHAR -> gameRoot.getChildren().setAll(new CookieSelectionScene());
-                case INGAME -> gameRoot.getChildren().setAll(new InGameScene());
+                case INGAME -> {
+                    InGameScene inGameScene = new InGameScene();
+                    GameLogic.setCurrentGameScene(inGameScene);
+                    gameRoot.getChildren().setAll(inGameScene);
+                }
                 case SELECTPET -> gameRoot.getChildren().setAll(new PetsSelectionScene());
                 case GAMEOVER -> gameRoot.getChildren().setAll(new GameOverRoot());
             }

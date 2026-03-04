@@ -1,5 +1,6 @@
 package Beam.Scene;
 
+import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
@@ -41,6 +42,9 @@ public class InGameScene extends BaseRoot{
     private final double groundH = 80;
     public static double groundY;
 
+    private AnimationTimer timer;
+    private Spawner spawner;
+
     public InGameScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
@@ -48,7 +52,7 @@ public class InGameScene extends BaseRoot{
         root.getChildren().add(new InGameBG(root));
 
         uiLayer.getChildren().addAll(
-                //new ExpBar(root),
+                new ExpBar(root),
                 settingZone,
                 lastRecord,
                 hpzone,
@@ -65,17 +69,15 @@ public class InGameScene extends BaseRoot{
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
 //       Cookie player = new BobaCookie();
-        Cookie player = new CrossiantCookie();
+        Cookie player = CharactorData.getCurrent_Cookie();
 
-        Spawner spawner =
+        spawner =
                 new Spawner(
                         gameLayer,
                         scene.getWidth(),
                         scene.getHeight(),
                         player
                 );
-
-        spawner.start();
 
         //ground
         Rectangle ground = new Rectangle();
@@ -110,7 +112,7 @@ public class InGameScene extends BaseRoot{
         root.getChildren().add(gameLayer);
         root.getChildren().add(uiLayer);
 
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
 
             long last = 0;
 
@@ -129,6 +131,8 @@ public class InGameScene extends BaseRoot{
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
+
+                spawner.update(now, dt);
 
                 if (shiftHeld && player.isOnGround()) {
                     player.slide();
@@ -221,6 +225,12 @@ public class InGameScene extends BaseRoot{
         setFocusTraversable(true);
         Platform.runLater(this::requestFocus);
 
+    }
+
+    public void stopGame() {
+        if (timer != null) {
+            timer.stop();
+        }
     }
 }
 

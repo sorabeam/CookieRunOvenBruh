@@ -21,6 +21,8 @@ public class NavBtn extends BaseButton{
     public void handleClick() {
         super.handleClick();
 
+        if(switchState.equals(null)) return;
+
         if(switchState.equals(GameState.INGAME)){
 
             //test
@@ -35,4 +37,6 @@ public class NavBtn extends BaseButton{
     public GameState getSwitchState() {
         return switchState;
     }
+
+
 }

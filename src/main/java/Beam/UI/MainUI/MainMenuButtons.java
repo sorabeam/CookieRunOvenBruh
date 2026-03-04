@@ -13,8 +13,8 @@ public class MainMenuButtons extends StackPane {
     public MainMenuButtons() {
 
         NavBtn playBtn = new NavBtn(Asset.createImageView("play",100,0), GameState.INGAME);
-        NavBtn cookieBtn = new NavBtn(Asset.createImageView("MainCookie",0,270), GameState.SELECTCHAR );
-        NavBtn petsBtn = new NavBtn(Asset.createImageView("PetsBtn",0,270), GameState.SELECTPET );
+        NavBtn cookieBtn = new NavBtn(Asset.createImageView("MainCookie",0,300), GameState.SELECTCHAR );
+        NavBtn petsBtn = new NavBtn(Asset.createImageView("PetsBtn",0,300), GameState.SELECTPET );
 
         VBox ButtonBoy = new VBox(petsBtn,cookieBtn);
 

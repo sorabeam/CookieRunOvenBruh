@@ -1,10 +1,11 @@
 package Beam.UI.CookiesUI;
 
+import Beam.Button.SettingPopUpBtn;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import Beam.Asset;
-import Beam.Button.SettingBtn;
+import Beam.Button.NavSettingBtn;
 import Beam.Image.OutlineText;
 
 public class SettingZone extends HBox {
@@ -16,13 +17,13 @@ public class SettingZone extends HBox {
 
         OutlineText Pname = new OutlineText("sorabeam",'C',18);
 
-        SettingBtn SettingBtn =new SettingBtn(SettingImg,root);
+        SettingPopUpBtn NavSettingBtn =new SettingPopUpBtn(SettingImg,root);
         setMargin(WifiImg,new Insets(10,0,0,0));
         setMaxHeight(80);
         setMaxWidth(500);
 
         setSpacing(10);
-        getChildren().addAll(spacer,Pname,WifiImg,SettingBtn);
+        getChildren().addAll(spacer,Pname,WifiImg, NavSettingBtn);
 
     }
 }
