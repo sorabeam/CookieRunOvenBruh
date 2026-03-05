@@ -205,13 +205,21 @@ public class InGameScene extends BaseRoot{
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
 
-//        flame.setFitWidth(250);
+//        flame.setManaged(false);
+        flame.setFitWidth(350);
         flame.setFitHeight(350);
         flame.setPreserveRatio(true);
         double flameW = flame.getFitWidth();
         double flameH = flame.getFitHeight();
-        flame.layoutXProperty().bind(player.getCookie().layoutXProperty().subtract(flameW/2+100));
-        flame.layoutYProperty().bind(player.getCookie().layoutYProperty().subtract(flameH/2-80));
+        flame.layoutXProperty().bind(
+                player.getCookie().layoutXProperty()
+                        .add(player.getCookie().fitWidthProperty().divide(2))
+        );
+
+        flame.layoutYProperty().bind(
+                player.getCookie().layoutYProperty()
+                        .add(player.getCookie().fitHeightProperty().divide(2))
+        );
 
         root.getChildren().add(gameLayer);
         root.getChildren().add(uiLayer);
@@ -271,12 +279,12 @@ public class InGameScene extends BaseRoot{
                     flame.setVisible(true);
                     if(player.getCookie().getAnimationState()==AnimationType.SLIDE) {
                         flame.setRotate(270);
-                        flame.layoutYProperty().bind(player.getCookie().layoutYProperty().subtract(flameH/2-180));
-                        flame.layoutXProperty().bind(player.getCookie().layoutXProperty().subtract(flameW/2+200));
+                        flame.setTranslateX(-flameH/2-100);
+                        flame.setTranslateY(-flameW/2+100);
                     } else {
-                        flame.layoutYProperty().bind(player.getCookie().layoutYProperty().subtract(flameH/2-80));
-                        flame.layoutXProperty().bind(player.getCookie().layoutXProperty().subtract(flameW/2+100));
                         flame.setRotate(0);
+                        flame.setTranslateX(-flameW/2-50);
+                        flame.setTranslateY(-flameH/2-50);
                     }
                     flame.update(dt);
                 } else {
