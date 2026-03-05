@@ -3,6 +3,7 @@ package Got.GameLogic;
 import Beam.CharactorData;
 import Beam.Media.MediaPlayer;
 import Beam.Scene.*;
+import Pors.ObjectInGame.Spawner;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
@@ -72,6 +73,7 @@ public class MainGameScene extends Application {
                     CharactorData.getCurrent_Cookie().setHp(CharactorData.getCurrent_Cookie().getMaxhp());
                     CharactorData.getCurrent_Cookie().setCooldownTimer(0);
                     CharactorData.getCurrent_Cookie().setSkillCounter(0);
+                    CharactorData.getCurrent_Cookie().setDead(false);
                     GameLogic.setScore(0);
                     playMusic("SoundMAP" + GameLogic.getMap(),50);
 

@@ -9,6 +9,7 @@ public class Tomato extends BaseItem {
     }
 
     public void interact(Cookie player) {
-        GameLogic.addScore(500);
+        player.heal(20);
+        GameLogic.addScore(100);
     }
 }

@@ -74,7 +74,7 @@ public class Animate extends ImageView {
             currentFrame = 0;
             maxFPR = maxFPRType[newValue.getRow()];
 
-            if (getAnimationState() == AnimationType.SKILL){
+            if (getAnimationState() == AnimationType.SKILL || getAnimationState() == AnimationType.DIE){
                 isLoop = false;
             } else {
                 isLoop = true;

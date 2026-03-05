@@ -9,6 +9,6 @@ public class Vegetable extends BaseItem{
     }
 
     public void interact(Cookie player) {
-        GameLogic.addScore(1000);
+        GameLogic.addScore(300);
     }
 }

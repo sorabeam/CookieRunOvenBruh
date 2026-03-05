@@ -50,6 +50,8 @@ public class GameplayScene extends BaseScene {
     Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
     StackPane uiLayer = new StackPane(); // สำหรับ UI
 
+    private MoveGround ground;
+
     private boolean shiftHeld = false;
 //    double groundSpeedDefault = Spawner.getSpeed();
 //    double groundSpeed = Spawner.getSpeed();
@@ -107,37 +109,11 @@ public class GameplayScene extends BaseScene {
                         pet
                 );
 
-
+        Spawner.setSpeed(-350);
         //ground
-        Image groundImg = new Image("/Image/BackGround/GroundLevel" + GameLogic.getMap() + ".png");
-
-        ImageView ground1 = new ImageView(groundImg);
-        ImageView ground2 = new ImageView(groundImg);
-
-        ground1.setFitHeight(groundH + 100);
-        ground2.setFitHeight(groundH + 100);
-
-        ground1.setFitWidth(scene.getWidth());
-        ground2.setFitWidth(scene.getWidth());
-
-        ground1.setPreserveRatio(false);
-        ground2.setPreserveRatio(false);
-
-        ground1.setScaleY(1.5);
-        ground2.setScaleY(1.5);
-
-        // wait until layout pass to get real width
-        Platform.runLater(() -> {
-            double groundWidth = scene.getWidth();
-
-            ground1.setTranslateX(0);
-            ground2.setTranslateX(groundWidth);
-        });
-
-        ground1.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(90));
-        ground2.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(90));
-
-        gameLayer.getChildren().addAll(ground1, ground2);
+        ground = new MoveGround(gameLayer, scene.getWidth());
+        gameLayer.getChildren().add(ground);
+        ground.start();
 
         player.setGameLayer(gameLayer);
         player.createCookie();
@@ -171,7 +147,7 @@ public class GameplayScene extends BaseScene {
         double flameH = flame.getFitHeight();
         flame.layoutXProperty().bind(
                 player.getCookie().layoutXProperty()
-                        .add(player.getCookie().fitWidthProperty().divide(2))
+                        .add(player.getCookie().fitWidthProperty().divide(2)).add(60)
         );
 
         flame.layoutYProperty().bind(
@@ -204,21 +180,10 @@ public class GameplayScene extends BaseScene {
                 double dt = (now - last) / 1e9;
                 last = now;
 
-                groundY = gameLayer.getHeight() - groundH;
+                groundY = ground.getGroundY();
 
                 double groundWidth = scene.getWidth();
                 double groundSpeed = Spawner.getSpeed();
-
-                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
-                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);
-
-                if (ground1.getTranslateX() <= -groundWidth) {
-                    ground1.setTranslateX(ground2.getTranslateX() + groundWidth);
-                }
-
-                if (ground2.getTranslateX() <= -groundWidth) {
-                    ground2.setTranslateX(ground1.getTranslateX() + groundWidth);
-                }
 
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
@@ -383,6 +348,8 @@ public class GameplayScene extends BaseScene {
         timer.start();
 
         setOnKeyPressed(e -> {
+            if(player.isDead()) return;
+
             switch (e.getCode()) {
                 case SPACE -> player.jump();
                 case SHIFT -> {
@@ -399,6 +366,7 @@ public class GameplayScene extends BaseScene {
         });
 
         setOnKeyReleased(e -> {
+            if(player.isDead()) return;
             if (e.getCode() == KeyCode.SHIFT ) {
                 shiftHeld = false;
                 player.upFromSlide();
@@ -421,11 +389,19 @@ public class GameplayScene extends BaseScene {
     public void stopGameByBool() {
         isUpdate = false;
         bg.stop();
+        ground.stop();
     }
 
     public void resumeGameByBool() {
         isUpdate = true;
         bg.start();
+        ground.start();
+    }
+
+    public void stopEnvironment() {
+        Spawner.setSpeed(0);
+        bg.stop();
+        ground.stop();
     }
 
     public boolean isUpdate() {

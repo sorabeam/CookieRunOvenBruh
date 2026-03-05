@@ -51,7 +51,7 @@ public class BobaCookie extends Cookie{
 
         getParentLayer().getChildren().add(pearl);
 
-        playSkill(0.3);
+        playSkill(0.6);
         cookie.changeAnimationState(AnimationType.SKILL);
     }
 

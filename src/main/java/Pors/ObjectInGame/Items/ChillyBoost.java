@@ -16,7 +16,7 @@ public class ChillyBoost extends BaseItem {
 
     public void interact(Cookie player) {
         GameLogic.addScore(1000);
-        player.setInvincible(5.0);
+        player.setInvincible(6.0);
 
         Thread speedBoostThread = new Thread(() -> {
             Spawner.setSpeed(Spawner.getDefaultSpeed()*speedMul);

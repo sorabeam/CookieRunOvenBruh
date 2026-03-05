@@ -9,7 +9,6 @@ public class Chicken extends BaseItem {
     }
 
     public void interact(Cookie player) {
-        GameLogic.addScore(100);
-        player.heal(20);
+        GameLogic.addScore(500);
     }
 }

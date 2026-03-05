@@ -4,6 +4,7 @@ import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
 import Beam.Media.MediaPlayer;
+import Beam.Scene.GameplayScene;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
 import javafx.beans.property.DoubleProperty;
@@ -53,6 +54,9 @@ public abstract class Cookie {
 
     protected double damageTimer = 0;
 
+    private boolean isDead = false;
+    private double deathTimer = 0;
+    private final double deathDuration = 3;
 
     int id;
     int maxhp;
@@ -94,6 +98,7 @@ public abstract class Cookie {
     public abstract void useSkill();
 
     public void takeDamage(int damage){
+        if(isDead) return;
         hp -= damage;
         GameLogic.getHpBar().updateHpBar();
         System.out.println("Cookie take " + damage + " damage");
@@ -123,7 +128,15 @@ public abstract class Cookie {
     }
 
     public void die(){
-        GameLogic.setGameState(GameState.GAMEOVER);
+        if(isDead) return;
+
+        isDead = true;
+        deathTimer = deathDuration;
+
+        cookie.changeAnimationState(AnimationType.DIE);
+
+        velocity = -5;
+        GameLogic.getCurrentGameScene().stopEnvironment();
     }
 
     protected void playSkill(double duration) {
@@ -192,6 +205,17 @@ public abstract class Cookie {
 
     public void update(double deltaTime){
 
+        if(isDead){
+
+            deathTimer -= deltaTime;
+
+            if(deathTimer <= 0){
+                GameLogic.setGameState(GameState.GAMEOVER);
+            }
+
+            return;
+        }
+
         boolean usingSkill = skillTimer > 0;
 
         if (skillTimer > 0) {
@@ -256,6 +280,8 @@ public abstract class Cookie {
 
     public void jump() {
 
+        if(isDead) return;
+
         if (jumpCount >= getMaxJump()) return;
 
         if (jumpCount == 0) {
@@ -272,6 +298,8 @@ public abstract class Cookie {
     }
 
     public void slide() {
+
+        if(isDead) return;
 
         setHitbox();
 
@@ -395,5 +423,13 @@ public abstract class Cookie {
 
     public boolean isSpeeding() {
         return isSpeeding;
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

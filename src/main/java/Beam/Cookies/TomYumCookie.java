@@ -8,7 +8,7 @@ public class TomYumCookie extends Cookie {
 
     public TomYumCookie() {
         super(2, "TomYum", 170,
-                "Every 20 seconds, Tom Yum Cookie" + "\n" +
+                "Every 15 seconds, Tom Yum Cookie" + "\n" +
                         "summons Ingredient Rain." + "\n" +
                         "Shrimp, Galangal, Lemongrass," + "\n" +
                         "and Kaffir Lime Leaf" + "\n" +
@@ -19,15 +19,16 @@ public class TomYumCookie extends Cookie {
         setScore(133000);
         setCooldownable(true);
         setCooldownTimer(0);
-        setSkillCooldown(20);
+        setSkillCooldown(15);
     }
 
     @Override
     public void useSkill() {
 
-        //playSkill(0.3); // animation
-
-        //rainReady = true;
+        playSkill(0.5);
+        setCooldownTimer(0);
+        setInvincible(2.0);
+        rainReady = true;
     }
 
     public void updateSkill(double dt){
@@ -35,10 +36,7 @@ public class TomYumCookie extends Cookie {
         setCooldownTimer(getCooldownTimer() + dt);
 
         if(getCooldownTimer() >= getSkillCooldown()){
-            playSkill(0.5);
-            setCooldownTimer(0);
-            setInvincible(2.0);
-            rainReady = true;
+            useSkill();
         }
     }
 
