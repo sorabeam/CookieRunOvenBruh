@@ -1,19 +1,14 @@
 package Beam.Scene;
 
 import Beam.CharactorData;
-import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
 import Beam.Cookies.TomYumCookie;
-import Beam.Pets.Chilly;
 import Beam.Pets.Pet;
-import Beam.Pets.Salad;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
-import Pors.ObjectInGame.Interactable;
 import Pors.ObjectInGame.Items.*;
-import Pors.ObjectInGame.Jelly.JellyView;
 import Pors.ObjectInGame.Obstacle.ObstacleView;
 import Pors.ObjectInGame.Spawner;
 import javafx.animation.AnimationTimer;
@@ -35,15 +30,11 @@ import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.shape.Rectangle;
-import Pors.ObjectInGame.Obstacle.BaseObstacle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import static Got.GameLogic.GameLogic.getStage;
-
-public class InGameScene extends BaseRoot{
+public class GameplayScene extends BaseScene {
 
     Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
     StackPane uiLayer = new StackPane(); // สำหรับ UI
@@ -64,7 +55,7 @@ public class InGameScene extends BaseRoot{
     private boolean isUpadate = true;
     private InGameBG bg = new InGameBG(root);
 
-    public InGameScene(){
+    public GameplayScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
         DropShadow shadow = new DropShadow();
@@ -137,57 +128,17 @@ public class InGameScene extends BaseRoot{
 
         player.setGameLayer(gameLayer);
         player.createCookie();
+        CoodownBar cdBar = new CoodownBar(player);
 
         gameLayer.getChildren().addAll(
                 player.getCookie(),
-                player.getHitbox()
+                player.getHitbox(),
+                cdBar
         );
 
-        //Cooldown Frame
-        Rectangle cdFrame = new Rectangle(84,12);
-        cdFrame.setFill(Color.BLACK);
-        cdFrame.setArcWidth(10);
-        cdFrame.setArcHeight(10);
 
-        Rectangle cdBackground = new Rectangle(80,8);
-        cdBackground.setFill(Color.rgb(40,40,40));
-        cdBackground.setArcWidth(8);
-        cdBackground.setArcHeight(8);
 
-        Rectangle cdFill = new Rectangle(80,8);
-        cdFill.setFill(Color.LIMEGREEN);
-        cdFill.setArcWidth(8);
-        cdFill.setArcHeight(8);
 
-        cdFill.setFill(new LinearGradient(
-                0,0,1,0,true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#b9ff9f")),
-                new Stop(0.35, Color.web("#7dff63")),
-                new Stop(0.7, Color.web("#39d353")),
-                new Stop(1, Color.web("#1faa2a"))
-        ));
-
-        cdBackground.setLayoutX(2);
-        cdBackground.setLayoutY(2);
-
-        cdFill.setLayoutX(2);
-        cdFill.setLayoutY(2);
-
-        gameLayer.getChildren().addAll(cdFrame, cdBackground, cdFill);
-
-        cdFrame.layoutXProperty().bind(
-                player.getCookie().layoutXProperty().add(58)
-        );
-
-        cdFrame.layoutYProperty().bind(
-                player.getCookie().layoutYProperty().subtract(18)
-        );
-
-        cdBackground.layoutXProperty().bind(cdFrame.layoutXProperty().add(2));
-        cdBackground.layoutYProperty().bind(cdFrame.layoutYProperty().add(2));
-
-        cdFill.layoutXProperty().bind(cdFrame.layoutXProperty().add(2));
-        cdFill.layoutYProperty().bind(cdFrame.layoutYProperty().add(2));
 
 //        pet.getView().setLayoutX(150);
         pet.getView().setFitWidth(80);
@@ -242,14 +193,15 @@ public class InGameScene extends BaseRoot{
                 player.update(dt);          // physics + movement
                 player.getCookie().update(dt);
 //                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
+
                 if(player.hasCooldownBar()){
                     double progress = player.getCooldownProgress();
-                    cdFill.setWidth(80 * progress);
-                    cdFill.setVisible(true);
+                    cdBar.fill.setWidth(80 * progress);
+                    cdBar.fill.setVisible(true);
                 }else{
-                    cdFill.setVisible(false);
-                    cdFrame.setVisible(false);
-                    cdBackground.setVisible(false);
+                    cdBar.fill.setVisible(false);
+                    cdBar.frame.setVisible(false);
+                    cdBar.background.setVisible(false);
                 }
 
                 petCooldownTimer -= dt;
@@ -309,7 +261,9 @@ public class InGameScene extends BaseRoot{
                     }
                 }
 
-                for (Node node : gameLayer.getChildren()) {
+                List<Node> snapshot = new ArrayList<>(gameLayer.getChildren());
+
+                for (Node node : snapshot) {
 
                     if (node instanceof Pearl pearl) {
 

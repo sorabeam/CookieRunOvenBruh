@@ -1,12 +1,10 @@
 package Beam.Cookies;
 
 import Beam.Animation.Animate;
-import Beam.Animation.AnimationType;
 import Beam.Asset;
-import Beam.Image.OutlineText;
+import Beam.Image.OutlineTextImage;
 import Pors.ObjectInGame.Items.CroissantType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 
 public class CrossiantCookie extends Cookie {
@@ -14,7 +12,7 @@ public class CrossiantCookie extends Cookie {
     private int jellyCollected = 0;
     private int croissantCycle = 0;
     private boolean croissantReady = false;
-    private OutlineText counterText;
+    private OutlineTextImage counterText;
 
     public CrossiantCookie() {
         super(3, "CroissantCookie", 140,
@@ -33,7 +31,7 @@ public class CrossiantCookie extends Cookie {
 
         Animate anim = super.createCookie(); // สร้าง cookie + hitbox จาก class แม่ก่อน
 
-        counterText = new OutlineText("0/30", 'C', 28);
+        counterText = new OutlineTextImage("0/30", 'C', 28);
         counterText.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
         counterText.setColor(Color.YELLOW);
 

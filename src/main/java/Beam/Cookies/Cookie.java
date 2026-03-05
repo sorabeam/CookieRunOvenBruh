@@ -3,13 +3,11 @@ package Beam.Cookies;
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
-import Beam.Media.JooxBox;
+import Beam.Media.MediaPlayer;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.Glow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -93,7 +91,7 @@ public abstract class Cookie {
         System.out.println("Cookie take " + damage + " damage");
 
         System.out.println(hp);
-        JooxBox.getInstance().playSFX("Hit");
+        MediaPlayer.getInstance().playSFX("Hit");
 
         cookie.changeAnimationState(AnimationType.TAKE_DAMAGE);
         damageTimer = 0.5;
@@ -250,7 +248,7 @@ public abstract class Cookie {
             cookie.changeAnimationState(AnimationType.DOUBLE_JUMP);
         }
 
-        JooxBox.getInstance().playSFX("JUMP");
+        MediaPlayer.getInstance().playSFX("JUMP");
         setHitbox();
         velocity = jumpSpeed;
         jumpCount++;
@@ -263,7 +261,7 @@ public abstract class Cookie {
 
         if ( isPerformingSkill() || !onGround || cookie.getAnimationState().equals(AnimationType.SLIDE)) { return; }
 
-        JooxBox.getInstance().playSFX("SLIDE");
+        MediaPlayer.getInstance().playSFX("SLIDE");
         cookie.changeAnimationState(AnimationType.SLIDE);
     }
 
