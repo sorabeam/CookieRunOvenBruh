@@ -12,24 +12,22 @@ import Beam.Image.OutlineTextImage;
 
 public class NavSettingBtn extends NavigationButton {
 
-    private final StackPane buttonPane;
-    private final DropShadow shadow;
     private final OutlineTextImage outlineTextImage;
     private final String txt;
-    private SettingsPopUpButton settingsPopupButton;
+    private final SettingsPopUpButton settingsPopupButton;
 
     public NavSettingBtn(GameState switchState , String txt, SettingsPopUpButton settingsPopupButton) {
 
         super(Asset.createImageView("SBtnBg",0,400),switchState);
         this.txt = txt;
-        shadow = setShadow();
+        DropShadow shadow = setShadow();
 
         this.settingsPopupButton = settingsPopupButton;
         outlineTextImage = new OutlineTextImage(txt,'C',25);
 
         outlineTextImage.setDropShadow(shadow);
         outlineTextImage.setMaxWidth(1);
-        buttonPane = new StackPane(Asset.createImageView("SBtnBg",0,400), outlineTextImage);
+        StackPane buttonPane = new StackPane(Asset.createImageView("SBtnBg", 0, 400), outlineTextImage);
 
         StackPane.setAlignment(outlineTextImage,Pos.TOP_LEFT);
         setGraphic(buttonPane);

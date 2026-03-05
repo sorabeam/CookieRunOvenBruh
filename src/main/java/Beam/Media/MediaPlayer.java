@@ -5,6 +5,7 @@ import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 public class MediaPlayer {
 
@@ -72,7 +73,7 @@ public class MediaPlayer {
             return;
         }
 
-        Media media = new Media(getClass().getResource(path).toExternalForm());
+        Media media = new Media(Objects.requireNonNull(getClass().getResource(path)).toExternalForm());
         bgmPlayer = new javafx.scene.media.MediaPlayer(media);
 
         if (loop)

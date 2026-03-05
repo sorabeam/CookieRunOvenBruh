@@ -18,7 +18,6 @@ import javafx.scene.shape.Rectangle;
 public abstract class Cookie {
 
     protected Animate cookie;
-    protected ImageView cookieImg;
     protected String imgURL;
 
     protected boolean invincible = false;
@@ -31,17 +30,10 @@ public abstract class Cookie {
     private DoubleProperty hitboxRatio = new SimpleDoubleProperty(0.7);
     private final double slideHitboxRatio = 0.3;
 
-    protected Rectangle boostAura;
-
     private double velocity;
     private int jumpCount;
 
     private boolean onGround;
-
-    // tuning
-    private final double gravity = 0.4;
-    private final double jumpSpeed = -13;
-    private final double maxFallSpeed = 12;
 
     protected boolean hasCooldown = false;
 
@@ -56,7 +48,6 @@ public abstract class Cookie {
 
     private boolean isDead = false;
     private double deathTimer = 0;
-    private final double deathDuration = 3;
 
     int id;
     int maxHp;
@@ -140,7 +131,7 @@ public abstract class Cookie {
         if(isDead) return;
 
         isDead = true;
-        deathTimer = deathDuration;
+        deathTimer = 3;
 
         cookie.changeAnimationState(AnimationType.DIE);
 
@@ -236,7 +227,10 @@ public abstract class Cookie {
             damageTimer -= deltaTime;
         }
 
+        // tuning
+        double gravity = 0.4;
         velocity += gravity * scale;
+        double maxFallSpeed = 12;
         velocity = Math.min(velocity, maxFallSpeed);
 
         cookie.setLayoutY(cookie.getLayoutY() + velocity * scale);
@@ -299,7 +293,7 @@ public abstract class Cookie {
 
         MediaPlayer.getInstance().playSFX("JUMP");
         setHitbox();
-        velocity = jumpSpeed;
+        velocity = -13;
         jumpCount++;
         onGround = false;
     }
@@ -394,10 +388,6 @@ public abstract class Cookie {
         return hitBox;
     }
 
-    public String getImgURL() {
-        return imgURL;
-    }
-
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
     }
@@ -416,10 +406,6 @@ public abstract class Cookie {
 
     public boolean isOnGround() {
         return onGround;
-    }
-
-    public void setOnGround(boolean onGround) {
-        this.onGround = onGround;
     }
 
     public boolean isMagnetic() {

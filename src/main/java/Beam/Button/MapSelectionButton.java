@@ -6,7 +6,7 @@ import javafx.scene.image.ImageView;
 
 
 public class MapSelectionButton extends BaseButton{
-    private int mapNo;
+    private final int mapNo;
     private final MapPopupButton targetButton;
 
     public MapSelectionButton(ImageView img , MapPopupButton targetButton, int mapNo) {

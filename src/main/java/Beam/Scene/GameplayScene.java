@@ -47,10 +47,10 @@ public class GameplayScene extends BaseScene {
     private final double groundH = -150;
     public static double groundY;
 
-    private AnimationTimer timer;
-    private Spawner spawner;
+    private final AnimationTimer timer;
+    private final Spawner spawner;
     public boolean isUpdate = true;
-    private InGameBG bg = new InGameBG(root);
+    private final InGameBG bg = new InGameBG(root);
     private double deltatime;
 
     public GameplayScene(){
