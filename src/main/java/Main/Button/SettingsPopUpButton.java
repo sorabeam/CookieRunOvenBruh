@@ -1,0 +1,276 @@
+package Main.Button;
+
+import Main.Asset;
+import Main.Image.OutlineTextImage;
+import Main.Media.MediaPlayer;
+import Main.Scene.GameplayScene;
+import Main.GameLogic.GameLogic;
+import Main.GameLogic.GameState;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Node;
+import javafx.scene.control.Slider;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+
+import java.util.Objects;
+
+public class SettingsPopUpButton extends BaseButton{
+    private final Pane root;
+    private StackPane overlay;
+    private boolean isOpen = false;
+
+    public SettingsPopUpButton(ImageView img, Pane root) {
+        super(img);
+        this.root = root;
+    }
+
+    @Override
+    public void handleClick() {
+        super.handleClick();
+        if(GameLogic.getGameState().equals(GameState.INGAME)){
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().getFirst();
+
+            if (child instanceof GameplayScene inGameScene) {
+                inGameScene.stopGameByBool();
+            }
+            }
+        }
+        showSetting();
+    }
+
+    private void showSetting() {
+
+        if(isOpen) return;
+        isOpen = true;
+
+        DropShadow shadow = new DropShadow();
+        shadow.setRadius(10);
+        shadow.setBlurType(BlurType.GAUSSIAN);
+        shadow.setColor(Color.rgb(255,255,255,0.3));
+
+        overlay = new StackPane();
+
+        Slider MainvolumeSlider = new Slider(0, 100, GameLogic.getMusicVolume());
+
+        MainvolumeSlider.setMinSize(500,30);
+        MainvolumeSlider.setMaxSize(500,30);
+        MainvolumeSlider.setPrefSize(500,30);
+
+        MainvolumeSlider.setMajorTickUnit(0.25);
+
+        Slider SFXvolumeSlider = new Slider(0, 100, GameLogic.getSFXVolume());
+
+        SFXvolumeSlider.setMinSize(500,30);
+        SFXvolumeSlider.setMaxSize(500,30);
+        SFXvolumeSlider.setPrefSize(500,30);
+        SFXvolumeSlider.setMajorTickUnit(0.25);
+
+
+        MainvolumeSlider.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node track = MainvolumeSlider.lookup(".track");
+                Node thumb = MainvolumeSlider.lookup(".thumb");
+                if (track != null) {
+                    track.setStyle(
+                            "-fx-background-color: black, white;" +
+                                    "-fx-background-radius: 5;" +
+                                    "-fx-padding: 3px;"
+                    );
+                }
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
+            }
+        });
+
+        SFXvolumeSlider.skinProperty().addListener((obs, oldSkin, newSkin) -> {
+            if (newSkin != null) {
+                Node track = SFXvolumeSlider.lookup(".track");
+                Node thumb = SFXvolumeSlider.lookup(".thumb");
+                if (track != null) {
+                    track.setStyle(
+                            "-fx-background-color: black, white;" +
+                                    "-fx-background-radius: 5;" +
+                                    "-fx-padding: 3px;"
+                    );
+                }
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
+            }
+        });
+
+
+
+        OutlineTextImage setting = new OutlineTextImage("setting",'C',30);
+        setting.setDropShadow(shadow);
+        VBox.setMargin(setting,new Insets(100,0,0,0));
+
+        OutlineTextImage mvolume = new OutlineTextImage("Main Volume",'C',25);
+        mvolume.setDropShadow(shadow);
+        OutlineTextImage sfxvolume = new OutlineTextImage("SFX Volume",'C',25);
+        sfxvolume.setDropShadow(shadow);
+
+        OutlineTextImage intmv = new OutlineTextImage(GameLogic.getMusicVolume()+"",'M',25);
+        intmv.setDropShadow(shadow);
+        intmv.setPadding(new Insets(0,0,0,-35));
+        OutlineTextImage intsfxv = new OutlineTextImage(GameLogic.getSFXVolume()+"",'M',25);
+        intsfxv.setDropShadow(shadow);
+        intsfxv.setPadding(new Insets(0,0,0,-60));
+
+        HBox volumBGSetting = new HBox(mvolume,MainvolumeSlider,intmv);
+        volumBGSetting.setMaxHeight(200);
+        volumBGSetting.setSpacing(40);
+        volumBGSetting.setPadding(new Insets(0,50,0,100));
+
+        HBox volumSFXSetting = new HBox(sfxvolume,SFXvolumeSlider,intsfxv);
+        volumSFXSetting.setMaxHeight(200);
+        volumSFXSetting.setSpacing(55);
+        volumSFXSetting.setPadding(new Insets(0,50,0,100));
+
+        GridPane BtnPane = new GridPane();
+        BtnPane.setAlignment(Pos.CENTER_RIGHT);
+
+        BtnPane.setHgap(30);
+        BtnPane.setVgap(30);
+
+        MainvolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+
+            GameLogic.setMusicVolume(newVal.intValue());
+            intmv.setText(GameLogic.getMusicVolume() + "");
+            MediaPlayer.getInstance().updateBGMVolume();
+        });
+
+        SFXvolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
+            GameLogic.setSFXVolume(newVal.intValue());
+            intsfxv.setText(GameLogic.getSFXVolume() + "");
+            MediaPlayer.getInstance().updateSFXVolume();
+        });
+
+
+//        NavSettingBtn play = new NavSettingBtn(GameState.INGAME,"PLAY",this);
+//        play.setInset(new Insets(24,0,0,82));
+
+        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECTPET, "Pets",this);
+        selectPets.setInset(new Insets(24,0,0,86));
+
+        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECTCHAR, "Cookies",this);
+        selectChar.setInset(new Insets(24,0,0,62));
+
+        NavSettingBtn menu = new NavSettingBtn(GameState.INTRO,"Menu",this);
+        menu.setInset(new Insets(24,0,0,79));
+
+        NavSettingBtn leave = new NavSettingBtn(null,"Leave",this);
+        leave.setInset(new Insets(24,0,0,80));
+
+        NavSettingBtn resumeBtn = new NavSettingBtn(null,"Resume",this);
+        resumeBtn.setInset(new Insets(24,0,0,62));
+
+
+
+        //deleteThis(play);
+        deleteThis(selectPets);
+        deleteThis(selectChar);
+        deleteThis(menu);
+        deleteThis(leave);
+        runItBack(resumeBtn);
+
+
+        BtnPane.add(menu, 0, 0);         BtnPane.add(resumeBtn, 1, 0);
+        BtnPane.add(selectPets, 0, 1);   BtnPane.add(leave, 1, 1);
+        BtnPane.add(selectChar, 0, 2);
+
+
+        VBox popupBox = new VBox(setting,volumBGSetting,volumSFXSetting,BtnPane);
+        popupBox.setSpacing(50);
+        StackPane.setAlignment(popupBox, Pos.CENTER_LEFT);
+        popupBox.setMaxWidth(960);
+
+        ImageView bg = Asset.createImageView("SettingBG",1,0);
+        bg.fitHeightProperty().bind(root.heightProperty());
+        StackPane.setAlignment(bg,Pos.CENTER_LEFT);
+
+        overlay.getChildren().addAll(bg,popupBox);
+        root.getChildren().addAll(overlay);
+    }
+
+    private void deleteThis(BaseButton button) {
+
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
+
+        button.setOnAction(e -> {
+
+            if (oldAction != null) {
+            oldAction.handle(e);
+            }
+
+            if (((NavSettingBtn)button).getSwitchState() == null ){
+
+                if (Objects.equals(((NavSettingBtn) button).getTxt(), "Leave")) {
+                    System.exit(0);
+                }
+
+                root.getChildren().remove(overlay);
+                return;
+            }
+
+            if(((NavSettingBtn) button).getSwitchState() == GameLogic.getGameState()) {
+                root.getChildren().remove(overlay);
+                return;
+            }
+
+
+            root.getChildren().remove(overlay);
+        });
+    }
+
+    private void runItBack(BaseButton button){
+
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
+
+        button.setOnAction(e -> {
+
+            if (oldAction != null) {
+                oldAction.handle(e);
+            }
+
+        if(GameLogic.getGameState().equals(GameState.INGAME)){
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().getFirst();
+
+            if  (child instanceof GameplayScene inGameScene) {
+                inGameScene.resumeGameByBool();
+            }}
+        }
+            root.getChildren().remove(overlay);
+
+        });
+    }
+
+    public Boolean getOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(Boolean open) {
+        isOpen = open;
+    }
+}

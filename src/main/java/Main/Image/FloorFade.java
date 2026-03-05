@@ -1,0 +1,19 @@
+package Main.Image;
+
+import javafx.scene.layout.Region;
+
+public class FloorFade extends Region {
+
+    public FloorFade(double H) {
+
+        setMaxWidth(Double.MAX_VALUE);
+        setMaxHeight(H);
+
+        setStyle("""
+            -fx-background-color: linear-gradient(to top,
+                rgba(2, 2, 2, 0.9),
+                rgba(255, 255, 255, 0.0)
+            );
+        """);
+    }
+}

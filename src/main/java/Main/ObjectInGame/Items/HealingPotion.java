@@ -1,0 +1,26 @@
+package Main.ObjectInGame.Items;
+
+import Main.Cookies.Cookie;
+
+public class HealingPotion extends BaseItem{
+    private int healingStat;
+
+    public HealingPotion()
+    {
+        super("HealingPotion");
+        setHealingStat(20);
+    }
+
+    public int getHealingStat() {
+        return healingStat;
+    }
+
+    public void setHealingStat(int healingStat) {
+        this.healingStat = healingStat;
+    }
+
+    @Override
+    public void interact(Cookie cookie) {
+        cookie.heal(getHealingStat());
+    }
+}

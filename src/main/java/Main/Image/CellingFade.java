@@ -1,0 +1,19 @@
+package Main.Image;
+
+import javafx.scene.layout.Region;
+
+public class CellingFade extends Region {
+
+    public CellingFade(double H) {
+
+        setMaxWidth(Double.MAX_VALUE);
+        setMaxHeight(H);
+
+        setStyle("""
+            -fx-background-color: linear-gradient(to bottom,
+                rgba(255, 255, 255, 0.4),
+                rgba(255, 255, 255, 0.0)
+            );
+        """);
+    }
+}
