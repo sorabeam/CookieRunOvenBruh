@@ -203,7 +203,7 @@ public abstract class Cookie {
             deathTimer -= deltaTime;
 
             if(deathTimer <= 0){
-                GameLogic.setGameState(GameState.GAMEOVER);
+                GameLogic.setGameState(GameState.GAME_OVER);
             }
 
             return;

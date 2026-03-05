@@ -46,7 +46,7 @@ public class DVDShow extends StackPane {
         ImageView curCharBox = Asset.createImageView("charBox", 300, 0);
 
         ImageView img = Asset.createImageView(CharacterData.getCurrent_Cookie().get_Bid(),180,0);
-        NavigationButton show = new NavigationButton(img, GameState.SELECTCHAR);
+        NavigationButton show = new NavigationButton(img, GameState.SELECT_CHAR);
         StackPane.setMargin(show,new Insets(-50,-60,0,0));
         wrapper2.getChildren().addAll(curCharBox,show);
         StackPane.setMargin(wrapper2,new Insets(0,475,0,0));

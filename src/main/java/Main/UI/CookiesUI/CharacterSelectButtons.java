@@ -10,7 +10,7 @@ import Main.Button.NavigationButton;
 public class CharacterSelectButtons extends HBox {
     public  CharacterSelectButtons(){
         NavigationButton BackBtn = new NavigationButton(Asset.createImageView("BackBtn",0,200), GameState.INTRO);
-        NavigationButton PetsBtn = new NavigationButton(Asset.createImageView("CSPetsBtn",0,200),GameState.SELECTPET);
+        NavigationButton PetsBtn = new NavigationButton(Asset.createImageView("CSPetsBtn",0,200),GameState.SELECT_PET);
 
         getChildren().addAll(BackBtn, PetsBtn);
         setSpacing(20);

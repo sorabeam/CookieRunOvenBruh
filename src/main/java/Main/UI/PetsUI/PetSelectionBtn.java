@@ -12,7 +12,7 @@ public class PetSelectionBtn extends HBox {
     public PetSelectionBtn(Region spacer){
 
         NavigationButton backBtn = new NavigationButton(Asset.createImageView("BackBtn",100,0), GameState.INTRO);
-        NavigationButton cookieBtn = new NavigationButton(Asset.createImageView("SEcookie",100,0),GameState.SELECTCHAR);
+        NavigationButton cookieBtn = new NavigationButton(Asset.createImageView("SEcookie",100,0),GameState.SELECT_CHAR);
 
         getChildren().addAll(spacer, cookieBtn, backBtn);
         setSpacing(20);

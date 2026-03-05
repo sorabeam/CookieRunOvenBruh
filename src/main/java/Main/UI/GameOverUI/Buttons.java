@@ -12,7 +12,7 @@ public class Buttons extends HBox {
 
     public Buttons(){
         Button playMoreView = new BaseButton(Asset.createImageView("playMoreTest", 250,0));
-        Button replayBtn = new NavigationButton(Asset.createImageView("ReplayBtn", 90, 0), GameState.INGAME);
+        Button replayBtn = new NavigationButton(Asset.createImageView("ReplayBtn", 90, 0), GameState.IN_GAME);
         Button backBtn = new NavigationButton(Asset.createImageView("backBtn", 90, 0),GameState.INTRO);
 
         setSpacing(10);

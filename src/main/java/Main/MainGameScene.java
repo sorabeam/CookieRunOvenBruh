@@ -56,12 +56,12 @@ public class MainGameScene extends Application {
                     playMusic("Lobby",50);
                 }
 
-                case SELECTCHAR -> {
+                case SELECT_CHAR -> {
                     gameRoot.getChildren().setAll(new CookieSelectionScene());
                     playMusic("Main/Cookies",50);
                 }
 
-                case INGAME -> {
+                case IN_GAME -> {
 
                     CharacterData.getCurrent_Cookie().setHp(CharacterData.getCurrent_Cookie().getMaxHp());
                     CharacterData.getCurrent_Cookie().setCooldownTimer(0);
@@ -75,12 +75,12 @@ public class MainGameScene extends Application {
                     GameLogic.setCurrentGameScene(inGameScene);
                     gameRoot.getChildren().setAll(inGameScene);
                 }
-                case SELECTPET -> {
+                case SELECT_PET -> {
                     gameRoot.getChildren().setAll(new PetsSelectionScene());
                     playMusic("Main/Pets",50);
                 }
 
-                case GAMEOVER -> {
+                case GAME_OVER -> {
                     gameRoot.getChildren().setAll(new GameOverScene());
                     playMusic("GameOver",50);
                 }

@@ -51,21 +51,21 @@ public class GameLogic {
     //GameState
     private static GameplayScene currentGameScene;
 
-    private static final ObjectProperty<GameState> gameState =
+    private static final ObjectProperty<GameState> GAME_STATE =
             new SimpleObjectProperty<>(null);
 
     public static GameState getGameState() {
-        return gameState.get();
+        return GAME_STATE.get();
     }
 
     public static void setGameState(GameState state) {
-        if (gameState.get() == state) return;
+        if (GAME_STATE.get() == state) return;
         if (currentGameScene != null) {
             currentGameScene.stopGame();
             currentGameScene = null;
         }
 
-        gameState.set(state);
+        GAME_STATE.set(state);
     }
 
     public static void setCurrentGameScene(GameplayScene scene) {
@@ -73,7 +73,7 @@ public class GameLogic {
     }
 
     public static ObjectProperty<GameState> gameStateProperty() {
-        return gameState;
+        return GAME_STATE;
     }
 
     //Scene/Stage

@@ -33,7 +33,7 @@ public class SettingsPopUpButton extends BaseButton{
     @Override
     public void handleClick() {
         super.handleClick();
-        if(GameLogic.getGameState().equals(GameState.INGAME)){
+        if(GameLogic.getGameState().equals(GameState.IN_GAME)){
             if (!GameLogic.getGameroot().getChildren().isEmpty()) {
                 Node child = GameLogic.getGameroot().getChildren().getFirst();
 
@@ -170,10 +170,10 @@ public class SettingsPopUpButton extends BaseButton{
 //        NavSettingBtn play = new NavSettingBtn(GameState.INGAME,"PLAY",this);
 //        play.setInset(new Insets(24,0,0,82));
 
-        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECTPET, "Pets",this);
+        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECT_PET, "Pets",this);
         selectPets.setInset(new Insets(24,0,0,86));
 
-        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECTCHAR, "Cookies",this);
+        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECT_CHAR, "Cookies",this);
         selectChar.setInset(new Insets(24,0,0,62));
 
         NavSettingBtn menu = new NavSettingBtn(GameState.INTRO,"Menu",this);
@@ -253,7 +253,7 @@ public class SettingsPopUpButton extends BaseButton{
                 oldAction.handle(e);
             }
 
-        if(GameLogic.getGameState().equals(GameState.INGAME)){
+        if(GameLogic.getGameState().equals(GameState.IN_GAME)){
             if (!GameLogic.getGameroot().getChildren().isEmpty()) {
                 Node child = GameLogic.getGameroot().getChildren().getFirst();
 
