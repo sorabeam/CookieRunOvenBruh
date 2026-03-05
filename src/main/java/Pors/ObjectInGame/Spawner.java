@@ -16,6 +16,8 @@ import javafx.scene.layout.Pane;
 import java.util.Iterator;
 import java.util.List;
 
+import static Pors.ObjectInGame.SpawnerLayout.level;
+
 public class Spawner {
 
     private Pane gameLayer;
@@ -25,6 +27,7 @@ public class Spawner {
     private static double defaultSpeed = -350;
     private static double speed = defaultSpeed;
     private Pet pet;
+    private int begin = 0;
 
     private long lastUpdateTime = 0;
 
@@ -32,8 +35,8 @@ public class Spawner {
 
     private List<List<SpawnAction>> spawnSets = SpawnerLayout.getSpawnLayout();
 
-    private int currentSetIndex = spawnSets.size() - 1;
-    //private int currentSetIndex = 0;
+    //private int currentSetIndex = spawnSets.size() - 1;
+    private int currentSetIndex = 0;
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
 
@@ -63,24 +66,47 @@ public class Spawner {
     }
 
     private void spawnBySet(long now) {
+        /*if (currentSetIndex >= spawnSets.size()) {
 
-        if (currentSetIndex >= spawnSets.size()) {
-            currentSetIndex = 0;
+            currentSetIndex = (int)(Math.random() * spawnSets.size());
             currentActionIndex = 0;
             lastSpawnTime = now;
             return;
-        }
-
+        }*/
         List<SpawnAction> set = spawnSets.get(currentSetIndex);
 
         if (currentActionIndex >= set.size()) {
-            // set จบ → ไป set ถัดไป
-            currentSetIndex++;
+
+            if(begin == 0){
+                currentSetIndex = 0;
+                begin++;
+            }
+            else if(begin == 1){
+                currentSetIndex = 3;
+                begin++;
+            }
+            else if(begin == 2){
+                currentSetIndex = 4;
+                begin++;
+            }
+            else if(begin == 3){
+                currentSetIndex = 9;
+                begin++;
+            }
+            else{
+                int min = (level - 1) * 4;
+                int max = spawnSets.size() - 1 - ((3 - level) * 2);
+                currentSetIndex = (int)(Math.random() * (max - min + 1)) + min;
+            }
+
+            System.out.println("New Pattern: " + currentSetIndex);
+
             currentActionIndex = 0;
             lastSpawnTime = now;
             return;
         }
 
+        //List<SpawnAction> set = spawnSets.get(currentSetIndex);
         SpawnAction action = set.get(currentActionIndex);
 
         if (lastSpawnTime == 0) {
@@ -167,7 +193,6 @@ public class Spawner {
                             i,
                             sceneHeight - 80
                     );
-                    //System.out.println("Croissant Y: " + i.getTranslateY());
                 } else {
                     i.update(deltaTime);
                 }

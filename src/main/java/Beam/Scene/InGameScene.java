@@ -266,7 +266,6 @@ public class InGameScene extends BaseRoot{
                         pet.getView().setEffect(shadow);
                     }
 
-                    System.out.println(player.getCookie().getLayoutY());
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                     if(pet.hasArrived()) {
                         pet.updateIndex();
@@ -293,7 +292,6 @@ public class InGameScene extends BaseRoot{
 
                 if (shiftHeld && player.isOnGround()) {
                     player.slide();
-                    System.out.println("slide");
                 }
 
                 //Pew-Pew Pearl And Obstacle

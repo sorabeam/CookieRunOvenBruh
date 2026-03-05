@@ -13,7 +13,7 @@ public class ItemView extends ImageView {
         this.item = item;
         this.vx = vx;
         this.vy = vy;
-        System.out.println("/Image/Items/" + item.getName() + ".png");
+        //System.out.println("/Image/Items/" + item.getName() + ".png");
         setImage(new Image("/Image/Items/" + item.getName() + ".png"));
         if (item instanceof Croissant) {
             setFitWidth(200);
