@@ -90,10 +90,6 @@ public class SpawnerLayout {
         return List.of(
             //0 straight way jelly1
             List.of(
-                    item(200_000_000L,650,"Magnetic"),
-                    item(200_000_000L,650,"HealingPotion"),
-                    item(200_000_000L,650,"SpeedBoost"),
-                    item(200_000_000L,600,"BigHealingPotion"),
                     jelly(200_000_000L, 650, 1),
                     jelly(200_000_000L, 650, 1),
                     jelly(200_000_000L, 650, 1),
@@ -285,14 +281,16 @@ public class SpawnerLayout {
 
                     basicSlice,
 
-                    jelly(400_000_000L, 650, 1),
+                    jelly(200_000_000L, 650, 1),
+                    jelly(200_000_000L, 650, 1),
 
                     jelly(200_000_000L, 600, 1),
                     jelly(200_000_000L, 600, 1),
                     jelly(200_000_000L, 600, 1),
                     jelly(200_000_000L, 600, 1),
 
-                    jelly(400_000_000L, 650, 1),
+                    jelly(200_000_000L, 650, 1),
+                    jelly(200_000_000L, 650, 1),
 
                     basicSlice,
 

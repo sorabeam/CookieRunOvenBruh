@@ -1,7 +1,5 @@
 package Pors.ObjectInGame;
 
-import Got.GameLogic.GameLogic;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +8,7 @@ public class SpawnAction {
     public enum Type { OBSTACLE, ITEM, JELLY }
 
     public final Type type;
-    public final long delay; // หน่วงจากตัวก่อนหน้า (ns)
+    public final long delay;
     public final String name;
     public final int height;
 

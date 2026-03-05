@@ -17,8 +17,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static Pors.ObjectInGame.SpawnerLayout.level;
-
 public class Spawner {
 
     private Pane gameLayer;
@@ -35,6 +33,8 @@ public class Spawner {
     private int currentSetIndex = 0;
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
+
+    private int[] tutorialPatterns = {3,4,9};
 
     public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie, Pet pet) {
         this.gameLayer = gameLayer;
@@ -66,20 +66,8 @@ public class Spawner {
 
         if (currentActionIndex >= set.size()) {
 
-            if(begin == 0){
-                currentSetIndex = 0;
-                begin++;
-            }
-            else if(begin == 1){
-                currentSetIndex = 3;
-                begin++;
-            }
-            else if(begin == 2){
-                currentSetIndex = 4;
-                begin++;
-            }
-            else if(begin == 3){
-                currentSetIndex = 9;
+            if(begin < tutorialPatterns.length){
+                currentSetIndex = tutorialPatterns[begin];
                 begin++;
             }
             else{
@@ -87,11 +75,10 @@ public class Spawner {
 
                 int min = (level - 1) * 4;
                 int max = spawnSets.size() - 1 - ((3 - level) * 5);
+
                 currentSetIndex = (int)(Math.random() * (max - min + 1)) + min;
             }
-
-            System.out.println("New Pattern: " + currentSetIndex);
-
+            System.out.println(currentSetIndex);
             currentActionIndex = 0;
             lastSpawnTime = now;
             return;
@@ -243,7 +230,6 @@ public class Spawner {
 
         ItemView view = new ItemView(croissant, speed, 0);
 
-        // เริ่มจากฟ้า
         view.setTranslateX(sceneWidth - 200);
         view.setTranslateY(-50);
 
@@ -293,7 +279,7 @@ public class Spawner {
                         .intersects(obs.getBoundsInParent())
                         && !cookie.isInvincible()) {
 
-                    cookie.takeDamage(obs.getDamage());
+                    obs.getObstacle().interact(cookie);
                     toRemove.add(node);
                 }
             }

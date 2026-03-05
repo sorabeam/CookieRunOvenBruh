@@ -21,6 +21,6 @@ public class BigHealingPotion extends BaseItem{
 
     @Override
     public void interact(Cookie cookie) {
-        cookie.heal(healingStat);
+        cookie.heal(getHealingStat());
     }
 }

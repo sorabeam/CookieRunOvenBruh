@@ -6,13 +6,11 @@ import Pors.ObjectInGame.Spawner;
 
 public class ChillyBoost extends BaseItem {
     private double speedMul = 3;
-//    private int boostTime = 3000;
     private int boostTime = 5000;
 
     public ChillyBoost() {
         super("ChillyBoost");
     }
-
 
     public void interact(Cookie player) {
         GameLogic.addScore(1000);
@@ -31,21 +29,5 @@ public class ChillyBoost extends BaseItem {
 
         });
         speedBoostThread.start();
-    }
-
-    public double getSpeedMul() {
-        return speedMul;
-    }
-
-    public void setSpeedMul(double speedMul) {
-        this.speedMul = speedMul;
-    }
-
-    public int getBoostTime() {
-        return boostTime;
-    }
-
-    public void setBoostTime(int boostTime) {
-        this.boostTime = boostTime;
     }
 }
