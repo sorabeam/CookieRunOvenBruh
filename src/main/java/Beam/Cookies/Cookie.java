@@ -95,7 +95,7 @@ public abstract class Cookie {
 
     public void takeDamage(int damage){
         hp -= damage;
-        GameLogic.getHpBar().updateHpBar();
+        GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
         System.out.println("Cookie take " + damage + " damage");
 
         System.out.println(hp);
@@ -111,18 +111,28 @@ public abstract class Cookie {
         }
     }
 
+    public void takeDamageByTime(){
+        hp -= 1;
+        GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
+
+        if(hp <= 0){
+            die();
+        }
+    }
+
     public void setHp(int hp) {
         this.hp = Math.min(maxhp,hp);
     }
 
     public void heal(int healunit){
 
-        GameLogic.getHpBar().updateHpBar();
+        GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
         hp = Math.min(maxhp,hp + healunit);;
         System.out.println("Cookie get " + healunit + " heathPoint");
     }
 
     public void die(){
+        cookie.changeAnimationState(AnimationType.DIE);
         GameLogic.setGameState(GameState.GAMEOVER);
     }
 

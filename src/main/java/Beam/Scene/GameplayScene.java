@@ -65,6 +65,7 @@ public class GameplayScene extends BaseScene {
     private Spawner spawner;
     public boolean isUpdate = true;
     private InGameBG bg = new InGameBG(root);
+    private double deltatime;
 
     public GameplayScene(){
         super();
@@ -187,6 +188,7 @@ public class GameplayScene extends BaseScene {
             long last = 0;
             double petCooldownTimer = pet.getCooldowntime()/1000.0;
             double tarPetPosY = 0;
+            double damageTimer;
 
             @Override
             public void handle(long now) {
@@ -201,7 +203,7 @@ public class GameplayScene extends BaseScene {
                     return;
                 }
 
-                double dt = (now - last) / 1e9;
+                deltatime = (now - last) / 1e9;
                 last = now;
 
                 groundY = gameLayer.getHeight() - groundH;
@@ -209,8 +211,8 @@ public class GameplayScene extends BaseScene {
                 double groundWidth = scene.getWidth();
                 double groundSpeed = Spawner.getSpeed();
 
-                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
-                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);
+                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * deltatime);
+                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * deltatime);
 
                 if (ground1.getTranslateX() <= -groundWidth) {
                     ground1.setTranslateX(ground2.getTranslateX() + groundWidth);
@@ -220,8 +222,17 @@ public class GameplayScene extends BaseScene {
                     ground2.setTranslateX(ground1.getTranslateX() + groundWidth);
                 }
 
-                player.update(dt);          // physics + movement
-                player.getCookie().update(dt);
+                damageTimer += deltatime;
+
+                if (damageTimer >= 2.0) {
+                    player.takeDamageByTime();
+                    damageTimer = 0;
+                }
+
+                hpzone.updateHpBar(deltatime);
+
+                player.update(deltatime);          // physics + movement
+                player.getCookie().update(deltatime);
 //                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
                 if(player.isCooldownable()){
                     double progress = player.getCooldownProgress();
@@ -244,13 +255,13 @@ public class GameplayScene extends BaseScene {
                         flame.setTranslateX(-flameW/2-50);
                         flame.setTranslateY(-flameH/2-50);
                     }
-                    flame.update(dt);
+                    flame.update(deltatime);
                 } else {
                     flame.setVisible(false);
                     flame.restart();
                 }
 
-                petCooldownTimer -= dt;
+                petCooldownTimer -= deltatime;
                 if(petCooldownTimer<=0) {
                     pet.useSkill();
                     petCooldownTimer = pet.getCooldowntime()/1000.0;
@@ -285,9 +296,9 @@ public class GameplayScene extends BaseScene {
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                 }
 
-                pet.update(dt);
+                pet.update(deltatime);
 
-                spawner.update(now, dt);
+                spawner.update(now, deltatime);
 
                 if (shiftHeld && player.isOnGround()) {
                     player.slide();
@@ -311,7 +322,7 @@ public class GameplayScene extends BaseScene {
 
                     if (node instanceof Pearl pearl) {
 
-                        pearl.update(dt);
+                        pearl.update(deltatime);
 
                         for (Node other : gameLayer.getChildren()) {
 
@@ -343,9 +354,9 @@ public class GameplayScene extends BaseScene {
                         double bouncePower = -700;
 
                         // เพิ่มความเร็วตก
-                        croissant.vy += gravity * dt;
+                        croissant.vy += gravity * deltatime;
 
-                        view.setTranslateY(view.getTranslateY() + croissant.vy * dt);
+                        view.setTranslateY(view.getTranslateY() + croissant.vy * deltatime);
 
                         double bottom = view.getTranslateY() + view.getBoundsInLocal().getHeight();
 
@@ -365,7 +376,7 @@ public class GameplayScene extends BaseScene {
 
                 if(player instanceof TomYumCookie tomyum){
 
-                    tomyum.updateSkill(dt);
+                    tomyum.updateSkill(deltatime);
 
                     if(tomyum.isSkillReady()){
 
@@ -434,6 +445,14 @@ public class GameplayScene extends BaseScene {
 
     public void setUpdate(boolean upadate) {
         isUpdate = upadate;
+    }
+
+    public double getDeltatime() {
+        return deltatime;
+    }
+
+    public void setDeltatime(double dt) {
+        this.deltatime = dt;
     }
 }
 

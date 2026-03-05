@@ -1,6 +1,7 @@
 package Beam.UI.InGameUI;
 
 import Beam.CharactorData;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -17,8 +18,11 @@ public class HpDisplayZone extends StackPane {
     int current_hp;
     double percent;
 
-    double barWidth = 980;   // ความกว้างเต็ม
-    double barHeight = 32;   // ความสูงคงที่
+    double barWidth = 980;
+    double barHeight = 32;
+
+    private double displayPercent = 1.0;
+    private double smoothSpeed = 5.0;
 
     Rectangle cdFill;
 
@@ -57,25 +61,23 @@ public class HpDisplayZone extends StackPane {
 
         setMaxSize(USE_PREF_SIZE,USE_PREF_SIZE);
 
-        updateHpBar(); // อัปเดตครั้งแรก
     }
 
-    public void updateHpBar() {
+    public void updateHpBar(double dt) {
 
         current_hp = CharactorData.getCurrent_Cookie().get_Hp();
 
         if (max_hp <= 0) return;
 
-        percent = (double) current_hp / max_hp;
+        double targetPercent = (double) current_hp / max_hp;
 
-        // จำกัดค่า 0 - 1
-        percent = Math.max(0, Math.min(1, percent));
+        targetPercent = Math.max(0, Math.min(1, targetPercent));
 
+        displayPercent += (targetPercent - displayPercent) * smoothSpeed * dt;
 
-        cdFill.setWidth(barWidth * percent);
+        cdFill.setWidth(barWidth * displayPercent);
 
-        Color brightOrange = Color.RED.interpolate(Color.WHITE, 0.3);
-        Color color =  Color.RED.interpolate(Color.WHITE, 0.3);
+        Color color = Color.RED.interpolate(Color.WHITE, 0.3);
 
         cdFill.setFill(new LinearGradient(
                 0, 0, 1, 0, true, CycleMethod.NO_CYCLE,

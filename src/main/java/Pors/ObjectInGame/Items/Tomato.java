@@ -8,7 +8,7 @@ public class Tomato extends BaseItem {
         super("Tomato");
     }
 
-    public void interact(Cookie player) {
+    public void interact(Cookie playert) {
         GameLogic.addScore(500);
     }
 }
