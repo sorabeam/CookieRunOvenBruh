@@ -9,7 +9,7 @@ public class StickyMochi extends BaseItem {
     }
 
     public void interact(Cookie player) {
-        GameLogic.addScore(100);
+        GameLogic.addScore(1000);
         player.heal(20);
     }
 }

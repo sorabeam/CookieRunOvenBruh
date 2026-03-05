@@ -3,14 +3,12 @@ package Beam.Cookies;
 import Beam.Asset;
 
 public class TomYumCookie extends Cookie {
-    protected double cooldownTimer = 0;
-    protected double skillCooldown = 20;
 
     private boolean rainReady = false;
 
     public TomYumCookie() {
-        super(2, "TomYumCookie", 170,
-                "Every 20 seconds, Tom Yum Cookie" + "\n" +
+        super(2, "TomYum", 170,
+                "Every 15 seconds, Tom Yum Cookie" + "\n" +
                         "summons Ingredient Rain." + "\n" +
                         "Shrimp, Galangal, Lemongrass," + "\n" +
                         "and Kaffir Lime Leaf" + "\n" +
@@ -19,25 +17,27 @@ public class TomYumCookie extends Cookie {
         setImgURL("TomYum_Cookie_sheet");
         setProfileImg(Asset.getImage("Profile_Tomyum"));
         setScore(133000);
+        setCooldownable(true);
+        setCooldownTimer(0);
+        setSkillCooldown(15);
     }
 
     @Override
     public void useSkill() {
+        if (isDead()) return;
 
-        //playSkill(0.3); // animation
-
-        //rainReady = true;
+        playSkill(0.5);
+        setCooldownTimer(0);
+        setInvincible(2.0);
+        rainReady = true;
     }
 
     public void updateSkill(double dt){
 
-        cooldownTimer += dt;
+        setCooldownTimer(getCooldownTimer() + dt);
 
-        if(cooldownTimer >= skillCooldown){
-            playSkill(0.5);
-            cooldownTimer = 0;
-            setInvincible(2.0);
-            rainReady = true;
+        if(getCooldownTimer() >= getSkillCooldown()){
+            useSkill();
         }
     }
 

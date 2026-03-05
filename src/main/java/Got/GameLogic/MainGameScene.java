@@ -1,22 +1,18 @@
 package Got.GameLogic;
 
 import Beam.CharactorData;
-import Beam.Media.JooxBox;
+import Beam.Media.MediaPlayer;
 import Beam.Scene.*;
+import Pors.ObjectInGame.Spawner;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-public class TestInGame2 extends Application {
+public class MainGameScene extends Application {
 
     private StackPane gameRoot;
     private Scene scene;
@@ -75,10 +71,13 @@ public class TestInGame2 extends Application {
                 case INGAME -> {
 
                     CharactorData.getCurrent_Cookie().setHp(CharactorData.getCurrent_Cookie().getMaxhp());
+                    CharactorData.getCurrent_Cookie().setCooldownTimer(0);
+                    CharactorData.getCurrent_Cookie().setSkillCounter(0);
+                    CharactorData.getCurrent_Cookie().setDead(false);
                     GameLogic.setScore(0);
                     playMusic("SoundMAP" + GameLogic.getMap(),50);
 
-                    InGameScene inGameScene = new InGameScene();
+                    GameplayScene inGameScene = new GameplayScene();
                     GameLogic.setCurrentGameScene(inGameScene);
                     gameRoot.getChildren().setAll(inGameScene);
                 }
@@ -88,7 +87,7 @@ public class TestInGame2 extends Application {
                 }
 
                 case GAMEOVER -> {
-                    gameRoot.getChildren().setAll(new GameOverRoot());
+                    gameRoot.getChildren().setAll(new GameOverScene());
                     playMusic("GameOver",50);
                 }
             }
@@ -119,7 +118,7 @@ public class TestInGame2 extends Application {
     }
 
     private void playMusic(String key,int v) {
-        JooxBox.getInstance().playBGM(key, true);
+        MediaPlayer.getInstance().playBGM(key, true);
     }
 
 }

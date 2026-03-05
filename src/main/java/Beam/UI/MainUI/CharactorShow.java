@@ -3,7 +3,6 @@ package Beam.UI.MainUI;
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.CharactorData;
-import Beam.Image.OutlineText;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -23,7 +22,8 @@ public class CharactorShow extends StackPane {
         setMargin(cookieView, new Insets( -100,-50,0,0));
 
         ImageView petView = CharactorData.getCurrent_Pet().getView();
-        petView.setFitHeight(100);
+        petView.setFitHeight(150);
+        petView.setFitWidth(150);
         petView.setStyle(
                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0.7, 0, 5);"
         );

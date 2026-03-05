@@ -1,5 +1,8 @@
 package Beam.Scene;
 
+import Beam.Animation.AnimateEffect;
+import Beam.Animation.AnimationType;
+import Beam.Asset;
 import Beam.CharactorData;
 import Beam.Cookies.BobaCookie;
 import Beam.Cookies.Cookie;
@@ -40,13 +43,14 @@ import Pors.ObjectInGame.Obstacle.BaseObstacle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import static Got.GameLogic.GameLogic.getStage;
-
-public class InGameScene extends BaseRoot{
+public class GameplayScene extends BaseScene {
 
     Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
     StackPane uiLayer = new StackPane(); // สำหรับ UI
+
+    private MoveGround ground;
 
     private boolean shiftHeld = false;
 //    double groundSpeedDefault = Spawner.getSpeed();
@@ -56,15 +60,16 @@ public class InGameScene extends BaseRoot{
     HpDisplayZone hpzone = new HpDisplayZone();
     ShowScore sc = new ShowScore();
 
-    private final double groundH = 150;
+    private final double groundH = -150;
     public static double groundY;
 
     private AnimationTimer timer;
     private Spawner spawner;
-    private boolean isUpadate = true;
+    public boolean isUpdate = true;
     private InGameBG bg = new InGameBG(root);
+    private double deltatime;
 
-    public InGameScene(){
+    public GameplayScene(){
         super();
         setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
         DropShadow shadow = new DropShadow();
@@ -91,6 +96,8 @@ public class InGameScene extends BaseRoot{
 //       Cookie player = new BobaCookie();
         Cookie player = CharactorData.getCurrent_Cookie();
         Pet pet = CharactorData.getCurrent_Pet();
+        AnimateEffect flame = new AnimateEffect(Asset.getImage("FireSpriteSheet"), 125, 125, 9, 4, 0.3);
+        flame.setLoop(true);
 //        Pet pet = new Salad()s;
 //        Pet pet = new Chilly();
 
@@ -103,91 +110,26 @@ public class InGameScene extends BaseRoot{
                         pet
                 );
 
-
+        Spawner.setSpeed(-350);
         //ground
-        Image groundImg = new Image("/Image/BackGround/GroundLevel" + GameLogic.getMap() + ".png");
-
-        ImageView ground1 = new ImageView(groundImg);
-        ImageView ground2 = new ImageView(groundImg);
-
-        ground1.setFitHeight(groundH + 100);
-        ground2.setFitHeight(groundH + 100);
-
-        ground1.setFitWidth(scene.getWidth());
-        ground2.setFitWidth(scene.getWidth());
-
-        ground1.setPreserveRatio(false);
-        ground2.setPreserveRatio(false);
-
-        ground1.setScaleY(1.5);
-        ground2.setScaleY(1.5);
-
-        // wait until layout pass to get real width
-        Platform.runLater(() -> {
-            double groundWidth = scene.getWidth();
-
-            ground1.setTranslateX(0);
-            ground2.setTranslateX(groundWidth);
-        });
-
-        ground1.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(90));
-        ground2.layoutYProperty().bind(gameLayer.heightProperty().subtract(groundH).subtract(90));
-
-        gameLayer.getChildren().addAll(ground1, ground2);
+        ground = new MoveGround(gameLayer, scene.getWidth());
+        gameLayer.getChildren().add(ground);
+        ground.start();
 
         player.setGameLayer(gameLayer);
         player.createCookie();
+        CoodownBar cdBar = new CoodownBar(player);
 
         gameLayer.getChildren().addAll(
+                flame,
                 player.getCookie(),
-                player.getHitbox()
+                player.getHitbox(),
+                cdBar
         );
 
-        //Cooldown Frame
-        Rectangle cdFrame = new Rectangle(84,12);
-        cdFrame.setFill(Color.BLACK);
-        cdFrame.setArcWidth(10);
-        cdFrame.setArcHeight(10);
 
-        Rectangle cdBackground = new Rectangle(80,8);
-        cdBackground.setFill(Color.rgb(40,40,40));
-        cdBackground.setArcWidth(8);
-        cdBackground.setArcHeight(8);
 
-        Rectangle cdFill = new Rectangle(80,8);
-        cdFill.setFill(Color.LIMEGREEN);
-        cdFill.setArcWidth(8);
-        cdFill.setArcHeight(8);
 
-        cdFill.setFill(new LinearGradient(
-                0,0,1,0,true, CycleMethod.NO_CYCLE,
-                new Stop(0, Color.web("#b9ff9f")),
-                new Stop(0.35, Color.web("#7dff63")),
-                new Stop(0.7, Color.web("#39d353")),
-                new Stop(1, Color.web("#1faa2a"))
-        ));
-
-        cdBackground.setLayoutX(2);
-        cdBackground.setLayoutY(2);
-
-        cdFill.setLayoutX(2);
-        cdFill.setLayoutY(2);
-
-        gameLayer.getChildren().addAll(cdFrame, cdBackground, cdFill);
-
-        cdFrame.layoutXProperty().bind(
-                player.getCookie().layoutXProperty().add(58)
-        );
-
-        cdFrame.layoutYProperty().bind(
-                player.getCookie().layoutYProperty().subtract(18)
-        );
-
-        cdBackground.layoutXProperty().bind(cdFrame.layoutXProperty().add(2));
-        cdBackground.layoutYProperty().bind(cdFrame.layoutYProperty().add(2));
-
-        cdFill.layoutXProperty().bind(cdFrame.layoutXProperty().add(2));
-        cdFill.layoutYProperty().bind(cdFrame.layoutYProperty().add(2));
 
 //        pet.getView().setLayoutX(150);
         pet.getView().setFitWidth(80);
@@ -198,6 +140,22 @@ public class InGameScene extends BaseRoot{
         player.getCookie().setFitHeight(200);
         player.getCookie().setLayoutX(200);
 
+//        flame.setManaged(false);
+        flame.setFitWidth(350);
+        flame.setFitHeight(350);
+        flame.setPreserveRatio(true);
+        double flameW = flame.getFitWidth();
+        double flameH = flame.getFitHeight();
+        flame.layoutXProperty().bind(
+                player.getCookie().layoutXProperty()
+                        .add(player.getCookie().fitWidthProperty().divide(2)).add(60)
+        );
+
+        flame.layoutYProperty().bind(
+                player.getCookie().layoutYProperty()
+                        .add(player.getCookie().fitHeightProperty().divide(2))
+        );
+
         root.getChildren().add(gameLayer);
         root.getChildren().add(uiLayer);
 
@@ -206,11 +164,12 @@ public class InGameScene extends BaseRoot{
             long last = 0;
             double petCooldownTimer = pet.getCooldowntime()/1000.0;
             double tarPetPosY = 0;
+            double damageTimer;
 
             @Override
             public void handle(long now) {
 
-                if (!isUpadate) {
+                if (!isUpdate) {
                     last = 0;
                     return;
                 }
@@ -220,39 +179,54 @@ public class InGameScene extends BaseRoot{
                     return;
                 }
 
-                double dt = (now - last) / 1e9;
+                deltatime = (now - last) / 1e9;
                 last = now;
 
-                groundY = gameLayer.getHeight() - groundH;
+                groundY = ground.getGroundY() - groundH - 80;
 
                 double groundWidth = scene.getWidth();
                 double groundSpeed = Spawner.getSpeed();
 
-                ground1.setTranslateX(ground1.getTranslateX() + groundSpeed * dt);
-                ground2.setTranslateX(ground2.getTranslateX() + groundSpeed * dt);
+                damageTimer += deltatime;
 
-                if (ground1.getTranslateX() <= -groundWidth) {
-                    ground1.setTranslateX(ground2.getTranslateX() + groundWidth);
+                if (damageTimer >= 2.0) {
+                    player.takeDamageByTime();
+                    damageTimer = 0;
                 }
 
-                if (ground2.getTranslateX() <= -groundWidth) {
-                    ground2.setTranslateX(ground1.getTranslateX() + groundWidth);
-                }
+                hpzone.updateHpBar(deltatime);
 
-                player.update(dt);          // physics + movement
-                player.getCookie().update(dt);
+                player.update(deltatime);          // physics + movement
+                player.getCookie().update(deltatime);
 //                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
-                if(player.hasCooldownBar()){
+                if(player.isCooldownable()){
                     double progress = player.getCooldownProgress();
-                    cdFill.setWidth(80 * progress);
-                    cdFill.setVisible(true);
+                    cdBar.fill.setWidth(80 * progress);
+                    cdBar.fill.setVisible(true);
                 }else{
-                    cdFill.setVisible(false);
-                    cdFrame.setVisible(false);
-                    cdBackground.setVisible(false);
+                    cdBar.fill.setVisible(false);
+                    cdBar.frame.setVisible(false);
+                    cdBar.background.setVisible(false);
                 }
 
-                petCooldownTimer -= dt;
+                if(player.isSpeeding()) {
+                    flame.setVisible(true);
+                    if(player.getCookie().getAnimationState()== AnimationType.SLIDE) {
+                        flame.setRotate(270);
+                        flame.setTranslateX(-flameH/2-100);
+                        flame.setTranslateY(-flameW/2+100);
+                    } else {
+                        flame.setRotate(0);
+                        flame.setTranslateX(-flameW/2-50);
+                        flame.setTranslateY(-flameH/2-50);
+                    }
+                    flame.update(deltatime);
+                } else {
+                    flame.setVisible(false);
+                    flame.restart();
+                }
+
+                petCooldownTimer -= deltatime;
                 if(petCooldownTimer<=0) {
                     pet.useSkill();
                     petCooldownTimer = pet.getCooldowntime()/1000.0;
@@ -266,6 +240,7 @@ public class InGameScene extends BaseRoot{
                         pet.getView().setEffect(shadow);
                     }
 
+                    System.out.println(player.getCookie().getLayoutY());
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                     if(pet.hasArrived()) {
                         pet.updateIndex();
@@ -286,12 +261,13 @@ public class InGameScene extends BaseRoot{
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                 }
 
-                pet.update(dt);
+                pet.update(deltatime);
 
-                spawner.update(now, dt);
+                spawner.update(now, deltatime);
 
                 if (shiftHeld && player.isOnGround()) {
                     player.slide();
+                    System.out.println("slide");
                 }
 
                 //Pew-Pew Pearl And Obstacle
@@ -311,7 +287,7 @@ public class InGameScene extends BaseRoot{
 
                     if (node instanceof Pearl pearl) {
 
-                        pearl.update(dt);
+                        pearl.update(deltatime);
 
                         for (Node other : gameLayer.getChildren()) {
 
@@ -343,15 +319,15 @@ public class InGameScene extends BaseRoot{
                         double bouncePower = -700;
 
                         // เพิ่มความเร็วตก
-                        croissant.vy += gravity * dt;
+                        croissant.vy += gravity * deltatime;
 
-                        view.setTranslateY(view.getTranslateY() + croissant.vy * dt);
+                        view.setTranslateY(view.getTranslateY() + croissant.vy * deltatime);
 
                         double bottom = view.getTranslateY() + view.getBoundsInLocal().getHeight();
 
-                        if (bottom >= groundY) {
+                        if (bottom >= GameplayScene.groundY) {
 
-                            view.setTranslateY(groundY - view.getBoundsInLocal().getHeight());
+                            view.setTranslateY(GameplayScene.groundY - view.getBoundsInLocal().getHeight());
 
                             if (!croissant.hasBounced) {
                                 croissant.vy = bouncePower;
@@ -365,7 +341,7 @@ public class InGameScene extends BaseRoot{
 
                 if(player instanceof TomYumCookie tomyum){
 
-                    tomyum.updateSkill(dt);
+                    tomyum.updateSkill(deltatime);
 
                     if(tomyum.isSkillReady()){
 
@@ -383,6 +359,8 @@ public class InGameScene extends BaseRoot{
         timer.start();
 
         setOnKeyPressed(e -> {
+            if(player.isDead()) return;
+
             switch (e.getCode()) {
                 case SPACE -> player.jump();
                 case SHIFT -> {
@@ -399,6 +377,7 @@ public class InGameScene extends BaseRoot{
         });
 
         setOnKeyReleased(e -> {
+            if(player.isDead()) return;
             if (e.getCode() == KeyCode.SHIFT ) {
                 shiftHeld = false;
                 player.upFromSlide();
@@ -419,13 +398,37 @@ public class InGameScene extends BaseRoot{
     }
 
     public void stopGameByBool() {
-        isUpadate = false;
+        isUpdate = false;
         bg.stop();
+        ground.stop();
     }
 
     public void resumeGameByBool() {
-        isUpadate = true;
+        isUpdate = true;
         bg.start();
+        ground.start();
+    }
+
+    public void stopEnvironment() {
+        Spawner.setSpeed(0);
+        bg.stop();
+        ground.stop();
+    }
+
+    public boolean isUpdate() {
+        return isUpdate;
+    }
+
+    public void setUpdate(boolean upadate) {
+        isUpdate = upadate;
+    }
+
+    public double getDeltatime() {
+        return deltatime;
+    }
+
+    public void setDeltatime(double dt) {
+        this.deltatime = dt;
     }
 }
 

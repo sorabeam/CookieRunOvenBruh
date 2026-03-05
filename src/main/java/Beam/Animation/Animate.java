@@ -6,7 +6,7 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Animate extends ImageView implements Animatable{
+public class Animate extends ImageView {
 
     protected int currentRow = 4;
     protected int currentFrame = 0;
@@ -74,7 +74,7 @@ public class Animate extends ImageView implements Animatable{
             currentFrame = 0;
             maxFPR = maxFPRType[newValue.getRow()];
 
-            if (getAnimationState() == AnimationType.SKILL){
+            if (getAnimationState() == AnimationType.SKILL || getAnimationState() == AnimationType.DIE){
                 isLoop = false;
             } else {
                 isLoop = true;
@@ -119,7 +119,6 @@ public class Animate extends ImageView implements Animatable{
         this.frameDuration = frameDuration;
     }
 
-    @Override
     public void DrawAnimation() {
 
         setViewport(new Rectangle2D(currentFrame * frameWidth,

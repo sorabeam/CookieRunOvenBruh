@@ -1,12 +1,13 @@
 package Beam.Button;
 
 import Beam.Asset;
-import Beam.Image.OutlineText;
-import Beam.Media.JooxBox;
-import Beam.Scene.InGameScene;
+import Beam.Image.OutlineTextImage;
+import Beam.Media.MediaPlayer;
+import Beam.Scene.GameplayScene;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
-import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -16,15 +17,15 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
 
 import java.util.Objects;
 
-public class SettingPopUpBtn extends BaseButton{
+public class SettingsPopupButton extends BaseButton{
     private final Pane root;
     private StackPane overlay;
+    private boolean isOpen = false;
 
-    public SettingPopUpBtn(ImageView img, Pane root) {
+    public SettingsPopupButton(ImageView img, Pane root) {
         super(img);
         this.root = root;
     }
@@ -33,16 +34,21 @@ public class SettingPopUpBtn extends BaseButton{
     public void handleClick() {
         super.handleClick();
         if(GameLogic.getGameState().equals(GameState.INGAME)){
-            Node child = GameLogic.getGameroot().getChildren().getFirst();
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().get(0);
 
-            if (child instanceof InGameScene inGameScene) {
+            if (child instanceof GameplayScene inGameScene) {
                 inGameScene.stopGameByBool();
+            }
             }
         }
         showSetting();
     }
 
     private void showSetting() {
+
+        if(isOpen) return;
+        isOpen = true;
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(10);
@@ -78,13 +84,15 @@ public class SettingPopUpBtn extends BaseButton{
                                     "-fx-padding: 3px;"
                     );
                 }
-                thumb.setStyle(
-                        "-fx-background-color: white, rgb(57, 44, 62);" +
-                                "-fx-background-insets: 0, 4;" +
-                                "-fx-background-radius: 50;" +
-                                "-fx-pref-width: 30px;" +
-                                "-fx-pref-height: 30px;"
-                );
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
             }
         });
 
@@ -99,31 +107,33 @@ public class SettingPopUpBtn extends BaseButton{
                                     "-fx-padding: 3px;"
                     );
                 }
-                thumb.setStyle(
-                        "-fx-background-color: white, rgb(57, 44, 62);" +
-                                "-fx-background-insets: 0, 4;" +
-                                "-fx-background-radius: 50;" +
-                                "-fx-pref-width: 30px;" +
-                                "-fx-pref-height: 30px;"
-                );
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
             }
         });
 
 
 
-        OutlineText setting = new OutlineText("setting",'C',30);
+        OutlineTextImage setting = new OutlineTextImage("setting",'C',30);
         setting.setDropShadow(shadow);
         VBox.setMargin(setting,new Insets(100,0,0,0));
 
-        OutlineText mvolume = new OutlineText("Main Volume",'C',25);
+        OutlineTextImage mvolume = new OutlineTextImage("Main Volume",'C',25);
         mvolume.setDropShadow(shadow);
-        OutlineText sfxvolume = new OutlineText("SFX Volume",'C',25);
+        OutlineTextImage sfxvolume = new OutlineTextImage("SFX Volume",'C',25);
         sfxvolume.setDropShadow(shadow);
 
-        OutlineText intmv = new OutlineText(GameLogic.getMusicVolume()+"",'M',25);
+        OutlineTextImage intmv = new OutlineTextImage(GameLogic.getMusicVolume()+"",'M',25);
         intmv.setDropShadow(shadow);
         intmv.setPadding(new Insets(0,0,0,-35));
-        OutlineText intsfxv = new OutlineText(GameLogic.getSFXVolume()+"",'M',25);
+        OutlineTextImage intsfxv = new OutlineTextImage(GameLogic.getSFXVolume()+"",'M',25);
         intsfxv.setDropShadow(shadow);
         intsfxv.setPadding(new Insets(0,0,0,-60));
 
@@ -138,7 +148,7 @@ public class SettingPopUpBtn extends BaseButton{
         volumSFXSetting.setPadding(new Insets(0,50,0,100));
 
         GridPane BtnPane = new GridPane();
-        BtnPane.setAlignment(Pos.CENTER);
+        BtnPane.setAlignment(Pos.CENTER_RIGHT);
 
         BtnPane.setHgap(30);
         BtnPane.setVgap(30);
@@ -147,32 +157,32 @@ public class SettingPopUpBtn extends BaseButton{
 
             GameLogic.setMusicVolume(newVal.intValue());
             intmv.setText(GameLogic.getMusicVolume() + "");
-            JooxBox.getInstance().updateBGMVolume();
+            MediaPlayer.getInstance().updateBGMVolume();
         });
 
         SFXvolumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             GameLogic.setSFXVolume(newVal.intValue());
             intsfxv.setText(GameLogic.getSFXVolume() + "");
-            JooxBox.getInstance().updateSFXVolume();
+            MediaPlayer.getInstance().updateSFXVolume();
         });
 
 
-        NavSettingBtn play = new NavSettingBtn(GameState.INGAME,"PLAY");
+        NavSettingBtn play = new NavSettingBtn(GameState.INGAME,"PLAY",this);
         play.setInset(new Insets(24,0,0,82));
 
-        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECTPET,"Pets");
+        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECTPET,"Pets",this);
         selectPets.setInset(new Insets(24,0,0,86));
 
-        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECTCHAR,"Cookies");
+        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECTCHAR,"Cookies",this);
         selectChar.setInset(new Insets(24,0,0,62));
 
-        NavSettingBtn menu = new NavSettingBtn(GameState.INTRO,"Menu");
+        NavSettingBtn menu = new NavSettingBtn(GameState.INTRO,"Menu",this);
         menu.setInset(new Insets(24,0,0,79));
 
-        NavSettingBtn leave = new NavSettingBtn(null,"Leave");
+        NavSettingBtn leave = new NavSettingBtn(null,"Leave",this);
         leave.setInset(new Insets(24,0,0,80));
 
-        NavSettingBtn resumeBtn = new NavSettingBtn(null,"Resume");
+        NavSettingBtn resumeBtn = new NavSettingBtn(null,"Resume",this);
         resumeBtn.setInset(new Insets(24,0,0,62));
 
 
@@ -208,7 +218,7 @@ public class SettingPopUpBtn extends BaseButton{
 
     private void deleteThis(BaseButton button) {
 
-        var oldAction = button.getOnAction();
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
 
         button.setOnAction(e -> {
 
@@ -238,7 +248,7 @@ public class SettingPopUpBtn extends BaseButton{
 
     private void runItBack(BaseButton button){
 
-        var oldAction = button.getOnAction();
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
 
         button.setOnAction(e -> {
 
@@ -247,14 +257,24 @@ public class SettingPopUpBtn extends BaseButton{
             }
 
         if(GameLogic.getGameState().equals(GameState.INGAME)){
-            Node child = GameLogic.getGameroot().getChildren().getFirst();
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().get(0);
 
-            if (child instanceof InGameScene inGameScene) {
+            if  (child instanceof GameplayScene) {
+                    GameplayScene inGameScene = (GameplayScene) child;
                 inGameScene.resumeGameByBool();
-            }
+            }}
         }
             root.getChildren().remove(overlay);
 
         });
+    }
+
+    public Boolean getOpen() {
+        return isOpen;
+    }
+
+    public void setOpen(Boolean open) {
+        isOpen = open;
     }
 }

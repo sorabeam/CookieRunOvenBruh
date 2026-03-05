@@ -1,23 +1,20 @@
 package Beam.Cookies;
 
 import Beam.Animation.Animate;
-import Beam.Animation.AnimationType;
 import Beam.Asset;
-import Beam.Image.OutlineText;
+import Beam.Image.OutlineTextImage;
 import Pors.ObjectInGame.Items.CroissantType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.text.Text;
 import javafx.scene.paint.Color;
 
 public class CrossiantCookie extends Cookie {
 
-    private int jellyCollected = 0;
     private int croissantCycle = 0;
     private boolean croissantReady = false;
-    private OutlineText counterText;
+    private OutlineTextImage counterText;
 
     public CrossiantCookie() {
-        super(3, "CroissantCookie", 140,
+        super(3, "Croissant", 140,
                 "Every 30 Jellies collected," + "\n" +
                         "a Croissant Jelly falls from the sky." + "\n" +
                         "Original grants bonus points," + "\n" +
@@ -26,6 +23,8 @@ public class CrossiantCookie extends Cookie {
         setImgURL("Croissant_Cookie_sheet");
         setProfileImg(Asset.getImage("Profile_Cross"));
         setScore(256200);
+        setSkillCounter(0);
+        setCooldownable(false);
     }
 
     @Override
@@ -33,7 +32,7 @@ public class CrossiantCookie extends Cookie {
 
         Animate anim = super.createCookie(); // สร้าง cookie + hitbox จาก class แม่ก่อน
 
-        counterText = new OutlineText("0/30", 'C', 28);
+        counterText = new OutlineTextImage("0/30", 'C', 28);
         counterText.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
         counterText.setColor(Color.YELLOW);
 
@@ -64,15 +63,15 @@ public class CrossiantCookie extends Cookie {
 
     public void onJellyCollected() {
 
-        jellyCollected++;
+        setSkillCounter(getSkillCounter() + 1);
 
         if (counterText != null) {
-            counterText.setText(jellyCollected + "/30");
+            counterText.setText(getSkillCounter() + "/30");
         }
 
-        if (jellyCollected >= 30) {
+        if (getSkillCounter() >= 30) {
 
-            jellyCollected = 0;
+            setSkillCounter(0);
             croissantReady = true;
 
 //            playSkill(0.3);
@@ -86,11 +85,6 @@ public class CrossiantCookie extends Cookie {
 
     public boolean isCroissantReady() {
         return croissantReady;
-    }
-
-    @Override
-    public boolean hasCooldownBar(){
-        return false;
     }
 
     public CroissantType consumeCroissant() {
