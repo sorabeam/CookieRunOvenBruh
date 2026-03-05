@@ -6,6 +6,8 @@ import Beam.Media.MediaPlayer;
 import Beam.Scene.GameplayScene;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -21,7 +23,7 @@ import java.util.Objects;
 public class SettingsPopupButton extends BaseButton{
     private final Pane root;
     private StackPane overlay;
-    private Boolean isOpen = false;
+    private boolean isOpen = false;
 
     public SettingsPopupButton(ImageView img, Pane root) {
         super(img);
@@ -32,10 +34,12 @@ public class SettingsPopupButton extends BaseButton{
     public void handleClick() {
         super.handleClick();
         if(GameLogic.getGameState().equals(GameState.INGAME)){
-            Node child = GameLogic.getGameroot().getChildren().getFirst();
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().get(0);
 
             if (child instanceof GameplayScene inGameScene) {
                 inGameScene.stopGameByBool();
+            }
             }
         }
         showSetting();
@@ -80,13 +84,15 @@ public class SettingsPopupButton extends BaseButton{
                                     "-fx-padding: 3px;"
                     );
                 }
-                thumb.setStyle(
-                        "-fx-background-color: white, rgb(57, 44, 62);" +
-                                "-fx-background-insets: 0, 4;" +
-                                "-fx-background-radius: 50;" +
-                                "-fx-pref-width: 30px;" +
-                                "-fx-pref-height: 30px;"
-                );
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
             }
         });
 
@@ -101,13 +107,15 @@ public class SettingsPopupButton extends BaseButton{
                                     "-fx-padding: 3px;"
                     );
                 }
-                thumb.setStyle(
-                        "-fx-background-color: white, rgb(57, 44, 62);" +
-                                "-fx-background-insets: 0, 4;" +
-                                "-fx-background-radius: 50;" +
-                                "-fx-pref-width: 30px;" +
-                                "-fx-pref-height: 30px;"
-                );
+                if (thumb != null) {
+                    thumb.setStyle(
+                            "-fx-background-color: white, rgb(57, 44, 62);" +
+                                    "-fx-background-insets: 0, 4;" +
+                                    "-fx-background-radius: 50;" +
+                                    "-fx-pref-width: 30px;" +
+                                    "-fx-pref-height: 30px;"
+                    );
+                }
             }
         });
 
@@ -210,7 +218,7 @@ public class SettingsPopupButton extends BaseButton{
 
     private void deleteThis(BaseButton button) {
 
-        var oldAction = button.getOnAction();
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
 
         button.setOnAction(e -> {
 
@@ -240,7 +248,7 @@ public class SettingsPopupButton extends BaseButton{
 
     private void runItBack(BaseButton button){
 
-        var oldAction = button.getOnAction();
+        EventHandler<ActionEvent> oldAction = button.getOnAction();
 
         button.setOnAction(e -> {
 
@@ -249,11 +257,13 @@ public class SettingsPopupButton extends BaseButton{
             }
 
         if(GameLogic.getGameState().equals(GameState.INGAME)){
-            Node child = GameLogic.getGameroot().getChildren().getFirst();
+            if (!GameLogic.getGameroot().getChildren().isEmpty()) {
+                Node child = GameLogic.getGameroot().getChildren().get(0);
 
-            if (child instanceof GameplayScene inGameScene) {
+            if  (child instanceof GameplayScene) {
+                    GameplayScene inGameScene = (GameplayScene) child;
                 inGameScene.resumeGameByBool();
-            }
+            }}
         }
             root.getChildren().remove(overlay);
 
