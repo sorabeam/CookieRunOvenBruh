@@ -1,29 +1,27 @@
 package Beam.Pets;
 
 import Pors.ObjectInGame.Items.ItemView;
-import Pors.ObjectInGame.Items.StickyMochi;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.function.Supplier;
 
 
 public abstract class Pet {
     int id;
-    int cooldowntime;
+    int cooldownTime;
     String Pid;   //paneID
     String BGid;
 
     String name;
-    String desc;
+    String description;
 
     ImageView view;
 
     Image viewImage;
-    Image bgImage;
-    Image btnImage;
+    Image backGroundImage;
+    Image buttonImage;
 
     private boolean isSkillReady;
     private boolean isUsingSkill;
@@ -37,12 +35,12 @@ public abstract class Pet {
     private ArrayList<Double> probability;
     private boolean useRandomSpin;
 
-    public Pet(int id, String name, String desc) {
+    public Pet(int id, String name, String description) {
         this.id = id;
         Pid = "P" + id;
         BGid = "BG" + id;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
         useRandomSpin = false;
     }
 
@@ -106,40 +104,36 @@ public abstract class Pet {
         this.viewImage = viewImage;
     }
 
-    public Image getBgImage() {
-        return bgImage;
+    public Image getBackGroundImage() {
+        return backGroundImage;
     }
 
-    public void setBgImage(Image bgImage) {
-        this.bgImage = bgImage;
+    public void setBackGroundImage(Image backGroundImage) {
+        this.backGroundImage = backGroundImage;
     }
 
-    public Image getBtnImage() {
-        return btnImage;
+    public Image getButtonImage() {
+        return buttonImage;
     }
 
-    public void setBtnImage(Image btnImage) {
-        this.btnImage = btnImage;
+    public void setButtonImage(Image buttonImage) {
+        this.buttonImage = buttonImage;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public int getCooldowntime() {
-        return cooldowntime;
+    public int getCooldownTime() {
+        return cooldownTime;
     }
 
-    public void setCooldowntime(int cooldowntime) {
-        this.cooldowntime = cooldowntime;
-    }
-
-    public void ActiveCooldowm(){
-        // threds.sleep(cooldowntime)
+    public void setCooldownTime(int cooldownTime) {
+        this.cooldownTime = cooldownTime;
     }
 
     public void setUsingSkill(boolean usingSkill) {

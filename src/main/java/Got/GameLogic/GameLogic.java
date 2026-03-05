@@ -12,51 +12,42 @@ import javafx.stage.Stage;
 
 public class GameLogic {
 
-    // ===== SCORE =====
-    private static final IntegerProperty score = new SimpleIntegerProperty(0);
+    //SCORE
+    private static final IntegerProperty SCORE = new SimpleIntegerProperty(0);
     private static int bestScore;
     private static double multiplier = 1;
     private static MainGameScene app;
     private static int cookieCountMod = 0;
-    private static int Map = 1;
+    private static int map = 1;
     private static HpDisplayZone hpBar;
 
-    private static int MusicVolume = 50;
-    private static int SFXVolume = 50;
+    private static int musicVolume = 50;
+    private static int sfxVolume = 50;
 
-    private static StackPane gameroot;
+    private static StackPane gameRoot;
 
     public static int getScore() {
-        return score.get();
+        return SCORE.get();
     }
 
     public static void setScore(int value) {
         bestScore = Math.max(value, bestScore);
-        score.set(value);
+        SCORE.set(value);
     }
 
     public static void addScore(int amount) {
         if (amount <= 0) return;
 
         int finalAmount = (int) (amount * multiplier);
-        score.set(score.get() + finalAmount);
-        bestScore = Math.max(score.get(), bestScore);
+        SCORE.set(SCORE.get() + finalAmount);
+        bestScore = Math.max(SCORE.get(), bestScore);
     }
 
     public static IntegerProperty scoreProperty() {
-        return score;
+        return SCORE;
     }
 
-    public static int getBestScore() {
-        return bestScore;
-    }
-
-    public static void resetScore() {
-        score.set(0);
-        multiplier = 1;
-    }
-
-    // ===== GAME STATE =====
+    //GameState
     private static GameplayScene currentGameScene;
 
     private static final ObjectProperty<GameState> gameState =
@@ -84,7 +75,7 @@ public class GameLogic {
         return gameState;
     }
 
-    // ===== SCENE / STAGE =====
+    //Scene/Stage
     private static Scene curScene;
     private static Stage stage;
 
@@ -107,7 +98,7 @@ public class GameLogic {
         return stage;
     }
 
-    // ===== MULTIPLIER =====
+    // MULTIPLIER
     public static double getMultiplier() {
         return multiplier;
     }
@@ -133,20 +124,20 @@ public class GameLogic {
     }
 
     public static int getMap() {
-        return Map;
+        return map;
     }
 
-    public static void setMap(int map) {
-        Map = Math.max(1,map);
+    public static void setMap(int mapNo) {
+        map = Math.max(1,mapNo);
     }
 
 
     public static StackPane getGameroot() {
-        return gameroot;
+        return gameRoot;
     }
 
-    public static void setGameroot(StackPane gameroot) {
-        GameLogic.gameroot = gameroot;
+    public static void setGameRoot(StackPane gameRoot) {
+        GameLogic.gameRoot = gameRoot;
     }
 
     public static void setBestScore(int bestScore) {
@@ -166,18 +157,18 @@ public class GameLogic {
     }
 
     public static int getMusicVolume() {
-        return MusicVolume;
+        return musicVolume;
     }
 
-    public static void setMusicVolume(int musicVolume) {
-        MusicVolume = musicVolume;
+    public static void setMusicVolume(int musicVolumeValue) {
+        musicVolume = musicVolumeValue;
     }
 
     public static int getSFXVolume() {
-        return SFXVolume;
+        return sfxVolume;
     }
 
-    public static void setSFXVolume(int SFXVolume) {
-        GameLogic.SFXVolume = SFXVolume;
+    public static void setSFXVolume(int sfxVolume) {
+        GameLogic.sfxVolume = sfxVolume;
     }
 }

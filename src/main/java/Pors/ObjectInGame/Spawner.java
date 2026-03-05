@@ -2,7 +2,6 @@ package Pors.ObjectInGame;
 
 import Beam.Cookies.Cookie;
 import Beam.Media.MediaPlayer;
-import Beam.Pets.Pet;
 import Beam.Cookies.CrossiantCookie;
 import Got.GameLogic.GameLogic;
 import Pors.ObjectInGame.Items.*;
@@ -19,29 +18,27 @@ import java.util.Objects;
 
 public class Spawner {
 
-    private Pane gameLayer;
-    private double sceneWidth;
-    private double sceneHeight;
-    private Cookie cookie;
-    private static double defaultSpeed = -350;
-    private static double speed = defaultSpeed;
-    private Pet pet;
+    private final Pane gameLayer;
+    private final double sceneWidth;
+    private final double sceneHeight;
+    private final Cookie cookie;
+    private static final double DEFAULT_SPEED = -350;
+    private static double speed = DEFAULT_SPEED;
     private int begin = 0;
 
-    private List<List<SpawnAction>> spawnSets = SpawnerLayout.getSpawnLayout();
+    private final List<List<SpawnAction>> spawnSets = SpawnerLayout.getSpawnLayout();
 
     private int currentSetIndex = 0;
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
 
-    private int[] tutorialPatterns = {3,4,9};
+    private final int[] tutorialPatterns = {3,4,9};
 
-    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie, Pet pet) {
+    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie) {
         this.gameLayer = gameLayer;
         this.sceneWidth = sceneWidth;
         this.sceneHeight = sceneHeight;
         this.cookie = cookie;
-        this.pet = pet;
     }
 
     public void update(long now, double deltaTime) {
@@ -274,7 +271,7 @@ public class Spawner {
         for (javafx.scene.Node node : snapshot) {
 
             if (node instanceof ObstacleView obs) {
-                if (cookie.getHitbox()
+                if (cookie.getHitBox()
                         .getBoundsInParent()
                         .intersects(obs.getBoundsInParent())
                         && !cookie.isInvincible()) {
@@ -285,7 +282,7 @@ public class Spawner {
             }
 
             else if (node instanceof ItemView item) {
-                if (cookie.getHitbox()
+                if (cookie.getHitBox()
                         .getBoundsInParent()
                         .intersects(item.getBoundsInParent())) {
 
@@ -296,7 +293,7 @@ public class Spawner {
             }
 
             else if (node instanceof JellyView jelly) {
-                if (cookie.getHitbox()
+                if (cookie.getHitBox()
                         .getBoundsInParent()
                         .intersects(jelly.getBoundsInParent())) {
 
@@ -324,10 +321,10 @@ public class Spawner {
     }
 
     public static void resetSpeed() {
-        Spawner.speed = defaultSpeed;
+        Spawner.speed = DEFAULT_SPEED;
     }
 
     public static double getDefaultSpeed() {
-        return defaultSpeed;
+        return DEFAULT_SPEED;
     }
 }

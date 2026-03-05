@@ -13,25 +13,15 @@ public class Animate extends ImageView {
     protected long lastTime = 0;
     protected double accumulator = 0;
 
-    private int maxFPRIdel;
-    private int maxFPRRun;                             //
-    private int maxFPRJumpUp;
-    private int maxFPRJumpDown;
-    private int maxFPRDoubleJump;
-    private int maxFPRDie;
-    private int maxFPRSlide;
-    private int maxFPRTakeDamage;
-    private int maxFPRSkill;
-
     private boolean isLoop = true;
     private int maxFPR;// equal to
 
-    private int frameWidth;                         //Test On 120px
-    private int frameHeight;                        //Test On 139px
+    private final int frameWidth; //Test On 120px
+    private final int frameHeight; //Test On 139px
     private double frameDuration = 0.15;
-    private int[] maxFPRType = new int[9];
+    private final int[] maxFPRType = new int[9];
 
-    private ObjectProperty<AnimationType> state;
+    private final ObjectProperty<AnimationType> state;
 
     public Animate(Image image,int idle,int run,int jumpUp,int jumpDown,int doubleJump,int die,int slide,int takeDamage,
                    int skill,int frameWidth,int frameHeight){
@@ -40,27 +30,27 @@ public class Animate extends ImageView {
 
         setFrameDuration(0.08f);
 
-        this.maxFPRIdel = Math.max(0,idle);
-        this.maxFPRRun = Math.max(0,run);
-        this.maxFPRJumpUp = Math.max(0,jumpUp);
-        this.maxFPRJumpDown = Math.max(0,jumpDown);
-        this.maxFPRDoubleJump = Math.max(0,doubleJump);
-        this.maxFPRDie = Math.max(0,die);
-        this.maxFPRSlide = Math.max(0,slide);
-        this.maxFPRTakeDamage = Math.max(0,takeDamage);
-        this.maxFPRSkill = Math.max(0,skill);
+        int maxFPRIdle = Math.max(0, idle);
+        int maxFPRRun = Math.max(0, run);
+        int maxFPRJumpUp = Math.max(0, jumpUp);
+        int maxFPRJumpDown = Math.max(0, jumpDown);
+        int maxFPRDoubleJump = Math.max(0, doubleJump);
+        int maxFPRDie = Math.max(0, die);
+        int maxFPRSlide = Math.max(0, slide);
+        int maxFPRTakeDamage = Math.max(0, takeDamage);
+        int maxFPRSkill = Math.max(0, skill);
 
-        maxFPRType[0] = this.maxFPRIdel;
-        maxFPRType[1] = this.maxFPRRun;
-        maxFPRType[2] = this.maxFPRJumpUp;
-        maxFPRType[3] = this.maxFPRJumpDown;
-        maxFPRType[4] = this.maxFPRDoubleJump;
-        maxFPRType[5] = this.maxFPRDie;
-        maxFPRType[6] = this.maxFPRSlide;
-        maxFPRType[7] = this.maxFPRTakeDamage;
-        maxFPRType[8] = this.maxFPRSkill;
+        maxFPRType[0] = maxFPRIdle;
+        maxFPRType[1] = maxFPRRun;
+        maxFPRType[2] = maxFPRJumpUp;
+        maxFPRType[3] = maxFPRJumpDown;
+        maxFPRType[4] = maxFPRDoubleJump;
+        maxFPRType[5] = maxFPRDie;
+        maxFPRType[6] = maxFPRSlide;
+        maxFPRType[7] = maxFPRTakeDamage;
+        maxFPRType[8] = maxFPRSkill;
 
-        this.maxFPR = this.maxFPRDoubleJump;
+        this.maxFPR = maxFPRDoubleJump;
 
         this.frameWidth = Math.max(0,frameWidth);
         this.frameHeight = Math.max(0,frameHeight);
@@ -74,11 +64,7 @@ public class Animate extends ImageView {
             currentFrame = 0;
             maxFPR = maxFPRType[newValue.getRow()];
 
-            if (getAnimationState() == AnimationType.SKILL || getAnimationState() == AnimationType.DIE){
-                isLoop = false;
-            } else {
-                isLoop = true;
-            }
+            isLoop = getAnimationState() != AnimationType.SKILL && getAnimationState() != AnimationType.DIE;
 
             if (getAnimationState() == AnimationType.RUN) {
                 setFrameDuration(0.08f);
@@ -105,10 +91,12 @@ public class Animate extends ImageView {
 
             currentFrame++;
 
-            if ( (currentFrame >= maxFPR ) && isLoop) {
-                currentFrame = 0;
-            } else if ( (currentFrame >= maxFPR ) && !isLoop ) {
-                currentFrame = maxFPR-1;
+            if (currentFrame >= maxFPR) {
+                if (isLoop) {
+                    currentFrame = 0;
+                } else {
+                    currentFrame = maxFPR - 1;
+                }
             }
 
             DrawAnimation();

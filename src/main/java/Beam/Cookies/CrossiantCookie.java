@@ -15,22 +15,23 @@ public class CrossiantCookie extends Cookie {
 
     public CrossiantCookie() {
         super(3, "Croissant", 140,
-                "Every 30 Jellies collected," + "\n" +
-                        "a Croissant Jelly falls from the sky." + "\n" +
-                        "Original grants bonus points," + "\n" +
-                        "Butter gives a Speed Boost," + "\n" +
-                        "and Strawberry restores 20 HP.");
+                """
+                        Every 30 Jellies collected,
+                        a Croissant Jelly falls from the sky.
+                        Original grants bonus points,
+                        Butter gives a Speed Boost,
+                        and Strawberry restores 20 HP.""");
         setImgURL("Croissant_Cookie_sheet");
         setProfileImg(Asset.getImage("Profile_Cross"));
         setScore(256200);
         setSkillCounter(0);
-        setCooldownable(false);
+        setHasCooldown(false);
     }
 
     @Override
     public Animate createCookie() {
 
-        Animate anim = super.createCookie(); // สร้าง cookie + hitbox จาก class แม่ก่อน
+        Animate anim = super.createCookie();
 
         counterText = new OutlineTextImage("0/30", 'C', 28);
         counterText.setStyle("-fx-font-size: 28px; -fx-font-weight: bold;");
@@ -43,7 +44,6 @@ public class CrossiantCookie extends Cookie {
 
         counterText.setEffect(shadow);
 
-        // ให้อยู่บนหัว cookie
         counterText.layoutXProperty().bind(
                 anim.layoutXProperty()
                         .add(anim.fitWidthProperty().divide(2))
@@ -73,9 +73,6 @@ public class CrossiantCookie extends Cookie {
 
             setSkillCounter(0);
             croissantReady = true;
-
-//            playSkill(0.3);
-//            cookie.changeAnimationState(AnimationType.SKILL);
 
             if (counterText != null) {
                 counterText.setText("0/30");
@@ -107,6 +104,5 @@ public class CrossiantCookie extends Cookie {
 
     @Override
     public void useSkill() {
-        //
     }
 }

@@ -8,19 +8,19 @@ import javafx.scene.layout.*;
 public class MapPopupButton extends BaseButton{
 
     private StackPane overlay;
-    private StackPane root;
+    private final StackPane root;
 
-    private MapSelectionButton m1 = new MapSelectionButton(Asset.createImageView("MAP1P",400,400),this,1);
-    private MapSelectionButton m2 = new MapSelectionButton(Asset.createImageView("MAP2P",400,400),this,2);
-    private MapSelectionButton m3 = new MapSelectionButton(Asset.createImageView("MAP3P",400,400),this,3);
+    private final MapSelectionButton map1 = new MapSelectionButton(Asset.createImageView("MAP1P",400,400),this,1);
+    private final MapSelectionButton map2 = new MapSelectionButton(Asset.createImageView("MAP2P",400,400),this,2);
+    private final MapSelectionButton map3 = new MapSelectionButton(Asset.createImageView("MAP3P",400,400),this,3);
 
     public MapPopupButton(ImageView img, StackPane root) {
         super(img);
         this.root = root;
 
-        deleteThis(m1);
-        deleteThis(m2);
-        deleteThis(m3);
+        deleteThis(map1);
+        deleteThis(map2);
+        deleteThis(map3);
     }
 
     public void setImg(ImageView img){
@@ -38,7 +38,7 @@ public class MapPopupButton extends BaseButton{
         overlay = new StackPane();
         ImageView BgPane = Asset.createImageView("MBGS",0,440);
 
-        VBox MapVB = new VBox(m1,m2,m3);
+        VBox MapVB = new VBox(map1,map2,map3);
 
         MapVB.setMaxHeight(400);
         MapVB.setMaxWidth(400);

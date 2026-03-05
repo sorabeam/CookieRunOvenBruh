@@ -1,7 +1,7 @@
 package Beam.UI.CookiesUI;
 
 import Beam.Animation.Animate;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Scene.CookieSelectionScene;
 import javafx.geometry.Insets;
 import javafx.scene.layout.*;
@@ -14,10 +14,10 @@ public class CharacterDisplay extends StackPane {
 
     public CharacterDisplay(CookieSelectionScene scene){
 
-        scene.setName( new OutlineTextImage(CharactorData.getCurrent_Cookie().get_Name(), 'C',30) );
+        scene.setName( new OutlineTextImage(CharacterData.getCurrent_Cookie().get_Name(), 'C',30) );
         scene.getName().setPadding(new Insets(0,0,40,0));
 
-        Animate cookie = CharactorData.getCurrent_Cookie().createCookie();
+        Animate cookie = CharacterData.getCurrent_Cookie().createCookie();
         scene.setCookie(cookie);
 
         StackPane.setAlignment(scene.getName(), TOP_CENTER);

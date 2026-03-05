@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class Pearl extends ImageView {
 
-    private double speed = 1000;
+    private final double speed = 1000;
 
     public Pearl(double x, double y) {
 

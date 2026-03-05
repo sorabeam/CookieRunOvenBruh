@@ -1,57 +1,71 @@
 package Beam.Button;
 
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Cookies.Cookie;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class CharacterButton extends BaseButton{
-    String n;
-    String r;
-    String d;
-    Image img;
-    Cookie cookie;
+public class CharacterButton extends BaseButton {
 
-    public CharacterButton(ImageView i, String n, String d , String r, Image img , Cookie cookie) {
+    private String name;
+    private String description;
+    private String record;
+    private Image image;
+    private Cookie cookie;
 
-        super(i);
+    public CharacterButton(ImageView imageView, String name, String description, String record, Image image, Cookie cookie) {
+        super(imageView);
 
-        this.n = n;
-        this.d = d;
-        this.r = r;
-        this.img = img;
+        this.name = name;
+        this.description = description;
+        this.record = record;
+        this.image = image;
         this.cookie = cookie;
     }
 
     @Override
     public void handleClick() {
         super.handleClick();
-
-        CharactorData.setCurrent_Cookie(cookie);
+        CharacterData.setCurrent_Cookie(cookie);
     }
 
-    public String getN() {
-        return n;
+    public String getName() {
+        return name;
     }
-    public String getD() {
-        return d;
-    }
-    public String getR() {
-        return r;
-    }
-    public Image getImg() { return img; }
-    public Cookie getCookie() { return cookie; }
 
-    public void setR(String r) {
-        this.r = r;
+    public String getDescription() {
+        return description;
     }
-    public void setN(String n) {
-        this.n = n;
-    }
-    public void setD(String d) {
-        this.d = d;
-    }
-    public void setImg(Image img) { this.img = img; }
-    public void setCookie(Cookie cookie) { this.cookie = cookie; }
 
+    public String getRecord() {
+        return record;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public Cookie getCookie() {
+        return cookie;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setRecord(String rarity) {
+        this.record = rarity;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
+    }
+
+    public void setCookie(Cookie cookie) {
+        this.cookie = cookie;
+    }
 }

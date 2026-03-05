@@ -10,10 +10,10 @@ import Beam.Asset;
 
 public class OutlineTextImage extends StackPane {
 
-    public static final Font FontChango =
+    public static final Font FONT_CHANGO =
             Font.loadFont(Asset.class.getResourceAsStream("/Fonts/Chango-Regular.ttf"), 30);
 
-    public static final Font FontMali =
+    public static final Font FONT_MALI =
             Font.loadFont(Asset.class.getResourceAsStream("/Fonts/Mali-Italic.ttf"), 30);
 
     private final Text stroke = new Text();
@@ -23,11 +23,11 @@ public class OutlineTextImage extends StackPane {
 
         Font textFont;
         if(F == 'M'){
-            textFont = FontMali;
+            textFont = FONT_MALI;
         } else if(F == 'C'){
-            textFont = FontChango;
+            textFont = FONT_CHANGO;
         } else{
-            textFont = FontMali;
+            textFont = FONT_MALI;
         }
 
         stroke.setText(text);

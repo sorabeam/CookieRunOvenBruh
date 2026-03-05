@@ -2,7 +2,7 @@ package Beam.UI.MainUI;
 
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -10,7 +10,7 @@ import javafx.scene.layout.StackPane;
 
 public class CharactorShow extends StackPane {
 
-    private final Animate cookieView = CharactorData.getCurrent_Cookie().createCookie();
+    private final Animate cookieView = CharacterData.getCurrent_Cookie().createCookie();
 
     public CharactorShow() {
         cookieView.setFitWidth(400);
@@ -21,7 +21,7 @@ public class CharactorShow extends StackPane {
         );
         setMargin(cookieView, new Insets( -100,-50,0,0));
 
-        ImageView petView = CharactorData.getCurrent_Pet().getView();
+        ImageView petView = CharacterData.getCurrent_Pet().getView();
         petView.setFitHeight(150);
         petView.setFitWidth(150);
         petView.setStyle(

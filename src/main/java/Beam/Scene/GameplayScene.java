@@ -3,20 +3,15 @@ package Beam.Scene;
 import Beam.Animation.AnimateEffect;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
-import Beam.CharactorData;
-import Beam.Cookies.BobaCookie;
+import Beam.CharacterData;
 import Beam.Cookies.Cookie;
 import Beam.Cookies.CrossiantCookie;
 import Beam.Cookies.TomYumCookie;
-import Beam.Pets.Chilly;
 import Beam.Pets.Pet;
-import Beam.Pets.Salad;
 import Beam.UI.InGameUI.*;
 import Filmmy.Pearl;
 import Got.GameLogic.GameLogic;
-import Pors.ObjectInGame.Interactable;
 import Pors.ObjectInGame.Items.*;
-import Pors.ObjectInGame.Jelly.JellyView;
 import Pors.ObjectInGame.Obstacle.ObstacleView;
 import Pors.ObjectInGame.Spawner;
 import javafx.animation.AnimationTimer;
@@ -26,38 +21,27 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
-import javafx.scene.shape.Rectangle;
-import Pors.ObjectInGame.Obstacle.BaseObstacle;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 public class GameplayScene extends BaseScene {
 
-    Pane gameLayer = new Pane();     // สำหรับ player / ground / obstacle
-    StackPane uiLayer = new StackPane(); // สำหรับ UI
+    Pane gameLayer = new Pane();
+    StackPane uiLayer = new StackPane();
 
     private MoveGround ground;
 
     private boolean shiftHeld = false;
-//    double groundSpeedDefault = Spawner.getSpeed();
-//    double groundSpeed = Spawner.getSpeed();
 
     SettingZone settingZone = new SettingZone(this,spacer('H'));
-    HpDisplayZone hpzone = new HpDisplayZone();
+    HpDisplayZone hpZone = new HpDisplayZone();
     ShowScore sc = new ShowScore();
 
     private final double groundH = -150;
@@ -81,33 +65,30 @@ public class GameplayScene extends BaseScene {
 
         uiLayer.getChildren().addAll(
                 settingZone,
-                hpzone,
+                hpZone,
                 sc
         );
 
-        GameLogic.setHpBar(hpzone);
+        GameLogic.setHpBar(hpZone);
         StackPane.setAlignment(sc,Pos.CENTER_RIGHT);
         StackPane.setMargin(sc,new Insets(200,0,0,0));
-        StackPane.setAlignment(hpzone,Pos.TOP_CENTER);
+        StackPane.setAlignment(hpZone,Pos.TOP_CENTER);
         settingZone.setMaxWidth(50);
         StackPane.setAlignment(settingZone,Pos.TOP_RIGHT);
         StackPane.setMargin(settingZone,new Insets(20,20,0,0));
 
 //       Cookie player = new BobaCookie();
-        Cookie player = CharactorData.getCurrent_Cookie();
-        Pet pet = CharactorData.getCurrent_Pet();
+        Cookie player = CharacterData.getCurrent_Cookie();
+        Pet pet = CharacterData.getCurrent_Pet();
         AnimateEffect flame = new AnimateEffect(Asset.getImage("FireSpriteSheet"), 125, 125, 9, 4, 0.3);
         flame.setLoop(true);
-//        Pet pet = new Salad()s;
-//        Pet pet = new Chilly();
 
         spawner =
                 new Spawner(
                         gameLayer,
                         scene.getWidth(),
                         scene.getHeight(),
-                        player,
-                        pet
+                        player
                 );
 
         Spawner.setSpeed(-350);
@@ -123,7 +104,7 @@ public class GameplayScene extends BaseScene {
         gameLayer.getChildren().addAll(
                 flame,
                 player.getCookie(),
-                player.getHitbox(),
+                player.getHitBox(),
                 cdBar
         );
 
@@ -162,7 +143,7 @@ public class GameplayScene extends BaseScene {
         timer = new AnimationTimer() {
 
             long last = 0;
-            double petCooldownTimer = pet.getCooldowntime()/1000.0;
+            double petCooldownTimer = pet.getCooldownTime()/1000.0;
             double tarPetPosY = 0;
             double damageTimer;
 
@@ -194,12 +175,12 @@ public class GameplayScene extends BaseScene {
                     damageTimer = 0;
                 }
 
-                hpzone.updateHpBar(deltatime);
+                hpZone.updateHpBar(deltatime);
 
                 player.update(deltatime);          // physics + movement
                 player.getCookie().update(deltatime);
 //                pet.getView().layoutYProperty().bind(player.getCookie().layoutYProperty().add(30));
-                if(player.isCooldownable()){
+                if(player.isHasCooldown()){
                     double progress = player.getCooldownProgress();
                     cdBar.fill.setWidth(80 * progress);
                     cdBar.fill.setVisible(true);
@@ -229,7 +210,7 @@ public class GameplayScene extends BaseScene {
                 petCooldownTimer -= deltatime;
                 if(petCooldownTimer<=0) {
                     pet.useSkill();
-                    petCooldownTimer = pet.getCooldowntime()/1000.0;
+                    petCooldownTimer = pet.getCooldownTime()/1000.0;
                 }
 
                 if(pet.isUsingSkill()) {

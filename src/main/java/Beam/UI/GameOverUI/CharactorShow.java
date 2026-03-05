@@ -2,7 +2,7 @@ package Beam.UI.GameOverUI;
 
 import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Image.OutlineTextImage;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,7 +11,7 @@ import javafx.scene.layout.StackPane;
 
 public class CharactorShow extends StackPane {
 
-    private final Animate cookieView = CharactorData.getCurrent_Cookie().createCookie();
+    private final Animate cookieView = CharacterData.getCurrent_Cookie().createCookie();
 
     public CharactorShow() {
         cookieView.setFitWidth(700);
@@ -21,9 +21,9 @@ public class CharactorShow extends StackPane {
                 "-fx-effect: dropshadow(gaussian, rgba(0,0,0,0.6), 40, 0.7, 0, 5);"
         );
 
-        ImageView petView = CharactorData.getCurrent_Pet().getView();
+        ImageView petView = CharacterData.getCurrent_Pet().getView();
 
-        if(CharactorData.getCurrent_Pet().getName().equals(CharactorData.CHILLY.getName())){
+        if(CharacterData.getCurrent_Pet().getName().equals(CharacterData.CHILLY.getName())){
             System.out.println("hhhhhhhh");
             petView.setFitHeight(300);
             petView.setFitWidth(300);
@@ -38,7 +38,7 @@ public class CharactorShow extends StackPane {
         setAlignment(petView, Pos.TOP_RIGHT);
         setMargin(petView, new Insets(60,-50,0,0));
 
-        OutlineTextImage username = new OutlineTextImage(CharactorData.getCurrent_Cookie().get_Name(), 'C',24);
+        OutlineTextImage username = new OutlineTextImage(CharacterData.getCurrent_Cookie().get_Name(), 'C',24);
         setAlignment(username, Pos.TOP_CENTER);
         setMargin(username, new Insets(0,-60,0,0));
 

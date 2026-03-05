@@ -6,7 +6,7 @@ public class FloorFade extends Region {
 
     public FloorFade(double H) {
 
-        setMaxWidth(Double.MAX_VALUE); // ให้ขยายเต็มความกว้าง
+        setMaxWidth(Double.MAX_VALUE);
         setMaxHeight(H);
 
         setStyle("""

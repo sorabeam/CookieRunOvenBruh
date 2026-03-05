@@ -19,9 +19,9 @@ public class Salad extends Pet {
 
         setView(Asset.createImageView("Salad",0,480));
         setViewImage(Asset.getImage("Salad"));
-        setBgImage(Asset.getImage("Selecting_Salad"));
-        setBtnImage(Asset.getImage("UnSelect_Salad"));
-        setCooldowntime(5000);
+        setBackGroundImage(Asset.getImage("Selecting_Salad"));
+        setButtonImage(Asset.getImage("UnSelect_Salad"));
+        setCooldownTime(5000);
         setSkillReady(true);
         setUsingSkill(false);
         setSpeed(500);
@@ -49,7 +49,7 @@ public class Salad extends Pet {
             try {
                 setUsingSkill(true);
                 setSkillReady(false);
-                Thread.sleep(getCooldowntime());
+                Thread.sleep(getCooldownTime());
                 setSkillReady(true);
                 setUsingSkill(false);
             } catch (InterruptedException e) {

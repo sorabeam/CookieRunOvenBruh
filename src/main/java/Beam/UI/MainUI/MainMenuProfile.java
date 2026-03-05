@@ -1,7 +1,7 @@
 package Beam.UI.MainUI;
 
 import Beam.Button.MapPopupButton;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Got.GameLogic.GameLogic;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,7 +16,7 @@ public class MainMenuProfile extends StackPane {
     public MainMenuProfile(String name, String score,StackPane root) {
 
         ImageView LillyBar = Asset.createImageView("LillyBar",0,460);
-        ImageView LillyProfile = new ImageView(CharactorData.getCurrent_Cookie().getProfileImg());
+        ImageView LillyProfile = new ImageView(CharacterData.getCurrent_Cookie().getProfileImg());
         LillyProfile.setPreserveRatio(true);
         LillyProfile.setFitWidth(460);
 

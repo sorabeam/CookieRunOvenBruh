@@ -4,13 +4,11 @@ import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
 import Beam.Media.MediaPlayer;
-import Beam.Scene.GameplayScene;
 import Got.GameLogic.GameLogic;
 import Got.GameLogic.GameState;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -18,7 +16,6 @@ import javafx.scene.shape.Rectangle;
 public abstract class Cookie {
 
     protected Animate cookie;
-    protected ImageView cookieImg;
     protected String imgURL;
 
     protected boolean invincible = false;
@@ -26,7 +23,7 @@ public abstract class Cookie {
     protected double invincibleDuration = 0;
 
     protected Pane gameLayer;
-    protected Rectangle hitbox;
+    protected Rectangle hitBox;
 
     private DoubleProperty hitboxRatio = new SimpleDoubleProperty(0.7);
     private final double slideHitboxRatio = 0.3;
@@ -43,7 +40,7 @@ public abstract class Cookie {
     private final double jumpSpeed = -13;
     private final double maxFallSpeed = 12;
 
-    protected boolean Cooldownable = false;
+    protected boolean hasCooldown = false;
 
     protected double cooldownTimer;
     protected double skillCooldown;
@@ -59,36 +56,35 @@ public abstract class Cookie {
     private final double deathDuration = 3;
 
     int id;
-    int maxhp;
+    int maxHp;
     int hp;
     int score = 0;
     double skillTimer=0;
 
-    String Bid;
-    String Sid;
+    String boxImageId;
+    String skillImageId;
     String name;
-    String desc;
+    String description;
 
     Image profileImg;
 
-    public Cookie(int id,String name,int hp, String desc) {
+    public Cookie(int id,String name,int hp, String description) {
 
         this.id = id;
         this.hp = hp;
-        this.maxhp = hp;
-        Bid = "B" + id;
-        Sid = "S" + id;
+        this.maxHp = hp;
+        boxImageId = "B" + id;
+        skillImageId = "S" + id;
         this.name = name;
-        this.desc = desc;
+        this.description = description;
 
     }
 
-    public int get_Id() { return id; }
     public int get_Hp() { return hp; }
-    public String get_Bid() { return Bid; }
-    public String get_Sid() { return Sid; }
+    public String get_Bid() { return boxImageId; }
+    public String get_Sid() { return skillImageId; }
     public String get_Name() { return name; }
-    public String get_Desc() { return desc; }
+    public String get_Desc() { return description; }
     public int get_Score() {return score;}
 
     public void setScore(int score) {
@@ -117,7 +113,7 @@ public abstract class Cookie {
     }
 
     public void takeDamageByTime(){
-        hp -= 1;
+        hp -= 2;
         GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
 
         if(hp <= 0){
@@ -126,13 +122,13 @@ public abstract class Cookie {
     }
 
     public void setHp(int hp) {
-        this.hp = Math.min(maxhp,hp);
+        this.hp = Math.min(maxHp,hp);
     }
 
     public void heal(int healunit){
 
         GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
-        hp = Math.min(maxhp,hp + healunit);;
+        hp = Math.min(maxHp,hp + healunit);;
         System.out.println("Cookie get " + healunit + " heathPoint");
     }
 
@@ -166,21 +162,19 @@ public abstract class Cookie {
                 5,
                 400,400);
 
-        hitbox = new Rectangle();
-        hitbox.widthProperty().bind(cookie.fitWidthProperty().multiply(0.4));
-        hitbox.heightProperty().bind(
+        hitBox = new Rectangle();
+        hitBox.widthProperty().bind(cookie.fitWidthProperty().multiply(0.4));
+        hitBox.heightProperty().bind(
                 cookie.fitHeightProperty().multiply(hitboxRatio)
         );
 
-        // DEBUG MODE (เปิดดู hitbox)
-        //hitbox.setStroke(Color.RED);
-        hitbox.setFill(Color.TRANSPARENT);
+        //hitBox.setStroke(Color.RED);
+        hitBox.setFill(Color.TRANSPARENT);
 
-        // bind ตำแหน่งกับ player
-        hitbox.layoutXProperty().bind(cookie.layoutXProperty().add(cookie.fitWidthProperty().multiply(0.2)).add(15));
-        hitbox.layoutYProperty().bind(
+        hitBox.layoutXProperty().bind(cookie.layoutXProperty().add(cookie.fitWidthProperty().multiply(0.2)).add(15));
+        hitBox.layoutYProperty().bind(
                 cookie.layoutYProperty().add(
-                        cookie.fitHeightProperty().subtract(hitbox.heightProperty())
+                        cookie.fitHeightProperty().subtract(hitBox.heightProperty())
                                 .subtract(20)
                 )
         );
@@ -188,20 +182,16 @@ public abstract class Cookie {
         return cookie;
     }
 
-    public boolean isCooldownable() {
-        return Cooldownable;
+    public boolean isHasCooldown() {
+        return hasCooldown;
     }
 
-    public void setCooldownable(boolean cooldownable) {
-        Cooldownable = cooldownable;
+    public void setHasCooldown(boolean hasCooldown) {
+        this.hasCooldown = hasCooldown;
     }
 
-    public int getMaxhp() {
-        return maxhp;
-    }
-
-    public void setMaxhp(int maxhp) {
-        this.maxhp = maxhp;
+    public int getMaxHp() {
+        return maxHp;
     }
 
     public Image getProfileImg() {
@@ -215,22 +205,17 @@ public abstract class Cookie {
     public void update(double deltaTime){
 
         if(isDead){
-
             deathTimer -= deltaTime;
-
             if(deathTimer <= 0){
                 GameLogic.setGameState(GameState.GAMEOVER);
             }
-
             return;
         }
 
         boolean usingSkill = skillTimer > 0;
 
         if (skillTimer > 0) {
-
             skillTimer -= deltaTime;
-
             if (skillTimer <= 0) {
                 skillTimer = 0;
             }
@@ -241,8 +226,6 @@ public abstract class Cookie {
         if (damageTimer > 0) {
             damageTimer -= deltaTime;
         }
-
-        // ---------- Physics ----------
 
         velocity += gravity * scale;
         velocity = Math.min(velocity, maxFallSpeed);
@@ -258,7 +241,6 @@ public abstract class Cookie {
 
         double feet = cookie.getLayoutY() + cookie.getBoundsInParent().getHeight();
 
-        // ---------- Ground Check ----------
         double groundY = gameLayer.getHeight() - 150;
 
         if (feet > groundY) {
@@ -393,8 +375,8 @@ public abstract class Cookie {
     protected int getMaxJump() {
         return 2;
     }
-    public Rectangle getHitbox() {
-        return hitbox;
+    public Rectangle getHitBox() {
+        return hitBox;
     }
 
     public String getImgURL() {

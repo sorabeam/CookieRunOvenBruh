@@ -4,13 +4,13 @@ import Beam.Asset;
 
 public class SamplePet extends Pet{
 
-    public SamplePet(int id, String name, String desc,String imgkey) {
-        super(id, name, desc);
+    public SamplePet(int id, String name, String description,String imageKey) {
+        super(id, name, description);
 
         setView(Asset.createImageView("Selecting_Boba",0,480));
-        setViewImage(Asset.getImage(imgkey));
-        setBgImage(Asset.getImage("Selecting_Boba"));
-        setBtnImage(Asset.getImage(imgkey));
+        setViewImage(Asset.getImage(imageKey));
+        setBackGroundImage(Asset.getImage("Selecting_Boba"));
+        setButtonImage(Asset.getImage(imageKey));
     }
 
     @Override

@@ -9,7 +9,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-
 public class BaseButton extends Button implements Clickable {
     private DropShadow dropShadow;
     private ScaleTransition scaleTransition;
@@ -20,7 +19,7 @@ public class BaseButton extends Button implements Clickable {
 
         super();
 
-        CreateBtn();
+        createButton();
 
         img.setPreserveRatio(true);
 
@@ -28,7 +27,6 @@ public class BaseButton extends Button implements Clickable {
         setPadding(Insets.EMPTY);
         setBackground(null);
 
-        // ให้ปุ่มคำนวณขนาดตาม graphic
         setMinSize(USE_PREF_SIZE, USE_PREF_SIZE);
         setMaxSize(USE_PREF_SIZE, USE_PREF_SIZE);
     }
@@ -67,7 +65,7 @@ public class BaseButton extends Button implements Clickable {
         });
     }
 
-    public void CreateBtn(){
+    public void createButton(){
 
         dropShadow = new DropShadow();
         dropShadow.setRadius(40);

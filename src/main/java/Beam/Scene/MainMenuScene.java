@@ -1,7 +1,7 @@
 package Beam.Scene;
 
 import Beam.Animation.Animate;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.UI.MainUI.*;
 
 import javafx.animation.AnimationTimer;
@@ -15,10 +15,10 @@ public class MainMenuScene extends BaseScene {
     public MainMenuScene() {
         super();
 
-        StackPane profile = new MainMenuProfile(CharactorData.getCurrent_Cookie().get_Name(), CharactorData.getCurrent_Cookie().get_Score() + "",root);
-        HBox Setting = new SettingZone(root,spacer('H'));
-        StackPane MainMenuButtons = new MainMenuButtons();
-        StackPane GlassDecoration = new GlassDecoration();
+        StackPane profile = new MainMenuProfile(CharacterData.getCurrent_Cookie().get_Name(), CharacterData.getCurrent_Cookie().get_Score() + "",root);
+        HBox setting = new SettingZone(root,spacer('H'));
+        StackPane mainMenuButtons = new MainMenuButtons();
+        StackPane glassDecoration = new GlassDecoration();
 
         CharactorShow imgShow = new CharactorShow();
         Animate cookie = imgShow.getCookie();
@@ -47,16 +47,16 @@ public class MainMenuScene extends BaseScene {
         root.getChildren().addAll(
                 new MainMenuBG(),
                 profile,
-                Setting,
+                setting,
                 imgShow,
-                MainMenuButtons,
-                GlassDecoration
+                mainMenuButtons,
+                glassDecoration
         );
 
-        StackPane.setAlignment(GlassDecoration,Pos.CENTER_RIGHT);
-        StackPane.setAlignment(MainMenuButtons, Pos.BOTTOM_CENTER);
-        StackPane.setAlignment(Setting, Pos.TOP_RIGHT);
-        StackPane.setMargin(Setting,new Insets(20,20,0,0));
+        StackPane.setAlignment(glassDecoration,Pos.CENTER_RIGHT);
+        StackPane.setAlignment(mainMenuButtons, Pos.BOTTOM_CENTER);
+        StackPane.setAlignment(setting, Pos.TOP_RIGHT);
+        StackPane.setMargin(setting,new Insets(20,20,0,0));
         StackPane.setAlignment(profile, Pos.TOP_LEFT);
     }
 }

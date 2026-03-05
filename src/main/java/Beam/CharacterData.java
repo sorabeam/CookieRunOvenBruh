@@ -3,9 +3,9 @@ package Beam;
 import Beam.Cookies.*;
 import Beam.Pets.*;
 
-public class CharactorData {
+public class CharacterData {
 
-    public static final Cookie BOBACOOKIE = new BobaCookie();
+    public static final Cookie BOBA_COOKIE = new BobaCookie();
     public static final Cookie CROSSIANT_COOKIE = new CrossiantCookie();
     public static final Cookie TOMYUM_COOKIE =new TomYumCookie();
 
@@ -14,13 +14,13 @@ public class CharactorData {
 
     public static final Pet SALAD = new Salad();
     public static final Pet CHILLY = new Chilly();
-    public static final Pet MOJINIGA = new Moji();
+    public static final Pet MOJI = new Moji();
     public static final Pet Chilly = new Chilly();
 
     public static final Pet LOCKING =
             new SamplePet(4, "Lock","","UnSelect_Lock");
 
-    private static Cookie Current_Cookie = BOBACOOKIE;
+    private static Cookie Current_Cookie = BOBA_COOKIE;
     private static Pet Current_Pet = SALAD;
 
     public static Cookie getCurrent_Cookie() {

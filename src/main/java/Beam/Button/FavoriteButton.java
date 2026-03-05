@@ -5,8 +5,6 @@ import Beam.Asset;
 
 public class FavoriteButton extends BaseButton{
 
-    private boolean isFav = true;
-
     public FavoriteButton() {
         super(Asset.createImageView("FavIco",30,0));
     }

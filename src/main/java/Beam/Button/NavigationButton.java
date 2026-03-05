@@ -9,7 +9,7 @@ import static Got.GameLogic.GameLogic.getStage;
 public class NavigationButton extends BaseButton{
 
 
-    private GameState switchState;
+    private final GameState switchState;
 
     public NavigationButton(ImageView Img, GameState switchState) {
         super(Img);

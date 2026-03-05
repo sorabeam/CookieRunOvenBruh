@@ -1,10 +1,8 @@
 package Beam.UI.InGameUI;
 
-import Beam.CharactorData;
-import javafx.animation.AnimationTimer;
+import Beam.CharacterData;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.CycleMethod;
 import javafx.scene.paint.LinearGradient;
@@ -28,7 +26,7 @@ public class HpDisplayZone extends StackPane {
 
     public HpDisplayZone() {
 
-        max_hp = CharactorData.getCurrent_Cookie().getMaxhp();
+        max_hp = CharacterData.getCurrent_Cookie().getMaxHp();
 
         Rectangle cdFrame = new Rectangle(1000, 50);
         cdFrame.setFill(Color.BLACK);
@@ -65,7 +63,7 @@ public class HpDisplayZone extends StackPane {
 
     public void updateHpBar(double dt) {
 
-        current_hp = CharactorData.getCurrent_Cookie().get_Hp();
+        current_hp = CharacterData.getCurrent_Cookie().get_Hp();
 
         if (max_hp <= 0) return;
 

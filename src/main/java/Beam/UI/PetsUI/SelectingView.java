@@ -1,6 +1,6 @@
 package Beam.UI.PetsUI;
 
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Scene.PetsSelectionScene;
 import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
@@ -12,30 +12,30 @@ import static javafx.geometry.Pos.*;
 
 public class SelectingView extends StackPane {
 
-    public SelectingView(StackPane root, PetsSelectionScene mscene){
+    public SelectingView(StackPane root, PetsSelectionScene petsScene){
 
         setPrefSize(600, 1000);
         setMinSize(400, 550);
         setMaxSize(600, 1000);
 
-        System.out.println(CharactorData.getCurrent_Pet().getViewImage());
-        ImageView show = new ImageView( CharactorData.getCurrent_Pet().getViewImage() );
+        System.out.println(CharacterData.getCurrent_Pet().getViewImage());
+        ImageView show = new ImageView( CharacterData.getCurrent_Pet().getViewImage() );
         show.setPreserveRatio(true);
 
-        ImageView selectingBg = new ImageView(
-                CharactorData.getCurrent_Pet().getBgImage()
+        ImageView selectingBackGround = new ImageView(
+                CharacterData.getCurrent_Pet().getBackGroundImage()
         );
 
-        selectingBg.setPreserveRatio(false);
-        selectingBg.setFitWidth(350);
-        selectingBg.fitHeightProperty().bind(root.heightProperty());
-        StackPane.setAlignment(selectingBg, CENTER);
+        selectingBackGround.setPreserveRatio(false);
+        selectingBackGround.setFitWidth(350);
+        selectingBackGround.fitHeightProperty().bind(root.heightProperty());
+        StackPane.setAlignment(selectingBackGround, CENTER);
 
         OutlineTextImage pName =
-                new OutlineTextImage(CharactorData.getCurrent_Pet().getName(),'C',40);
+                new OutlineTextImage(CharacterData.getCurrent_Pet().getName(),'C',40);
 
         OutlineTextImage description =
-                new OutlineTextImage(CharactorData.getCurrent_Pet().getDesc(),'M',20);
+                new OutlineTextImage(CharacterData.getCurrent_Pet().getDescription(),'M',20);
 
         description.setTextAlignment(TextAlignment.CENTER);
 
@@ -49,11 +49,11 @@ public class SelectingView extends StackPane {
         setAlignment(vbox, Pos.CENTER);
 
         // ส่ง reference กลับไป scene
-        mscene.setShowi(show);
-        mscene.setBgi(selectingBg);
-        mscene.setName(pName);
-        mscene.setDescription(description);
+        petsScene.setShowImage(show);
+        petsScene.setBackGroundImage(selectingBackGround);
+        petsScene.setName(pName);
+        petsScene.setDescription(description);
 
-        getChildren().addAll(selectingBg, vbox);
+        getChildren().addAll(selectingBackGround, vbox);
     }
 }

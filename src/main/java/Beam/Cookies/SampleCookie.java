@@ -4,8 +4,8 @@ import Beam.Animation.Animate;
 
 public class SampleCookie extends Cookie{
 
-    public SampleCookie(int id, String name, int hp, String desc) {
-        super(id, name, hp, desc);
+    public SampleCookie(int id, String name, int hp, String description) {
+        super(id, name, hp, description);
     }
 
     @Override

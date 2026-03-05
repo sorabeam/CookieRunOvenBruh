@@ -9,25 +9,25 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Image.OutlineTextImage;
 
 public class PetsSelectionScene extends BaseScene {
 
-    ImageView Showi,Bgi;
-    OutlineTextImage name,Description;
+    ImageView showImage,backGroundImage;
+    OutlineTextImage name,description;
 
     PetsButton ins1, ins2, ins3, ins4;
 
-    private String txt = CharactorData.getCurrent_Pet().getDesc();
+    private String txt = CharacterData.getCurrent_Pet().getDescription();
 
     public PetsSelectionScene(){
         super();
 
-        ins1 = new PetsButton(CharactorData.MOJINIGA,28,50);
-        ins2 = new PetsButton(CharactorData.Chilly,28,50);
-        ins3 = new PetsButton(CharactorData.SALAD,28,50);
-        ins4 = new PetsButton(CharactorData.LOCKING,28,50);
+        ins1 = new PetsButton(CharacterData.MOJI,28,50);
+        ins2 = new PetsButton(CharacterData.Chilly,28,50);
+        ins3 = new PetsButton(CharacterData.SALAD,28,50);
+        ins4 = new PetsButton(CharacterData.LOCKING,28,50);
 
         HBox box = new HBox(spacer('H'),ins1, ins2, ins3, ins4);
         box.setSpacing(-15);
@@ -61,14 +61,14 @@ public class PetsSelectionScene extends BaseScene {
 
     }
 
-    public ImageView getShowi() { return Showi; }
-    public void setShowi(ImageView showi) { Showi = showi; }
-    public ImageView getBgi() { return Bgi; }
-    public void setBgi(ImageView bgi) { Bgi = bgi; }
+    public ImageView getShowImage() { return showImage; }
+    public void setShowImage(ImageView showImage) { this.showImage = showImage; }
+    public ImageView getBackGroundImage() { return backGroundImage; }
+    public void setBackGroundImage(ImageView backGroundImage) { this.backGroundImage = backGroundImage; }
     public OutlineTextImage getName() { return name; }
     public void setName(OutlineTextImage name) { this.name = name; }
-    public OutlineTextImage getDescription() { return Description; }
-    public void setDescription(OutlineTextImage description) { Description = description; }
+    public OutlineTextImage getDescription() { return description; }
+    public void setDescription(OutlineTextImage description) { this.description = description; }
     public PetsButton getIns1() { return ins1; }
     public void setIns1(PetsButton ins1) { this.ins1 = ins1; }
     public PetsButton getIns2() { return ins2; }
@@ -90,12 +90,12 @@ public class PetsSelectionScene extends BaseScene {
                 oldAction.handle(e);
             }
 
-            CharactorData.setCurrent_Pet(button.getPet());
+            CharacterData.setCurrent_Pet(button.getPet());
 
-            Showi.setImage(button.getI());
-            Bgi.setImage(button.getBg());
+            showImage.setImage(button.getPetImage());
+            backGroundImage.setImage(button.getBackGround());
             name.setText(button.getName());
-            Description.setText(button.getD());
+            description.setText(button.getDescription());
 
         });
 

@@ -1,6 +1,6 @@
 package Beam.UI.CookiesUI;
 
-import Beam.Button.SettingsPopupButton;
+import Beam.Button.SettingsPopUpButton;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,7 +16,7 @@ public class SettingZone extends HBox {
 
         OutlineTextImage Pname = new OutlineTextImage("sorabeam",'C',18);
 
-        SettingsPopupButton NavSettingBtn =new SettingsPopupButton(SettingImg,root);
+        SettingsPopUpButton NavSettingBtn =new SettingsPopUpButton(SettingImg,root);
         setMargin(WifiImg,new Insets(10,0,0,0));
         setMaxHeight(80);
         setMaxWidth(500);

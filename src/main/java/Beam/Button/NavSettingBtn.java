@@ -12,27 +12,27 @@ import Beam.Image.OutlineTextImage;
 
 public class NavSettingBtn extends NavigationButton {
 
-    private StackPane Rimg;
-    private DropShadow shadow;
-    private OutlineTextImage outl;
-    private String txt;
-    private SettingsPopupButton settingsPopupButton;
+    private final StackPane buttonPane;
+    private final DropShadow shadow;
+    private final OutlineTextImage outlineTextImage;
+    private final String txt;
+    private SettingsPopUpButton settingsPopupButton;
 
-    public NavSettingBtn(GameState switchState , String txt,SettingsPopupButton settingsPopupButton) {
+    public NavSettingBtn(GameState switchState , String txt, SettingsPopUpButton settingsPopupButton) {
 
         super(Asset.createImageView("SBtnBg",0,400),switchState);
         this.txt = txt;
         shadow = setShadow();
 
         this.settingsPopupButton = settingsPopupButton;
-        outl = new OutlineTextImage(txt,'C',25);
+        outlineTextImage = new OutlineTextImage(txt,'C',25);
 
-        outl.setDropShadow(shadow);
-        outl.setMaxWidth(1);
-        Rimg = new StackPane(Asset.createImageView("SBtnBg",0,400),outl);
+        outlineTextImage.setDropShadow(shadow);
+        outlineTextImage.setMaxWidth(1);
+        buttonPane = new StackPane(Asset.createImageView("SBtnBg",0,400), outlineTextImage);
 
-        StackPane.setAlignment(outl,Pos.TOP_LEFT);
-        setGraphic(Rimg);
+        StackPane.setAlignment(outlineTextImage,Pos.TOP_LEFT);
+        setGraphic(buttonPane);
 
     }
 
@@ -53,7 +53,7 @@ public class NavSettingBtn extends NavigationButton {
     }
 
     public void setInset(Insets i){
-        StackPane.setMargin(outl,i);
+        StackPane.setMargin(outlineTextImage,i);
     }
 
     public String getTxt() {

@@ -13,38 +13,37 @@ import javafx.scene.layout.*;
 
 import Beam.Asset;
 import Beam.Button.CharacterButton;
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Image.OutlineTextImage;
 
 import static javafx.geometry.Pos.BOTTOM_CENTER;
 
 public class CookieSelectionScene extends BaseScene {
 
-    CharacterButton block1 = Asset.createGridButton(CharactorData.BOBACOOKIE,220,0);
-    CharacterButton block2 = Asset.createGridButton(CharactorData.TOMYUM_COOKIE,220,0);
-    CharacterButton block3 = Asset.createGridButton(CharactorData.CROSSIANT_COOKIE,220,0);
+    CharacterButton block1 = Asset.createGridButton(CharacterData.BOBA_COOKIE,220,0);
+    CharacterButton block2 = Asset.createGridButton(CharacterData.TOMYUM_COOKIE,220,0);
+    CharacterButton block3 = Asset.createGridButton(CharacterData.CROSSIANT_COOKIE,220,0);
 
-    //ล็อคไม่ให้มันกดได้นะ ไม่งั้นมันบัค
     BaseButton block4 = new BaseButton(Asset.createImageView("B4",220,0));
 
-    ImageView SkillVideo;
-    OutlineTextImage name,Description,Record;
+    ImageView skillVideo;
+    OutlineTextImage name,description,record;
     Animate cookie;
     CharacterButton selectButton = block1;
 
     GridPane characterBoard = new GridDisplay(block1, block2, block3,block4);
-    CharacterDisplay cd =  new CharacterDisplay(this);
+    CharacterDisplay characterDisplay =  new CharacterDisplay(this);
 
     public CookieSelectionScene(){
         super();
         HBox Setting = new SettingZone(root,spacer('H'));
-        String txt = CharactorData.getCurrent_Cookie().get_Desc();
+        String txt = CharacterData.getCurrent_Cookie().get_Desc();
         initCookieBtn();
 
-        HBox MainHBox = new HBox(cd,new DataDisplay(txt,this),characterBoard);
+        HBox MainHBox = new HBox(characterDisplay,new DataDisplay(txt,this),characterBoard);
         MainHBox.setPadding(new Insets(0,30,0,30));
 
-        HBox.setMargin(cd,new Insets(0,0,-30,0));
+        HBox.setMargin(characterDisplay,new Insets(0,0,-30,0));
         //MainHBox.setBackground(new Background(new BackgroundFill(Color.WHITE,null,null)));
         CharacterSelectButtons Btns = new CharacterSelectButtons();
         VBox MainLayer = new VBox(Setting,MainHBox,Btns);
@@ -102,10 +101,10 @@ public class CookieSelectionScene extends BaseScene {
                 oldAction.handle(e);
             }
 
-            SkillVideo.setImage(button.getImg());
-            name.setText(button.getN());
-            Description.setText(button.getD());
-            Record.setText(button.getR());
+            skillVideo.setImage(button.getImage());
+            name.setText(button.getName());
+            description.setText(button.getDescription());
+            record.setText(button.getRecord());
             selectButton = button;
 
             Animate newCookie = button.getCookie().createCookie();
@@ -113,31 +112,31 @@ public class CookieSelectionScene extends BaseScene {
             if (newCookie != null) {
 
                 if (cookie != null) {
-                    cd.getChildren().remove(cookie);
+                    characterDisplay.getChildren().remove(cookie);
                 }
 
                 cookie = newCookie;
                 cookie.changeAnimationState(AnimationType.IDLE);
 
-                cd.getChildren().add(cookie);
+                characterDisplay.getChildren().add(cookie);
                 StackPane.setAlignment(cookie, BOTTOM_CENTER);
 
-                CharactorData.setCurrent_Cookie(button.getCookie());
-            }System.out.println("Current_Cookie change to " + CharactorData.getCurrent_Cookie().get_Name());
+                CharacterData.setCurrent_Cookie(button.getCookie());
+            }System.out.println("Current_Cookie change to " + CharacterData.getCurrent_Cookie().get_Name());
         });
 
 
     }
 
-    public void setSkillVideo(ImageView skillVideo) { SkillVideo = skillVideo; }
+    public void setSkillVideo(ImageView skillVideo) { this.skillVideo = skillVideo; }
     public void setName(OutlineTextImage name) { this.name = name; }
-    public void setDescription(OutlineTextImage description) { Description = description; }
-    public void setRecord(OutlineTextImage record) { Record = record; }
+    public void setDescription(OutlineTextImage description) { this.description = description; }
+    public void setRecord(OutlineTextImage record) { this.record = record; }
     public void setCookie(Animate cookie) { this.cookie = cookie; }
 
-    public ImageView getSkillVideo() { return SkillVideo; }
+    public ImageView getSkillVideo() { return skillVideo; }
     public OutlineTextImage getName() { return name; }
-    public OutlineTextImage getDescription() { return Description; }
-    public OutlineTextImage getRecord() { return Record; }
+    public OutlineTextImage getDescription() { return description; }
+    public OutlineTextImage getRecord() { return record; }
     public Animate getCookie() { return cookie; }
 }

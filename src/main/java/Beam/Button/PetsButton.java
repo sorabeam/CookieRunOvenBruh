@@ -11,19 +11,19 @@ import Beam.Image.OutlineTextImage;
 public class PetsButton extends BaseButton{
 
     ImageView img;
-    Image I,Bg;
-    String name,D;
+    Image petImage, backGround;
+    String name, description;
     Pet pet;
-    public PetsButton(Pet pet , int txtSize, double MarginBtm) {
-        super(new ImageView(pet.getBtnImage()));
+    public PetsButton(Pet pet, int txtSize, double MarginBtm) {
+        super(new ImageView(pet.getButtonImage()));
 
-        img = new ImageView(pet.getBtnImage());
+        img = new ImageView(pet.getButtonImage());
         img.setFitWidth(230);
         img.setPreserveRatio(true);
-        I = pet.getView().getImage();
-        Bg = pet.getBgImage();
+        petImage = pet.getView().getImage();
+        backGround = pet.getBackGroundImage();
         name = pet.getName();
-        D = pet.getDesc();
+        description = pet.getDescription();
 
         img.setFitWidth(270);
 
@@ -65,20 +65,20 @@ public class PetsButton extends BaseButton{
         this.img = img;
     }
 
-    public Image getI() {
-        return I;
+    public Image getPetImage() {
+        return petImage;
     }
 
-    public void setI(Image i) {
-        I = i;
+    public void setPetImage(Image petImage) {
+        this.petImage = petImage;
     }
 
-    public Image getBg() {
-        return Bg;
+    public Image getBackGround() {
+        return backGround;
     }
 
-    public void setBg(Image bg) {
-        Bg = bg;
+    public void setBackGround(Image backGround) {
+        this.backGround = backGround;
     }
 
     public String getName() {
@@ -89,12 +89,12 @@ public class PetsButton extends BaseButton{
         this.name = name;
     }
 
-    public String getD() {
-        return D;
+    public String getDescription() {
+        return description;
     }
 
-    public void setD(String d) {
-        D = d;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Pet getPet() {

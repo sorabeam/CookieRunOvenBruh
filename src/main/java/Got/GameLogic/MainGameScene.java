@@ -1,9 +1,8 @@
 package Got.GameLogic;
 
-import Beam.CharactorData;
+import Beam.CharacterData;
 import Beam.Media.MediaPlayer;
 import Beam.Scene.*;
-import Pors.ObjectInGame.Spawner;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Background;
@@ -18,24 +17,19 @@ public class MainGameScene extends Application {
     private Scene scene;
     private StackPane scalableLayer;
 
-    private final double BASE_WIDTH = 1600;
-    private final double BASE_HEIGHT = 900;
-
-    private boolean scaleLocked = false;
+    private static final double BASE_WIDTH = 1600;
+    private static final double BASE_HEIGHT = 900;
 
     @Override
     public void start(Stage stage) {
 
         GameLogic.setStage(stage);
 
-        // 🔥 ชั้นที่เอาไว้ใส่ scene เกมจริง
         gameRoot = new StackPane();
         gameRoot.setPrefSize(BASE_WIDTH, BASE_HEIGHT);
 
-        // 🔥 ชั้นที่เอาไว้ scale ทั้งเกม
         scalableLayer = new StackPane(gameRoot);
 
-        // 🔥 root จริงของ Scene
         StackPane root = new StackPane(scalableLayer);
         root.setBackground(new Background(new BackgroundFill(Color.BLACK,null,null)));
 
@@ -43,7 +37,6 @@ public class MainGameScene extends Application {
         stage.setScene(scene);
         GameLogic.setApp(this);
 
-        // 🔥 ทำให้ scale ตามขนาดหน้าต่าง
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             updateScale(scalableLayer);
         });
@@ -52,9 +45,8 @@ public class MainGameScene extends Application {
             updateScale(scalableLayer);
         });
 
-        GameLogic.setGameroot(gameRoot);
+        GameLogic.setGameRoot(gameRoot);
 
-        // เปลี่ยน scene ตาม game state
         GameLogic.gameStateProperty().addListener((obs, oldState, newState) -> {
 
             switch (newState) {
@@ -70,10 +62,10 @@ public class MainGameScene extends Application {
 
                 case INGAME -> {
 
-                    CharactorData.getCurrent_Cookie().setHp(CharactorData.getCurrent_Cookie().getMaxhp());
-                    CharactorData.getCurrent_Cookie().setCooldownTimer(0);
-                    CharactorData.getCurrent_Cookie().setSkillCounter(0);
-                    CharactorData.getCurrent_Cookie().setDead(false);
+                    CharacterData.getCurrent_Cookie().setHp(CharacterData.getCurrent_Cookie().getMaxHp());
+                    CharacterData.getCurrent_Cookie().setCooldownTimer(0);
+                    CharacterData.getCurrent_Cookie().setSkillCounter(0);
+                    CharacterData.getCurrent_Cookie().setDead(false);
                     GameLogic.setScore(0);
                     playMusic("SoundMAP" + GameLogic.getMap(),50);
 
@@ -97,7 +89,6 @@ public class MainGameScene extends Application {
         GameLogic.setGameState(GameState.INTRO);
         stage.show();
 
-        // scale ครั้งแรก
         updateScale(scalableLayer);
     }
 
@@ -106,7 +97,6 @@ public class MainGameScene extends Application {
         double scaleX = scene.getWidth() / BASE_WIDTH;
         double scaleY = scene.getHeight() / BASE_HEIGHT;
 
-        // 🔥 รักษาสัดส่วน (ไม่บิด)
         double scale = Math.min(scaleX, scaleY);
 
         scalableLayer.setScaleX(scale);
@@ -120,5 +110,4 @@ public class MainGameScene extends Application {
     private void playMusic(String key,int v) {
         MediaPlayer.getInstance().playBGM(key, true);
     }
-
 }

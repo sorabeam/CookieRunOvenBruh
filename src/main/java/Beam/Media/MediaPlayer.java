@@ -8,8 +8,8 @@ import java.util.HashMap;
 
 public class MediaPlayer {
 
-    private HashMap<String, String> playlist;
-    private HashMap<String, AudioClip> sfxCache;
+    private final HashMap<String, String> playList;
+    private final HashMap<String, AudioClip> sfxCache;
     private javafx.scene.media.MediaPlayer bgmPlayer;
     private static MediaPlayer instance;
 
@@ -20,24 +20,24 @@ public class MediaPlayer {
     }
 
     public MediaPlayer(){
-        playlist = new HashMap<>();
+        playList = new HashMap<>();
         sfxCache = new HashMap<>();
 
-        playlist.put("GameOver", "/SOUND/GameOver.mp3");
-        playlist.put("HeatWave", "/SOUND/HeatWaves.mp3");
-        playlist.put("Hit", "/SOUND/Hit.mp3");
-        playlist.put("JUMP", "/SOUND/JUMP.mp3");
-        playlist.put("Cookies", "/SOUND/Cookies.mp3");
-        playlist.put("SLIDE", "/SOUND/SLIDE.mp3");
-        playlist.put("Click", "/SOUND/CLICK.mp3");
-        playlist.put("Lobby", "/SOUND/Lobby.mp3");
-        playlist.put("Pets", "/SOUND/PETS.mp3");
-        playlist.put("Jelly", "/SOUND/JellyCollectedSound.mp3");
-        playlist.put("Item", "/SOUND/ItemCollectedSound.mp3");
+        playList.put("GameOver", "/SOUND/GameOver.mp3");
+        playList.put("HeatWave", "/SOUND/HeatWaves.mp3");
+        playList.put("Hit", "/SOUND/Hit.mp3");
+        playList.put("JUMP", "/SOUND/JUMP.mp3");
+        playList.put("Cookies", "/SOUND/Cookies.mp3");
+        playList.put("SLIDE", "/SOUND/SLIDE.mp3");
+        playList.put("Click", "/SOUND/CLICK.mp3");
+        playList.put("Lobby", "/SOUND/Lobby.mp3");
+        playList.put("Pets", "/SOUND/PETS.mp3");
+        playList.put("Jelly", "/SOUND/JellyCollectedSound.mp3");
+        playList.put("Item", "/SOUND/ItemCollectedSound.mp3");
 
-        playlist.put("SoundMAP1", "/SOUND/SOUNDMAP1.mp3");
-        playlist.put("SoundMAP2", "/SOUND/SOUNDMAP2.mp3");
-        playlist.put("SoundMAP3", "/SOUND/SOUNDMAP3.mp3");
+        playList.put("SoundMAP1", "/SOUND/SOUNDMAP1.mp3");
+        playList.put("SoundMAP2", "/SOUND/SOUNDMAP2.mp3");
+        playList.put("SoundMAP3", "/SOUND/SOUNDMAP3.mp3");
 
         // preload SFX
         preloadSFX("Hit");
@@ -50,7 +50,7 @@ public class MediaPlayer {
 
     private void preloadSFX(String key) {
 
-        String path = playlist.get(key);
+        String path = playList.get(key);
         if (path == null) return;
 
         var url = getClass().getResource(path);
@@ -66,7 +66,7 @@ public class MediaPlayer {
             bgmPlayer.dispose();
         }
 
-        String path = playlist.get(key);
+        String path = playList.get(key);
         if (path == null) {
             System.out.println("BGM key not found: " + key);
             return;

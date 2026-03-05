@@ -10,16 +10,16 @@ import java.util.Arrays;
 public class Moji extends Pet {
 
     public Moji() {
-        super(3, "Moji Niga", "Produce Mochi jelly," + "\n" +
-                                            "every 20 seconds Contains" + "\n" +
-                                            "scores and healing");
+        super(3, "Moji", """
+                Produce Mochi jelly,
+                every 20 seconds Contains
+                scores and healing""");
 
         setView(Asset.createImageView("Moji",0,480));
         setViewImage(Asset.getImage("Moji"));
-        setBgImage(Asset.getImage("Selecting_Boba"));
-        setBtnImage(Asset.getImage("UnSelect_Boba"));
-        setCooldowntime(20000);
-//        setCooldowntime(5000);
+        setBackGroundImage(Asset.getImage("Selecting_Boba"));
+        setButtonImage(Asset.getImage("UnSelect_Boba"));
+        setCooldownTime(20000);
         setSkillReady(true);
         setUsingSkill(false);
         setSpeed(500);
@@ -38,7 +38,7 @@ public class Moji extends Pet {
             try {
                 setUsingSkill(true);
                 setSkillReady(false);
-                Thread.sleep(getCooldowntime());
+                Thread.sleep(getCooldownTime());
                 setSkillReady(true);
                 setUsingSkill(false);
             } catch (InterruptedException e) {

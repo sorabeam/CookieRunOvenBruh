@@ -20,12 +20,12 @@ import javafx.scene.paint.Color;
 
 import java.util.Objects;
 
-public class SettingsPopupButton extends BaseButton{
+public class SettingsPopUpButton extends BaseButton{
     private final Pane root;
     private StackPane overlay;
     private boolean isOpen = false;
 
-    public SettingsPopupButton(ImageView img, Pane root) {
+    public SettingsPopUpButton(ImageView img, Pane root) {
         super(img);
         this.root = root;
     }
@@ -35,7 +35,7 @@ public class SettingsPopupButton extends BaseButton{
         super.handleClick();
         if(GameLogic.getGameState().equals(GameState.INGAME)){
             if (!GameLogic.getGameroot().getChildren().isEmpty()) {
-                Node child = GameLogic.getGameroot().getChildren().get(0);
+                Node child = GameLogic.getGameroot().getChildren().getFirst();
 
             if (child instanceof GameplayScene inGameScene) {
                 inGameScene.stopGameByBool();
@@ -258,10 +258,9 @@ public class SettingsPopupButton extends BaseButton{
 
         if(GameLogic.getGameState().equals(GameState.INGAME)){
             if (!GameLogic.getGameroot().getChildren().isEmpty()) {
-                Node child = GameLogic.getGameroot().getChildren().get(0);
+                Node child = GameLogic.getGameroot().getChildren().getFirst();
 
-            if  (child instanceof GameplayScene) {
-                    GameplayScene inGameScene = (GameplayScene) child;
+            if  (child instanceof GameplayScene inGameScene) {
                 inGameScene.resumeGameByBool();
             }}
         }

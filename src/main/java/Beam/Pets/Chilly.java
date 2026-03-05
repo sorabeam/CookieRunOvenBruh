@@ -14,10 +14,9 @@ public class Chilly extends Pet {
 
         setView(Asset.createImageView("Chilly",0,480));
         setViewImage(Asset.getImage("Chilly"));
-        setBgImage(Asset.getImage("Selecting_Chilly"));
-        setBtnImage(Asset.getImage("UnSelect_Chilly"));
-//        setCooldowntime(5000);
-        setCooldowntime(20000);
+        setBackGroundImage(Asset.getImage("Selecting_Chilly"));
+        setButtonImage(Asset.getImage("UnSelect_Chilly"));
+        setCooldownTime(20000);
         setSkillReady(true);
         setUsingSkill(false);
         setSpeed(500);
@@ -36,7 +35,7 @@ public class Chilly extends Pet {
             try {
                 setUsingSkill(true);
                 setSkillReady(false);
-                Thread.sleep(getCooldowntime());
+                Thread.sleep(getCooldownTime());
                 setSkillReady(true);
                 setUsingSkill(false);
             } catch (InterruptedException e) {
