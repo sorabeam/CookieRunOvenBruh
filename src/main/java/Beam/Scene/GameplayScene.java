@@ -9,8 +9,8 @@ import Beam.Cookies.CrossiantCookie;
 import Beam.Cookies.TomYumCookie;
 import Beam.Pets.Pet;
 import Beam.UI.InGameUI.*;
-import Filmmy.Pearl;
-import Got.GameLogic.GameLogic;
+import Pors.ObjectInGame.Items.Pearl;
+import GameLogic.GameLogic;
 import Pors.ObjectInGame.Items.*;
 import Pors.ObjectInGame.Obstacle.ObstacleView;
 import Pors.ObjectInGame.Spawner;
@@ -99,7 +99,7 @@ public class GameplayScene extends BaseScene {
 
         player.setGameLayer(gameLayer);
         player.createCookie();
-        CoodownBar cdBar = new CoodownBar(player);
+        CooldownBar cdBar = new CooldownBar(player);
 
         gameLayer.getChildren().addAll(
                 flame,
@@ -329,7 +329,6 @@ public class GameplayScene extends BaseScene {
                     }
                 }
 
-                // 3️⃣ ลบทีเดียวหลัง loop
                 gameLayer.getChildren().removeAll(toRemove);
             }
         };
@@ -345,9 +344,9 @@ public class GameplayScene extends BaseScene {
                     shiftHeld = true;
                     player.slide();
                 }
-                case Q -> {
-                    player.useSkill();
-                }
+//                case Q -> {
+//                    player.useSkill();
+//                }
 //                case T -> {
 //                    pet.useSkill();
 //                }

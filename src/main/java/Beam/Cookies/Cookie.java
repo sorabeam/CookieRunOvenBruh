@@ -4,11 +4,13 @@ import Beam.Animation.Animate;
 import Beam.Animation.AnimationType;
 import Beam.Asset;
 import Beam.Media.MediaPlayer;
-import Got.GameLogic.GameLogic;
-import Got.GameLogic.GameState;
+import GameLogic.GameLogic;
+import GameLogic.GameState;
+import Pors.ObjectInGame.Spawner;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -16,6 +18,7 @@ import javafx.scene.shape.Rectangle;
 public abstract class Cookie {
 
     protected Animate cookie;
+    protected ImageView cookieImg;
     protected String imgURL;
 
     protected boolean invincible = false;
@@ -80,6 +83,7 @@ public abstract class Cookie {
 
     }
 
+    public int get_Id() { return id; }
     public int get_Hp() { return hp; }
     public String get_Bid() { return boxImageId; }
     public String get_Sid() { return skillImageId; }
@@ -205,17 +209,22 @@ public abstract class Cookie {
     public void update(double deltaTime){
 
         if(isDead){
+
             deathTimer -= deltaTime;
+
             if(deathTimer <= 0){
                 GameLogic.setGameState(GameState.GAMEOVER);
             }
+
             return;
         }
 
         boolean usingSkill = skillTimer > 0;
 
         if (skillTimer > 0) {
+
             skillTimer -= deltaTime;
+
             if (skillTimer <= 0) {
                 skillTimer = 0;
             }
@@ -332,6 +341,12 @@ public abstract class Cookie {
         invincible = true;
         invincibleDuration = duration;
         invincibleTimer = 0;
+    }
+
+    public void reset() {
+        setMagnetic(false);
+        setSpeeding(false);
+        Spawner.resetSpeed();
     }
 
     public double getCooldownTimer() {

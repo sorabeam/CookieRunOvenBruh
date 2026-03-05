@@ -1,4 +1,4 @@
-package Got.GameLogic;
+package GameLogic;
 
 import Beam.CharacterData;
 import Beam.Media.MediaPlayer;
@@ -66,6 +66,7 @@ public class MainGameScene extends Application {
                     CharacterData.getCurrent_Cookie().setCooldownTimer(0);
                     CharacterData.getCurrent_Cookie().setSkillCounter(0);
                     CharacterData.getCurrent_Cookie().setDead(false);
+                    CharacterData.getCurrent_Cookie().reset();
                     GameLogic.setScore(0);
                     playMusic("SoundMAP" + GameLogic.getMap(),50);
 

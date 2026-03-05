@@ -8,11 +8,11 @@ import javafx.geometry.Pos;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
-public class CharactorShow extends StackPane {
+public class CharacterShow extends StackPane {
 
     private final Animate cookieView = CharacterData.getCurrent_Cookie().createCookie();
 
-    public CharactorShow() {
+    public CharacterShow() {
         cookieView.setFitWidth(400);
         cookieView.setPreserveRatio(true);
         cookieView.changeAnimationState(AnimationType.IDLE);
