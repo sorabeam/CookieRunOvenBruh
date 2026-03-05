@@ -249,6 +249,13 @@ public abstract class Cookie {
 
         cookie.setLayoutY(cookie.getLayoutY() + velocity * scale);
 
+        if (!onGround && velocity > 0 && !cookie.getAnimationState().equals(AnimationType.DOUBLE_JUMP)) {
+
+            if (!cookie.getAnimationState().equals(AnimationType.JUMP_DOWN)) {
+                cookie.changeAnimationState(AnimationType.JUMP_DOWN);
+            }
+        }
+
         double feet = cookie.getLayoutY() + cookie.getBoundsInParent().getHeight();
 
         // ---------- Ground Check ----------
