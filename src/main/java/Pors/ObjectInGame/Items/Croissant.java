@@ -5,8 +5,8 @@ import Got.GameLogic.GameLogic;
 
 public class Croissant extends BaseItem {
 
-    private double vx;   // ไหลซ้าย
-    public double vy = 0;    // ความเร็วแกน Y
+    private double vx;
+    public double vy = 0;
     private double gravity = 1500;
     public boolean hasBounced = false;
     private CroissantType type;
@@ -34,10 +34,8 @@ public class Croissant extends BaseItem {
 
     public void updatePhysics(double dt, ItemView view, double groundY) {
 
-        // เร่งลงตลอด
         vy += gravity * dt;
 
-        // ขยับตำแหน่ง
         view.setTranslateX(view.getTranslateX() + vx * dt);
         view.setTranslateY(view.getTranslateY() + vy * dt);
 
@@ -45,14 +43,13 @@ public class Croissant extends BaseItem {
 
         if (bottom >= groundY) {
 
-            // วางบนพื้น
             view.setTranslateY(groundY - view.getBoundsInLocal().getHeight());
 
             if (!hasBounced) {
-                vy = -300;       // เด้งขึ้นครั้งเดียว
+                vy = -300;
                 hasBounced = true;
             } else {
-                vy = 0;          // หยุดแนวดิ่ง
+                vy = 0;
             }
         }
     }

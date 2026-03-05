@@ -56,11 +56,11 @@ public class JellyView extends ImageView {
                 setTranslateY(groundY - height);
 
                 if (!hasBounced) {
-                    vy = -400;        // แรงเด้งขึ้น (ปรับได้)
+                    vy = -400;
                     hasBounced = true;
                 } else {
-                    vy = 0;           // หลังเด้งครั้งเดียวแล้วหยุด
-                    falling = false;  // (ถ้าต้องการให้หยุดตกถาวร)
+                    vy = 0;
+                    falling = false;
                 }
             }
         }
@@ -81,10 +81,6 @@ public class JellyView extends ImageView {
 
     public void setFalling(boolean falling){
         this.falling = falling;
-    }
-
-    public int getScore() {
-        return jelly.getScore();
     }
 
     public BaseJelly getJelly() {

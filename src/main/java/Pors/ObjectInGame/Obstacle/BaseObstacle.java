@@ -3,8 +3,6 @@ package Pors.ObjectInGame.Obstacle;
 import Beam.Cookies.Cookie;
 import Pors.ObjectInGame.Interactable;
 
-import java.util.Objects;
-
 public class BaseObstacle implements Interactable {
     private String name;
     private int damage;
@@ -16,11 +14,8 @@ public class BaseObstacle implements Interactable {
     }
 
     @Override
-    public void interact(Cookie player) {
-        if(player.isInvincible()){
-            return;
-        }
-        //player.takeDamage(damage);
+    public void interact(Cookie cookie) {
+        cookie.takeDamage(getDamage());
     }
 
     public String getName() {

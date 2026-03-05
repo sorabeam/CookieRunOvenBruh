@@ -239,8 +239,6 @@ public class GameplayScene extends BaseScene {
                         tarPetPosY = Math.max(400,player.getCookie().getLayoutY());
                         pet.getView().setEffect(shadow);
                     }
-
-                    //System.out.println(player.getCookie().getLayoutY());
                     pet.setTargetPos(tarPetPosX, tarPetPosY);
                     if(pet.hasArrived()) {
                         pet.updateIndex();
@@ -267,7 +265,6 @@ public class GameplayScene extends BaseScene {
 
                 if (shiftHeld && player.isOnGround()) {
                     player.slide();
-                    //System.out.println("slide");
                 }
 
                 //Pew-Pew Pearl And Obstacle

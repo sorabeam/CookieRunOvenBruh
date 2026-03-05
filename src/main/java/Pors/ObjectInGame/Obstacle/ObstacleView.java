@@ -24,8 +24,6 @@ public class ObstacleView extends ImageView {
         }
         else if(Objects.equals(obstacle.getName(), "Obs_1_2"))
         {
-            //setFitWidth(200);
-            //setFitHeight(400);
             setFitWidth(125);
             setFitHeight(250);
         }
@@ -33,11 +31,10 @@ public class ObstacleView extends ImageView {
         {
             setFitWidth(103);
             setPreserveRatio(true);
-            //System.out.println(getFitHeight());
         }
         else if(Objects.equals(obstacle.getName(), "Obs_1_4"))
         {
-            setFitWidth(470);
+            setFitWidth(200);
             setPreserveRatio(true);
         }
         else if(Objects.equals(obstacle.getName(), "Obs_2_1"))
@@ -47,8 +44,6 @@ public class ObstacleView extends ImageView {
         }
         else if(Objects.equals(obstacle.getName(), "Obs_2_2"))
         {
-            //setFitWidth(200);
-            //setFitHeight(400);
             setFitWidth(125);
             setFitHeight(250);
         }
@@ -58,6 +53,26 @@ public class ObstacleView extends ImageView {
             setPreserveRatio(true);
         }
         else if(Objects.equals(obstacle.getName(), "Obs_2_4"))
+        {
+            setFitWidth(200);
+            setPreserveRatio(true);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_3_1"))
+        {
+            setFitWidth(103);
+            setPreserveRatio(true);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_3_2"))
+        {
+            setFitWidth(125);
+            setFitHeight(250);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_3_3"))
+        {
+            setFitWidth(103);
+            setPreserveRatio(true);
+        }
+        else if(Objects.equals(obstacle.getName(), "Obs_3_4"))
         {
             setFitWidth(200);
             setPreserveRatio(true);
@@ -74,12 +89,12 @@ public class ObstacleView extends ImageView {
         setTranslateY(getTranslateY() + vy * deltaTime);
     }
 
-    public int getDamage() {
-        return obstacle.getDamage();
-    }
-
     public void setSpeed(double vx, double vy) {
         this.vx = vx;
         this.vy = vy;
+    }
+
+    public BaseObstacle getObstacle() {
+        return this.obstacle;
     }
 }

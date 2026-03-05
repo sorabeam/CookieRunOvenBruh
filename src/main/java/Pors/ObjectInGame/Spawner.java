@@ -15,6 +15,7 @@ import javafx.scene.layout.Pane;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Spawner {
 
@@ -25,17 +26,15 @@ public class Spawner {
     private static double defaultSpeed = -350;
     private static double speed = defaultSpeed;
     private Pet pet;
-
-    private long lastUpdateTime = 0;
-
-    //private AnimationTimer timer;
+    private int begin = 0;
 
     private List<List<SpawnAction>> spawnSets = SpawnerLayout.getSpawnLayout();
 
-    private int currentSetIndex = spawnSets.size() - 1;
-    //private int currentSetIndex = 0;
+    private int currentSetIndex = 0;
     private int currentActionIndex = 0;
     private long lastSpawnTime = 0;
+
+    private int[] tutorialPatterns = {3,4,9};
 
     public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie, Pet pet) {
         this.gameLayer = gameLayer;
@@ -63,19 +62,23 @@ public class Spawner {
     }
 
     private void spawnBySet(long now) {
-
-        if (currentSetIndex >= spawnSets.size()) {
-            currentSetIndex = 0;
-            currentActionIndex = 0;
-            lastSpawnTime = now;
-            return;
-        }
-
         List<SpawnAction> set = spawnSets.get(currentSetIndex);
 
         if (currentActionIndex >= set.size()) {
-            // set จบ → ไป set ถัดไป
-            currentSetIndex++;
+
+            if(begin < tutorialPatterns.length){
+                currentSetIndex = tutorialPatterns[begin];
+                begin++;
+            }
+            else{
+                int level = GameLogic.getMap();
+
+                int min = (level - 1) * 4;
+                int max = spawnSets.size() - 1 - ((3 - level) * 5);
+
+                currentSetIndex = (int)(Math.random() * (max - min + 1)) + min;
+            }
+            System.out.println(currentSetIndex);
             currentActionIndex = 0;
             lastSpawnTime = now;
             return;
@@ -91,8 +94,6 @@ public class Spawner {
         if (now - lastSpawnTime < action.delay) return;
 
         lastSpawnTime = now;
-
-        //double y = 650;
 
         if (action.type == SpawnAction.Type.OBSTACLE) {
             int level = GameLogic.getMap();
@@ -113,11 +114,32 @@ public class Spawner {
             gameLayer.getChildren().add(obs);
 
         } else if (action.type == SpawnAction.Type.ITEM){
-            ItemView item = new ItemView(
-                    new HealingPotion(action.name),
-                    speed,
-                    0
-            );
+            ItemView item;
+            if(Objects.equals(action.name, "BigHealingPotion")) {
+                item = new ItemView(
+                        new BigHealingPotion(),
+                        speed,
+                        0
+                );
+            } else if(Objects.equals(action.name, "SpeedBoost")) {
+                item = new ItemView(
+                        new SpeedBoost(),
+                        speed,
+                        0
+                );
+            } else if(Objects.equals(action.name, "Magnetic")) {
+                item = new ItemView(
+                        new Magnetic(),
+                        speed,
+                        0
+                );
+            } else {
+                item = new ItemView(
+                        new HealingPotion(),
+                        speed,
+                        0
+                );
+            }
             item.setTranslateX(sceneWidth + 50);
             item.setTranslateY(action.height);
             gameLayer.getChildren().add(item);
@@ -167,7 +189,6 @@ public class Spawner {
                             i,
                             sceneHeight - 80
                     );
-                    //System.out.println("Croissant Y: " + i.getTranslateY());
                 } else {
                     i.update(deltaTime);
                 }
@@ -209,7 +230,6 @@ public class Spawner {
 
         ItemView view = new ItemView(croissant, speed, 0);
 
-        // เริ่มจากฟ้า
         view.setTranslateX(sceneWidth - 200);
         view.setTranslateY(-50);
 
@@ -259,7 +279,7 @@ public class Spawner {
                         .intersects(obs.getBoundsInParent())
                         && !cookie.isInvincible()) {
 
-                    cookie.takeDamage(obs.getDamage());
+                    obs.getObstacle().interact(cookie);
                     toRemove.add(node);
                 }
             }
@@ -310,14 +330,4 @@ public class Spawner {
     public static double getDefaultSpeed() {
         return defaultSpeed;
     }
-
-    /*public void stop() {
-        if (timer != null) {
-            timer.stop();
-            timer = null;
-        }
-
-        lastUpdateTime = 0;
-        lastSpawnTime = 0;
-    }*/
 }

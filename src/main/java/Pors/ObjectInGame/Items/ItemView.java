@@ -13,11 +13,14 @@ public class ItemView extends ImageView {
         this.item = item;
         this.vx = vx;
         this.vy = vy;
-        System.out.println("/Image/Items/" + item.getName() + ".png");
+        //System.out.println("/Image/Items/" + item.getName() + ".png");
         setImage(new Image("/Image/Items/" + item.getName() + ".png"));
         if (item instanceof Croissant) {
             setFitWidth(200);
             setFitHeight(145);
+        } else if (item instanceof BigHealingPotion) {
+            setFitWidth(100);
+            setFitHeight(100);
         } else {
             setFitWidth(50);
             setFitHeight(50);
