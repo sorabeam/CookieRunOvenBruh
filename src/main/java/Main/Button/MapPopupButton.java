@@ -79,6 +79,9 @@ public class MapPopupButton extends BaseButton{
      * map selection buttons.
      */
     private void showMap() {
+
+        if(overlay != null) return;
+
         overlay = new StackPane();
         ImageView BgPane = Asset.createImageView("MBGS",0,440);
 
@@ -115,6 +118,7 @@ public class MapPopupButton extends BaseButton{
             }
 
             root.getChildren().remove(overlay);
+            overlay = null;
         });
     }
 

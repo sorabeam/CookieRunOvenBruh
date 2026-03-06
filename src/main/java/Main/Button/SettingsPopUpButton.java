@@ -63,6 +63,9 @@ public class SettingsPopUpButton extends BaseButton{
     @Override
     public void handleClick() {
         super.handleClick();
+
+        showSetting();
+
         if(GameLogic.getGameState().equals(GameState.IN_GAME)){
             if (!GameLogic.getGameroot().getChildren().isEmpty()) {
                 Node child = GameLogic.getGameroot().getChildren().getFirst();
@@ -73,7 +76,7 @@ public class SettingsPopUpButton extends BaseButton{
                 }
             }
         }
-        showSetting();
+
     }
 
     /**
@@ -86,6 +89,8 @@ public class SettingsPopUpButton extends BaseButton{
 
         if(isOpen) return;
         isOpen = true;
+
+        System.out.println("add overlay");
 
         DropShadow shadow = new DropShadow();
         shadow.setRadius(10);
