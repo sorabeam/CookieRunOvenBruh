@@ -23,7 +23,7 @@ class SpawnerTest {
             public void useSkill() {}
         };
 
-        spawner = new Spawner(pane, 800, 600, cookie);
+        spawner = new Spawner(pane, cookie);
     }
 
     @Test

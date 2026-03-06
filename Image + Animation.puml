@@ -1,0 +1,84 @@
+@startuml
+class Main.Animation.Animate {
+# int currentRow
+# int currentFrame
+# double accumulator
+- boolean isLoop
+- int maxFPR
+- int frameWidth
+- int frameHeight
+- double frameDuration
+- int[] maxFPRType
+- ObjectProperty<AnimationType> state
++ <<Create>> Animate(Image,int,int,int,int,int,int,int,int,int,int,int)
++ void update(double)
++ void setFrameDuration(float)
++ void DrawAnimation()
++ void changeAnimationState(AnimationType)
++ AnimationType getAnimationState()
+}
+
+
+class Main.Image.FloorFade {
++ <<Create>> FloorFade(double)
+}
+
+class Main.Image.CellingFade {
++ <<Create>> CellingFade(double)
+}
+
+class Main.Image.OutlineTextImage {
++ {static} Font FONT_CHANGO
++ {static} Font FONT_MALI
+- Text stroke
+- Text fill
++ <<Create>> OutlineTextImage(String,char,int)
++ void setText(String)
++ void setTextAlignment(TextAlignment)
++ void setDropShadow(DropShadow)
++ void setColor(Color)
+}
+
+
+enum Main.Animation.AnimationType {
++  IDLE
++  RUN
++  JUMP_UP
++  JUMP_DOWN
++  DOUBLE_JUMP
++  DIE
++  SLIDE
++  TAKE_DAMAGE
++  SKILL
+- int row
+~ <<Create>> AnimationType(int)
++ int getRow()
+}
+
+
+class Main.Animation.AnimateEffect {
+- int frameWidth
+- int frameHeight
+- int totalFrames
+- int framesPerRow
+- double frameDuration
+- boolean loop
+- int currentFrame
+- double accumulator
++ <<Create>> AnimateEffect(Image,int,int,int,int,double)
++ void update(double)
+- void draw()
++ void restart()
++ void setLoop(boolean)
++ void setFrameDuration(double)
+}
+
+
+
+
+javafx.scene.image.ImageView <|-- Main.Animation.Animate
+javafx.scene.layout.Region <|-- Main.Image.FloorFade
+javafx.scene.layout.Region <|-- Main.Image.CellingFade
+javafx.scene.layout.StackPane <|-- Main.Image.OutlineTextImage
+javafx.scene.image.ImageView <|-- Main.Animation.AnimateEffect
+@enduml

@@ -11,7 +11,7 @@ import Main.Asset;
 /**
  * UI component representing the settings area in the main menu.
  *
- * <p>This layout contains a WiFi status icon and a settings button.
+ * <p>This layout contains a Wi-Fi status icon and a settings button.
  * A spacer region is used to push the components to the right side
  * of the layout.</p>
  */

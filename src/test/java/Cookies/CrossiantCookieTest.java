@@ -2,6 +2,9 @@ package Cookies;
 
 import Main.Cookies.CrossiantCookie;
 import Main.ObjectInGame.Items.CroissantType;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,11 +22,11 @@ class CrossiantCookieTest {
     }
 
     @Test
-    void testCroissantReadyAfter30Jellies() {
+    void testCroissantReadyAfter50Jellies() {
 
         CrossiantCookie cookie = new CrossiantCookie();
 
-        for(int i=0;i<30;i++){
+        for(int i=0;i<50;i++){
             cookie.onJellyCollected();
         }
 

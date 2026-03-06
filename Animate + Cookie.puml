@@ -1,0 +1,181 @@
+@startuml
+class Main.Cookies.TomYumCookie {
+- boolean rainReady
++ void useSkill()
++ void updateSkill(double)
++ double getCooldownProgress()
++ boolean isSkillReady()
++ void consumeRain()
+}
+
+
+class Main.Animation.Animate {
+# int currentRow
+# int currentFrame
+# double accumulator
+- boolean isLoop
+- int maxFPR
+- int frameWidth
+- int frameHeight
+- double frameDuration
+- int[] maxFPRType
+- ObjectProperty<AnimationType> state
++ void update(double)
++ void setFrameDuration(float)
++ void DrawAnimation()
++ void changeAnimationState(AnimationType)
++ AnimationType getAnimationState()
+}
+
+
+class Main.Cookies.SampleCookie {
++ void useSkill()
++ Animate createCookie()
+}
+
+class Main.Cookies.BobaCookie {
++ Animate createCookie()
++ void update(double)
++ void useSkill()
++ double getCooldownProgress()
+}
+
+enum Main.Animation.AnimationType {
++  IDLE
++  RUN
++  JUMP_UP
++  JUMP_DOWN
++  DOUBLE_JUMP
++  DIE
++  SLIDE
++  TAKE_DAMAGE
++  SKILL
+- int row
++ int getRow()
+}
+
+
+abstract class Main.Cookies.Cookie {
+# Animate cookie
+# String imgURL
+# boolean invincible
+# double invincibleTimer
+# double invincibleDuration
+# Pane gameLayer
+# Rectangle hitBox
+- DoubleProperty hitboxRatio
+- double slideHitboxRatio
+- double velocity
+- int jumpCount
+- boolean onGround
+# boolean hasCooldown
+# double cooldownTimer
+# double skillCooldown
+# int skillCounter
+- boolean isMagnetic
+- boolean isSpeeding
+# double damageTimer
+- boolean isDead
+- double deathTimer
+~ int id
+~ int maxHp
+~ int hp
+~ int score
+~ double skillTimer
+~ String boxImageId
+~ String skillImageId
+~ String name
+~ String description
+~ Image profileImg
++ int get_Id()
++ int get_Hp()
++ String get_Bid()
++ String get_Sid()
++ String get_Name()
++ String get_Desc()
++ int get_Score()
++ void setScore(int)
++ {abstract}void useSkill()
++ void takeDamage(int)
++ void takeDamageByTime()
++ void setHp(int)
++ void heal(int)
++ void die()
+# void playSkill(double)
++ Animate createCookie()
++ boolean isHasCooldown()
++ void setHasCooldown(boolean)
++ int getMaxHp()
++ Image getProfileImg()
++ void setProfileImg(Image)
++ void update(double)
++ void jump()
++ void slide()
++ void upFromSlide()
++ void setHitbox()
++ void setInvincible(double)
++ void reset()
++ double getCooldownTimer()
++ void setCooldownTimer(double)
++ double getSkillCooldown()
++ void setSkillCooldown(double)
++ int getSkillCounter()
++ void setSkillCounter(int)
++ boolean isInvincible()
+- boolean isPerformingSkill()
+# Pane getParentLayer()
++ void setGameLayer(Pane)
+# int getMaxJump()
++ Rectangle getHitBox()
++ void setImgURL(String)
++ double getCooldownProgress()
++ Animate getCookie()
++ void setCookie(Animate)
++ boolean isOnGround()
++ boolean isMagnetic()
++ void setMagnetic(boolean)
++ void setSpeeding(boolean)
++ boolean isSpeeding()
++ boolean isDead()
++ void setDead(boolean)
+}
+
+
+class Main.Animation.AnimateEffect {
+- int frameWidth
+- int frameHeight
+- int totalFrames
+- int framesPerRow
+- double frameDuration
+- boolean loop
+- int currentFrame
+- double accumulator
++ void update(double)
+- void draw()
++ void restart()
++ void setLoop(boolean)
++ void setFrameDuration(double)
+}
+
+
+class Main.Cookies.CrossiantCookie {
+- int croissantCycle
+- boolean croissantReady
+- OutlineTextImage counterText
++ Animate createCookie()
++ void onJellyCollected()
++ boolean isCroissantReady()
++ CroissantType consumeCroissant()
++ void useSkill()
+}
+
+
+
+
+Main.Cookies.Cookie <|-- Main.Cookies.TomYumCookie
+javafx.scene.image.ImageView <|-- Main.Animation.Animate
+Main.Cookies.Cookie <|-- Main.Cookies.SampleCookie
+Main.Cookies.Cookie <|-- Main.Cookies.BobaCookie
+javafx.scene.image.ImageView <|-- Main.Animation.AnimateEffect
+Main.Cookies.Cookie <|-- Main.Cookies.CrossiantCookie
+@enduml

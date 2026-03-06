@@ -1,0 +1,1067 @@
+@startuml
+abstract class Main.Pets.Pet {
+~ int id
+~ int cooldownTime
+~ String BGid
+~ String name
+~ String description
+~ ImageView view
+~ Image viewImage
+~ Image backGroundImage
+~ Image buttonImage
+- boolean isSkillReady
+- boolean isUsingSkill
+- double targetPosX
+- double targetPoxY
+- double speed
+- int indexRoll
+- ArrayList<Supplier<ItemView>> spawnItemList
+- ArrayList<Double> probability
+- boolean useRandomSpin
++ <<Create>> Pet(int,String,String)
++ boolean hasArrived()
++ void update(double)
++ void updateIndex()
++ int getId()
++ String getName()
++ String getBGid()
++ {abstract}void useSkill()
++ ImageView getView()
++ void setView(ImageView)
++ Image getViewImage()
++ void setViewImage(Image)
++ Image getBackGroundImage()
++ void setBackGroundImage(Image)
++ Image getButtonImage()
++ void setButtonImage(Image)
++ String getDescription()
++ void setDescription(String)
++ int getCooldownTime()
++ void setCooldownTime(int)
++ void setUsingSkill(boolean)
++ void setSkillReady(boolean)
++ boolean isUsingSkill()
++ boolean isSkillReady()
++ void setTargetPos(double,double)
++ double getTargetPosX()
++ double getTargetPoxY()
++ double getSpeed()
++ void setSpeed(double)
++ ItemView getCurrentSpawnItem()
++ void setSpawnItemList(ArrayList<Supplier<ItemView>>)
++ ArrayList<Supplier<ItemView>> getSpawnItemList()
++ void setUseRandomSpin(boolean)
++ ArrayList<Double> getProbability()
++ void setProbability(ArrayList<Double>)
+}
+
+
+class Main.Button.PetsButton {
+~ ImageView img
+~ Image petImage
+~ String name
+~ Pet pet
++ <<Create>> PetsButton(Pet,int,double)
+- OutlineTextImage setText(String,int,double)
+- FavoriteButton buildFav()
++ ImageView getImg()
++ void setImg(ImageView)
++ Image getPetImage()
++ void setPetImage(Image)
++ Image getBackGround()
++ void setBackGround(Image)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ Pet getPet()
++ void setPet(Pet)
+}
+
+
+class Main.Cookies.TomYumCookie {
+- boolean rainReady
++ <<Create>> TomYumCookie()
++ void useSkill()
++ void updateSkill(double)
++ double getCooldownProgress()
++ boolean isSkillReady()
++ void consumeRain()
+}
+
+
+class Main.ObjectInGame.Items.HealingPotion {
+- int healingStat
++ <<Create>> HealingPotion()
++ int getHealingStat()
++ void setHealingStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.SpawnAction {
++ Type type
++ long delay
++ String name
++ int height
++ <<Create>> SpawnAction(Type,long,String,int)
++ {static} List<SpawnAction> combine(Object)
++ {static} SpawnAction jelly(long,int,int)
++ {static} List<SpawnAction> jellyWave(long,int,int)
++ {static} SpawnAction obstacle(long,int,int,int)
++ {static} SpawnAction item(long,int,String)
+}
+
+
+enum Main.ObjectInGame.Type {
++  OBSTACLE
++  ITEM
++  JELLY
+}
+
+class Main.Button.CharacterButton {
+- String name
+- String description
+- String record
+- Image image
+- Cookie cookie
++ <<Create>> CharacterButton(ImageView,String,String,String,Image,Cookie)
++ void handleClick()
++ String getName()
++ String getDescription()
++ String getRecord()
++ Image getImage()
++ Cookie getCookie()
++ void setName(String)
++ void setDescription(String)
++ void setRecord(String)
++ void setImage(Image)
++ void setCookie(Cookie)
+}
+
+
+class Main.ObjectInGame.Items.Vegetable {
++ <<Create>> Vegetable()
++ void interact(Cookie)
+}
+
+class Main.Image.OutlineTextImage {
++ {static} Font FONT_CHANGO
++ {static} Font FONT_MALI
+- Text stroke
+- Text fill
++ <<Create>> OutlineTextImage(String,char,int)
++ void setText(String)
++ void setTextAlignment(TextAlignment)
++ void setDropShadow(DropShadow)
++ void setColor(Color)
+}
+
+
+class Main.UI.CookiesUI.DataDisplay {
++ <<Create>> DataDisplay(String,CookieSelectionScene)
+}
+
+class Main.Pets.SamplePet {
++ <<Create>> SamplePet(int,String,String,String)
++ void useSkill()
+}
+
+class Main.Button.SettingsPopUpButton {
+- Pane root
+- StackPane overlay
+- boolean isOpen
++ <<Create>> SettingsPopUpButton(ImageView,Pane)
++ void handleClick()
+- void showSetting()
+- void deleteThis(BaseButton)
+- void runItBack(BaseButton)
++ Boolean getOpen()
++ void setOpen(Boolean)
+}
+
+
+class Main.Animation.AnimateEffect {
+- int frameWidth
+- int frameHeight
+- int totalFrames
+- int framesPerRow
+- double frameDuration
+- boolean loop
+- int currentFrame
+- double accumulator
++ <<Create>> AnimateEffect(Image,int,int,int,int,double)
++ void update(double)
+- void draw()
++ void restart()
++ void setLoop(boolean)
++ void setFrameDuration(double)
+}
+
+
+enum Main.GameLogic.GameState {
++  INTRO
++  SELECT_CHAR
++  IN_GAME
++  GAME_OVER
++  SELECT_PET
+}
+
+class Main.UI.PetsUI.SettingZone {
++ <<Create>> SettingZone(StackPane,Region)
+}
+
+class Main.Scene.GameplayScene {
+~ Pane gameLayer
+~ StackPane uiLayer
+- MoveGround ground
+- boolean shiftHeld
+~ SettingZone settingZone
+~ HpDisplayZone hpZone
+~ ShowScore sc
+- double groundH
++ {static} double groundY
+- AnimationTimer timer
+- Spawner spawner
++ boolean isUpdate
+- InGameBG bg
+- double deltatime
++ <<Create>> GameplayScene()
++ void stopGame()
++ void stopGameByBool()
++ void resumeGameByBool()
++ void stopEnvironment()
++ boolean isUpdate()
++ void setUpdate(boolean)
++ double getDeltatime()
++ void setDeltatime(double)
+}
+
+
+class Main.ObjectInGame.Items.Chicken {
++ <<Create>> Chicken()
++ void interact(Cookie)
+}
+
+class Main.Button.NavigationButton {
+- GameState switchState
++ <<Create>> NavigationButton(ImageView,GameState)
++ void handleClick()
++ GameState getSwitchState()
+}
+
+
+class Main.UI.MainMenuUI.GlassDecoration {
++ <<Create>> GlassDecoration()
+}
+
+class Main.UI.InGameUI.CooldownBar {
++ Rectangle frame
++ Rectangle background
++ Rectangle fill
++ <<Create>> CooldownBar(Cookie)
+}
+
+
+class Main.UI.GameOverUI.Buttons {
++ <<Create>> Buttons()
+}
+
+class Main.ObjectInGame.Items.SpeedBoost {
+- int speedStat
++ <<Create>> SpeedBoost()
++ int getSpeedStat()
++ void setSpeedStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.Items.BigHealingPotion {
+- int healingStat
++ <<Create>> BigHealingPotion()
++ int getHealingStat()
++ void setHealingStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.UI.InGameUI.ShowScore {
+~ ImageView fadeBg
+~ OutlineTextImage score
++ <<Create>> ShowScore()
+}
+
+
+class Main.MediaPlayer {
+- HashMap<String,String> playList
+- HashMap<String,AudioClip> sfxCache
+- javafx.scene.media.MediaPlayer bgmPlayer
+- {static} MediaPlayer instance
++ <<Create>> MediaPlayer()
++ {static} MediaPlayer getInstance()
+- void preloadSFX(String)
++ void playBGM(String,boolean)
++ void playSFX(String)
++ void updateBGMVolume()
++ void updateSFXVolume()
+}
+
+
+class Main.UI.MainMenuUI.MainMenuProfile {
++ <<Create>> MainMenuProfile(String,String,StackPane)
+}
+
+class Main.ObjectInGame.Items.StickyMochi {
++ <<Create>> StickyMochi()
++ void interact(Cookie)
+}
+
+class Main.Cookies.CrossiantCookie {
+- int croissantCycle
+- boolean croissantReady
+- OutlineTextImage counterText
++ <<Create>> CrossiantCookie()
++ Animate createCookie()
++ void onJellyCollected()
++ boolean isCroissantReady()
++ CroissantType consumeCroissant()
++ void useSkill()
+}
+
+
+class Main.Scene.MainMenuScene {
++ <<Create>> MainMenuScene()
+}
+
+class Main.Scene.CookieSelectionScene {
+~ CharacterButton block1
+~ CharacterButton block2
+~ CharacterButton block3
+~ BaseButton block4
+~ ImageView skillVideo
+~ OutlineTextImage name
+~ Animate cookie
+~ CharacterButton selectButton
+~ GridPane characterBoard
+~ CharacterDisplay characterDisplay
++ <<Create>> CookieSelectionScene()
+- void initCookieBtn()
+- void enableShow(CharacterButton)
++ void setSkillVideo(ImageView)
++ void setName(OutlineTextImage)
++ void setDescription(OutlineTextImage)
++ void setRecord(OutlineTextImage)
++ void setCookie(Animate)
++ ImageView getSkillVideo()
++ OutlineTextImage getName()
++ OutlineTextImage getDescription()
++ OutlineTextImage getRecord()
++ Animate getCookie()
+}
+
+
+class Main.Button.NavSettingButton {
+- OutlineTextImage outlineTextImage
+- String txt
+- SettingsPopUpButton settingsPopupButton
++ <<Create>> NavSettingButton(GameState,String,SettingsPopUpButton)
+- DropShadow setShadow()
++ void handleClick()
++ void setInset(Insets)
++ String getTxt()
+}
+
+
+class Main.UI.InGameUI.InGameBG {
+- ImageView bg1
+- ImageView bg2
+- double speed
+- double width
+- AnimationTimer timer
+- long lastTime
++ <<Create>> InGameBG(StackPane)
+- void createLoop()
+- void recalculatePositions()
++ void start()
++ void stop()
+}
+
+
+class Main.UI.CookiesUI.CharacterSelectButtons {
++ <<Create>> CharacterSelectButtons()
+}
+
+class Main.UI.MainMenuUI.MainMenuBG {
++ <<Create>> MainMenuBG()
+}
+
+class Main.ObjectInGame.Items.Pearl {
+- double speed
++ <<Create>> Pearl(double,double)
++ void update(double)
+}
+
+
+class Main.Pets.Salad {
++ <<Create>> Salad()
++ void useSkill()
+}
+
+interface Main.Button.Clickable {
+~ void handleClick()
+~ void onHoverEnter()
+~ void onHoverExit()
+}
+
+class Main.UI.InGameUI.MoveGround {
+- ImageView ground1
+- ImageView ground2
+- double groundH
+- double width
+- AnimationTimer timer
+- long lastTime
+- Pane gameLayer
++ <<Create>> MoveGround(Pane)
+- void updateGroundWidth(Bounds)
+- void createLoop()
++ double getGroundY()
++ void start()
++ void stop()
+}
+
+
+class Main.UI.PetsUI.PetSelectionBtn {
++ <<Create>> PetSelectionBtn(Region)
+}
+
+class Main.Image.CellingFade {
++ <<Create>> CellingFade(double)
+}
+
+class Main.Button.MapPopupButton {
+- StackPane overlay
+- StackPane root
+- MapSelectionButton map1
+- MapSelectionButton map2
+- MapSelectionButton map3
++ <<Create>> MapPopupButton(ImageView,StackPane)
++ void setImg(ImageView)
++ void handleClick()
+- void showMap()
+- void deleteThis(MapSelectionButton)
+}
+
+
+class Main.ObjectInGame.Items.ChillyBoost {
+- double speedMul
+- int boostTime
++ <<Create>> ChillyBoost()
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.Jelly.BaseJelly {
+- String name
+- int score
++ <<Create>> BaseJelly(String)
++ void interact(Cookie)
++ String getName()
++ void setName(String)
++ int getScore()
++ void setScore(int)
+}
+
+
+class Main.UI.InGameUI.HpDisplayZone {
+~ int max_hp
+~ int current_hp
+~ double barWidth
+~ double barHeight
+- double displayPercent
+- double smoothSpeed
+~ Rectangle cdFill
++ <<Create>> HpDisplayZone()
++ void updateHpBar(double)
+}
+
+
+class Main.UI.InGameUI.SettingZone {
++ <<Create>> SettingZone(StackPane,Region)
+}
+
+class Main.Button.BaseButton {
+- boolean isHovering
+- boolean clicked
++ <<Create>> BaseButton(ImageView)
++ void handleClick()
++ void onHoverEnter()
++ void onHoverExit()
+- void scaleTo(double)
++ void initializesButton()
+}
+
+
+class Main.UI.GameOverUI.Banner {
++ <<Create>> Banner()
+}
+
+class Main.Scene.PetsSelectionScene {
+~ ImageView showImage
+~ OutlineTextImage name
+~ PetsButton ins1
+- String txt
++ <<Create>> PetsSelectionScene()
++ ImageView getShowImage()
++ void setShowImage(ImageView)
++ ImageView getBackGroundImage()
++ void setBackGroundImage(ImageView)
++ OutlineTextImage getName()
++ void setName(OutlineTextImage)
++ OutlineTextImage getDescription()
++ void setDescription(OutlineTextImage)
++ PetsButton getIns1()
++ void setIns1(PetsButton)
++ PetsButton getIns2()
++ void setIns2(PetsButton)
++ PetsButton getIns3()
++ void setIns3(PetsButton)
++ PetsButton getIns4()
++ void setIns4(PetsButton)
++ String getTxt()
++ void setTxt(String)
+- void enableSwap(PetsButton)
+}
+
+
+class Main.Button.FavoriteButton {
++ <<Create>> FavoriteButton()
++ void setHeight(double)
+}
+
+class Main.ObjectInGame.Items.Magnetic {
+- int activeTime
++ <<Create>> Magnetic()
++ void interact(Cookie)
++ int getActiveTime()
++ void setActiveTime(int)
+}
+
+
+class Main.ObjectInGame.SpawnerLayout {
+~ {static} int level
++ {static} List<SpawnAction> basicJump
++ {static} List<SpawnAction> doubleJump
++ {static} List<SpawnAction> basicSlice
++ {static} List<SpawnAction> advancedJump
++ {static} List<SpawnAction> bigJump3
++ {static} List<List<SpawnAction>> getSpawnLayout()
+}
+
+
+class Main.UI.CookiesUI.SettingZone {
++ <<Create>> SettingZone(StackPane,Region)
+}
+
+class Main.ObjectInGame.Obstacle.BaseObstacle {
+- String name
+- int damage
++ <<Create>> BaseObstacle(String)
++ void interact(Cookie)
++ String getName()
++ void setName(String)
++ int getDamage()
++ void setDamage(int)
+}
+
+
+abstract class Main.Scene.BaseScene {
+# Scene scene
+# StackPane root
+- {static} double BASE_WIDTH
+- {static} double BASE_HEIGHT
++ <<Create>> BaseScene()
++ Region spacer(char)
+}
+
+
+class Main.UI.CookiesUI.CharacterDisplay {
++ <<Create>> CharacterDisplay(CookieSelectionScene)
+}
+
+class Main.Pets.Chilly {
++ <<Create>> Chilly()
++ void useSkill()
+}
+
+class Main.CharacterData {
++ {static} Cookie BOBA_COOKIE
++ {static} Cookie CROSSIANT_COOKIE
++ {static} Cookie TOMYUM_COOKIE
++ {static} Cookie LOCKING_COOKIE
++ {static} Pet SALAD
++ {static} Pet CHILLY
++ {static} Pet MOJI
++ {static} Pet Chilly
++ {static} Pet LOCKING
+- {static} Cookie Current_Cookie
+- {static} Pet Current_Pet
++ {static} Cookie getCurrent_Cookie()
++ {static} void setCurrent_Cookie(Cookie)
++ {static} Pet getCurrent_Pet()
++ {static} void setCurrent_Pet(Pet)
+}
+
+
+class Main.GameLogic.GameLogic {
+- {static} IntegerProperty SCORE
+- {static} int bestScore
+- {static} double multiplier
+- {static} MainGameScene app
+- {static} int map
+- {static} HpDisplayZone hpBar
+- {static} int musicVolume
+- {static} int sfxVolume
+- {static} StackPane gameRoot
+- {static} GameplayScene currentGameScene
+- {static} ObjectProperty<GameState> GAME_STATE
+- {static} Scene curScene
+- {static} Stage stage
++ {static} int getScore()
++ {static} void setScore(int)
++ {static} void addScore(int)
++ {static} IntegerProperty scoreProperty()
++ {static} GameState getGameState()
++ {static} void setGameState(GameState)
++ {static} void setCurrentGameScene(GameplayScene)
++ {static} ObjectProperty<GameState> gameStateProperty()
++ {static} void setStage(Stage)
++ {static} void setCurScene(Scene)
++ {static} Scene getCurScene()
++ {static} Stage getStage()
++ {static} double getMultiplier()
++ {static} void setMultiplier(double)
++ {static} void setApp(MainGameScene)
++ {static} MainGameScene getApp()
++ {static} int getMap()
++ {static} void setMap(int)
++ {static} StackPane getGameroot()
++ {static} void setGameRoot(StackPane)
++ {static} void setBestScore(int)
++ {static} HpDisplayZone getHpBar()
++ {static} void setHpBar(HpDisplayZone)
++ {static} GameplayScene getCurrentGameScene()
++ {static} int getMusicVolume()
++ {static} void setMusicVolume(int)
++ {static} int getSFXVolume()
++ {static} void setSFXVolume(int)
+}
+
+
+class Main.UI.MainMenuUI.CharacterShow {
+- Animate cookieView
++ <<Create>> CharacterShow()
++ Animate getCookie()
+}
+
+
+class Main.UI.MainMenuUI.SettingZone {
++ <<Create>> SettingZone(StackPane,Region)
+}
+
+class Main.UI.CookiesUI.GridDisplay {
++ <<Create>> GridDisplay(CharacterButton,CharacterButton,CharacterButton,BaseButton)
+}
+
+class Main.ObjectInGame.Items.Croissant {
+- double vx
++ double vy
+- double gravity
++ boolean hasBounced
+- CroissantType type
++ <<Create>> Croissant(CroissantType,double)
+- {static} String getImageName(CroissantType)
++ void updatePhysics(double,ItemView,double)
++ void interact(Cookie)
++ void setSpeed(double,double)
+}
+
+
+class Main.Animation.Animate {
+# int currentRow
+# int currentFrame
+# double accumulator
+- boolean isLoop
+- int maxFPR
+- int frameWidth
+- int frameHeight
+- double frameDuration
+- int[] maxFPRType
+- ObjectProperty<AnimationType> state
++ <<Create>> Animate(Image,int,int,int,int,int,int,int,int,int,int,int)
++ void update(double)
++ void setFrameDuration(float)
++ void DrawAnimation()
++ void changeAnimationState(AnimationType)
++ AnimationType getAnimationState()
+}
+
+
+class Main.Cookies.SampleCookie {
++ <<Create>> SampleCookie(int,String,int,String)
++ void useSkill()
++ Animate createCookie()
+}
+
+class Main.Image.FloorFade {
++ <<Create>> FloorFade(double)
+}
+
+class Main.UI.GameOverUI.DVDShow {
++ <<Create>> DVDShow()
+}
+
+interface Main.ObjectInGame.Interactable {
+~ void interact(Cookie)
+}
+
+class Main.UI.PetsUI.PetSelectionBG {
++ <<Create>> PetSelectionBG()
+}
+
+class Main.UI.PetsUI.SelectingView {
++ <<Create>> SelectingView(StackPane,PetsSelectionScene)
+}
+
+class Main.UI.MainMenuUI.MainMenuButtons {
++ <<Create>> MainMenuButtons()
+}
+
+class Main.Cookies.BobaCookie {
++ <<Create>> BobaCookie()
++ Animate createCookie()
++ void update(double)
++ void useSkill()
++ double getCooldownProgress()
+}
+
+class Main.ObjectInGame.Items.Tomato {
++ <<Create>> Tomato()
++ void interact(Cookie)
+}
+
+enum Main.Animation.AnimationType {
++  IDLE
++  RUN
++  JUMP_UP
++  JUMP_DOWN
++  DOUBLE_JUMP
++  DIE
++  SLIDE
++  TAKE_DAMAGE
++  SKILL
+- int row
+~ <<Create>> AnimationType(int)
++ int getRow()
+}
+
+
+class Main.UI.GameOverUI.CharacterShow {
+- Animate cookieView
++ <<Create>> CharacterShow()
++ Animate getCookie()
+}
+
+
+abstract class Main.Cookies.Cookie {
+# Animate cookie
+# String imgURL
+# boolean invincible
+# double invincibleTimer
+# double invincibleDuration
+# Pane gameLayer
+# Rectangle hitBox
+- DoubleProperty hitboxRatio
+- double slideHitboxRatio
+- double velocity
+- int jumpCount
+- boolean onGround
+# boolean hasCooldown
+# double cooldownTimer
+# double skillCooldown
+# int skillCounter
+- boolean isMagnetic
+- boolean isSpeeding
+# double damageTimer
+- boolean isDead
+- double deathTimer
+~ int id
+~ int maxHp
+~ int hp
+~ int score
+~ double skillTimer
+~ String boxImageId
+~ String skillImageId
+~ String name
+~ String description
+~ Image profileImg
++ <<Create>> Cookie(int,String,int,String)
++ int get_Id()
++ int get_Hp()
++ String get_Bid()
++ String get_Sid()
++ String get_Name()
++ String get_Desc()
++ int get_Score()
++ void setScore(int)
++ {abstract}void useSkill()
++ void takeDamage(int)
++ void takeDamageByTime()
++ void setHp(int)
++ void heal(int)
++ void die()
+# void playSkill(double)
++ Animate createCookie()
++ boolean isHasCooldown()
++ void setHasCooldown(boolean)
++ int getMaxHp()
++ Image getProfileImg()
++ void setProfileImg(Image)
++ void update(double)
++ void jump()
++ void slide()
++ void upFromSlide()
++ void setHitbox()
++ void setInvincible(double)
++ void reset()
++ double getCooldownTimer()
++ void setCooldownTimer(double)
++ double getSkillCooldown()
++ void setSkillCooldown(double)
++ int getSkillCounter()
++ void setSkillCounter(int)
++ boolean isInvincible()
+- boolean isPerformingSkill()
+# Pane getParentLayer()
++ void setGameLayer(Pane)
+# int getMaxJump()
++ Rectangle getHitBox()
++ void setImgURL(String)
++ double getCooldownProgress()
++ Animate getCookie()
++ void setCookie(Animate)
++ boolean isOnGround()
++ boolean isMagnetic()
++ void setMagnetic(boolean)
++ void setSpeeding(boolean)
++ boolean isSpeeding()
++ boolean isDead()
++ void setDead(boolean)
+}
+
+
+class Main.Pets.Moji {
++ <<Create>> Moji()
++ void useSkill()
+}
+
+class Main.UI.GameOverUI.GameOverBg {
++ <<Create>> GameOverBg()
+}
+
+class Main.Asset {
+- {static} Map<String,Image> IMAGE_CACHE
++ {static} Image getImage(String)
++ {static} ImageView createImageView(String,double,double)
++ {static} ImageView createBackgroundView(String,double,double)
++ {static} Image getBackGroundImage(String)
++ {static} CharacterButton createGridButton(Cookie,double,double)
+}
+
+
+class Main.UI.CookiesUI.CookieSelectBG {
++ <<Create>> CookieSelectBG()
+}
+
+class Main.ObjectInGame.Jelly.JellyView {
+- BaseJelly jelly
+- double vx
+- double vy
+- boolean falling
+- double gravity
+- boolean hasBounced
++ <<Create>> JellyView(BaseJelly,double,double)
++ void update(double)
++ void pullToPlayer(Cookie,double)
++ void setFalling(boolean)
++ BaseJelly getJelly()
++ void setSpeed(double,double)
++ void setSpeedX(double)
+}
+
+
+class Main.ObjectInGame.Items.ItemView {
+- BaseItem item
+- double vx
+- double vy
++ <<Create>> ItemView(BaseItem,double,double)
++ void update(double)
++ int getHealAmount()
++ BaseItem getItem()
++ void setSpeed(double,double)
+}
+
+
+abstract class Main.ObjectInGame.Items.BaseItem {
+- String name
++ <<Create>> BaseItem(String)
++ String getName()
++ void setName(String)
+}
+
+
+class Main.ObjectInGame.Obstacle.ObstacleView {
+- BaseObstacle obstacle
+- double vx
+- double vy
++ <<Create>> ObstacleView(BaseObstacle,double,double)
++ void update(double)
++ void setSpeed(double,double)
++ BaseObstacle getObstacle()
+}
+
+
+class Main.Button.MapSelectionButton {
+- int mapNo
+- MapPopupButton targetButton
++ <<Create>> MapSelectionButton(ImageView,MapPopupButton,int)
++ void handleClick()
+}
+
+
+class Main.MainGameScene {
+- StackPane gameRoot
+- Scene scene
+- StackPane scalableLayer
+- {static} double BASE_WIDTH
+- {static} double BASE_HEIGHT
++ void start(Stage)
+- void updateScale(StackPane)
++ {static} void main(String[])
+- void playMusic(String,int)
+}
+
+
+enum Main.ObjectInGame.Items.CroissantType {
++  ORIGINAL
++  BUTTER
++  STRAWBERRY
+}
+
+class Main.ObjectInGame.Spawner {
+- Pane gameLayer
+- Cookie cookie
+- {static} double DEFAULT_SPEED
+- {static} double speed
+- int begin
+- List<List<SpawnAction>> spawnSets
+- int currentSetIndex
+- int currentActionIndex
+- long lastSpawnTime
+- int[] tutorialPatterns
++ <<Create>> Spawner(Pane,Cookie)
++ void update(long,double)
+- void spawnBySet(long)
+- void updateObstacles(double)
+- void updateItem(double)
+- void updateJelly(double)
+- void spawnCroissant(CroissantType)
++ void spawnIngredientRain()
+- void checkCollision(Cookie)
++ {static} void setSpeed(double)
++ {static} double getSpeed()
++ {static} void resetSpeed()
++ {static} double getDefaultSpeed()
+}
+
+
+class Main.Scene.GameOverScene {
++ <<Create>> GameOverScene()
+}
+
+
+
+Main.Button.BaseButton <|-- Main.Button.PetsButton
+Main.Cookies.Cookie <|-- Main.Cookies.TomYumCookie
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.HealingPotion
+Main.Button.BaseButton <|-- Main.Button.CharacterButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Vegetable
+javafx.scene.layout.StackPane <|-- Main.Image.OutlineTextImage
+javafx.scene.layout.VBox <|-- Main.UI.CookiesUI.DataDisplay
+Main.Pets.Pet <|-- Main.Pets.SamplePet
+Main.Button.BaseButton <|-- Main.Button.SettingsPopUpButton
+javafx.scene.image.ImageView <|-- Main.Animation.AnimateEffect
+Main.UI.PetsUI.HBox <|-- Main.UI.PetsUI.SettingZone
+Main.Scene.BaseScene <|-- Main.Scene.GameplayScene
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Chicken
+Main.Button.BaseButton <|-- Main.Button.NavigationButton
+javafx.scene.layout.StackPane <|-- Main.UI.MainMenuUI.GlassDecoration
+javafx.scene.layout.StackPane <|-- Main.UI.InGameUI.CooldownBar
+javafx.scene.layout.HBox <|-- Main.UI.GameOverUI.Buttons
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.SpeedBoost
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.BigHealingPotion
+javafx.scene.layout.StackPane <|-- Main.UI.InGameUI.ShowScore
+javafx.scene.layout.StackPane <|-- Main.UI.MainMenuUI.MainMenuProfile
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.StickyMochi
+Main.Cookies.Cookie <|-- Main.Cookies.CrossiantCookie
+Main.Scene.BaseScene <|-- Main.Scene.MainMenuScene
+Main.Scene.BaseScene <|-- Main.Scene.CookieSelectionScene
+Main.Button.NavigationButton <|-- Main.Button.NavSettingButton
+javafx.scene.layout.StackPane <|-- Main.UI.InGameUI.InGameBG
+javafx.scene.layout.HBox <|-- Main.UI.CookiesUI.CharacterSelectButtons
+javafx.scene.layout.StackPane <|-- Main.UI.MainMenuUI.MainMenuBG
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Items.Pearl
+Main.Pets.Pet <|-- Main.Pets.Salad
+javafx.scene.layout.Pane <|-- Main.UI.InGameUI.MoveGround
+javafx.scene.layout.HBox <|-- Main.UI.PetsUI.PetSelectionBtn
+javafx.scene.layout.Region <|-- Main.Image.CellingFade
+Main.Button.BaseButton <|-- Main.Button.MapPopupButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.ChillyBoost
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Jelly.BaseJelly
+Main.UI.InGameUI.StackPane <|-- Main.UI.InGameUI.HpDisplayZone
+javafx.scene.layout.HBox <|-- Main.UI.InGameUI.SettingZone
+Main.Button.Clickable <|.. Main.Button.BaseButton
+javafx.scene.control.Button <|-- Main.Button.BaseButton
+javafx.scene.layout.StackPane <|-- Main.UI.GameOverUI.Banner
+Main.Scene.BaseScene <|-- Main.Scene.PetsSelectionScene
+Main.Button.BaseButton <|-- Main.Button.FavoriteButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Magnetic
+Main.UI.CookiesUI.HBox <|-- Main.UI.CookiesUI.SettingZone
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Obstacle.BaseObstacle
+Main.Scene.StackPane <|-- Main.Scene.BaseScene
+Main.UI.CookiesUI.StackPane <|-- Main.UI.CookiesUI.CharacterDisplay
+Main.Pets.Pet <|-- Main.Pets.Chilly
+javafx.scene.layout.StackPane <|-- Main.UI.MainMenuUI.CharacterShow
+javafx.scene.layout.HBox <|-- Main.UI.MainMenuUI.SettingZone
+javafx.scene.layout.GridPane <|-- Main.UI.CookiesUI.GridDisplay
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Croissant
+javafx.scene.image.ImageView <|-- Main.Animation.Animate
+Main.Cookies.Cookie <|-- Main.Cookies.SampleCookie
+javafx.scene.layout.Region <|-- Main.Image.FloorFade
+javafx.scene.layout.StackPane <|-- Main.UI.GameOverUI.DVDShow
+javafx.scene.layout.StackPane <|-- Main.UI.PetsUI.PetSelectionBG
+Main.UI.PetsUI.StackPane <|-- Main.UI.PetsUI.SelectingView
+javafx.scene.layout.StackPane <|-- Main.UI.MainMenuUI.MainMenuButtons
+Main.Cookies.Cookie <|-- Main.Cookies.BobaCookie
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Tomato
+javafx.scene.layout.StackPane <|-- Main.UI.GameOverUI.CharacterShow
+Main.Pets.Pet <|-- Main.Pets.Moji
+Main.UI.GameOverUI.StackPane <|-- Main.UI.GameOverUI.GameOverBg
+javafx.scene.layout.StackPane <|-- Main.UI.CookiesUI.CookieSelectBG
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Jelly.JellyView
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Items.ItemView
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Items.BaseItem
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Obstacle.ObstacleView
+Main.Button.BaseButton <|-- Main.Button.MapSelectionButton
+javafx.application.Application <|-- Main.MainGameScene
+Main.Scene.BaseScene <|-- Main.Scene.GameOverScene
+@enduml

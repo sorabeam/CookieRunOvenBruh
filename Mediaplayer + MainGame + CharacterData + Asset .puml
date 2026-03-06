@@ -1,0 +1,62 @@
+@startuml
+class Main.MainGameScene {
+- StackPane gameRoot
+- Scene scene
+- StackPane scalableLayer
+- {static} double BASE_WIDTH
+- {static} double BASE_HEIGHT
++ void start(Stage)
+- void updateScale(StackPane)
++ {static} void main(String[])
+- void playMusic(String,int)
+}
+
+
+class Main.CharacterData {
++ {static} Cookie BOBA_COOKIE
++ {static} Cookie CROSSIANT_COOKIE
++ {static} Cookie TOMYUM_COOKIE
++ {static} Cookie LOCKING_COOKIE
++ {static} Pet SALAD
++ {static} Pet CHILLY
++ {static} Pet MOJI
++ {static} Pet Chilly
++ {static} Pet LOCKING
+- {static} Cookie Current_Cookie
+- {static} Pet Current_Pet
++ {static} Cookie getCurrent_Cookie()
++ {static} void setCurrent_Cookie(Cookie)
++ {static} Pet getCurrent_Pet()
++ {static} void setCurrent_Pet(Pet)
+}
+
+
+class Main.MediaPlayer {
+- HashMap<String,String> playList
+- HashMap<String,AudioClip> sfxCache
+- javafx.scene.media.MediaPlayer bgmPlayer
+- {static} MediaPlayer instance
++ <<Create>> MediaPlayer()
++ {static} MediaPlayer getInstance()
+- void preloadSFX(String)
++ void playBGM(String,boolean)
++ void playSFX(String)
++ void updateBGMVolume()
++ void updateSFXVolume()
+}
+
+
+class Main.Asset {
+- {static} Map<String,Image> IMAGE_CACHE
++ {static} Image getImage(String)
++ {static} ImageView createImageView(String,double,double)
++ {static} ImageView createBackgroundView(String,double,double)
++ {static} Image getBackGroundImage(String)
++ {static} CharacterButton createGridButton(Cookie,double,double)
+}
+
+
+
+
+javafx.application.Application <|-- Main.MainGameScene
+@enduml

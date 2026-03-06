@@ -1,12 +1,16 @@
 package Cookies;
 
 import Main.Cookies.BobaCookie;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class BobaCookieTest {
+
 
     @Test
     void testConstructor() {

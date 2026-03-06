@@ -2,6 +2,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import Main.GameLogic.GameLogic;
 import Main.GameLogic.GameState;
+import javafx.embed.swing.JFXPanel;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

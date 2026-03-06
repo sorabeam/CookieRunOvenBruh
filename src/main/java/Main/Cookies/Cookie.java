@@ -7,6 +7,7 @@ import Main.MediaPlayer;
 import Main.GameLogic.GameLogic;
 import Main.GameLogic.GameState;
 import Main.ObjectInGame.Spawner;
+import Main.Scene.GameplayScene;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.scene.image.Image;
@@ -347,7 +348,11 @@ public abstract class Cookie {
         }
 
         velocity = -5;
-        GameLogic.getCurrentGameScene().stopEnvironment();
+        GameplayScene scene = GameLogic.getCurrentGameScene();
+
+        if(scene != null){
+            scene.stopEnvironment();
+        }
     }
 
     /**

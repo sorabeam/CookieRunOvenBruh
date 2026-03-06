@@ -2,6 +2,7 @@ import Main.CharacterData;
 import Main.Cookies.Cookie;
 import Main.Pets.Pet;
 import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CharacterDataTest {
+
     @BeforeAll
     static void initJavaFX() {
-        Platform.startup(() -> {});
+        new JFXPanel();
     }
 
     @BeforeEach

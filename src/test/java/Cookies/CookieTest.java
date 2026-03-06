@@ -3,6 +3,9 @@ package Cookies;
 import Main.Animation.Animate;
 import Main.Animation.AnimationType;
 import Main.Cookies.Cookie;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import Main.GameLogic.GameLogic;
 import Main.Scene.GameplayScene;
@@ -14,14 +17,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class CookieTest {
     private GameplayScene mockScene;
 
-    @BeforeEach
-    void setup() {
-        mockScene = mock(GameplayScene.class);
 
-        when(mockScene.getDeltatime()).thenReturn(1.0);
-
-        GameLogic.setCurrentGameScene(mockScene);
+    @BeforeAll
+    static void initJavaFX() {
+        new JFXPanel();
     }
+
     /**
      * Dummy Animate
      * ใช้แทน Animate จริงเพื่อไม่ให้เรียก JavaFX

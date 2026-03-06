@@ -1,0 +1,214 @@
+@startuml
+abstract class Main.Pets.Pet {
+~ int id
+~ int cooldownTime
+~ String BGid
+~ String name
+~ String description
+~ ImageView view
+~ Image viewImage
+~ Image backGroundImage
+~ Image buttonImage
+- boolean isSkillReady
+- boolean isUsingSkill
+- double targetPosX
+- double targetPoxY
+- double speed
+- int indexRoll
+- ArrayList<Supplier<ItemView>> spawnItemList
+- ArrayList<Double> probability
+- boolean useRandomSpin
++ <<Create>> Pet(int,String,String)
++ boolean hasArrived()
++ void update(double)
++ void updateIndex()
++ int getId()
++ String getName()
++ String getBGid()
++ {abstract}void useSkill()
++ ImageView getView()
++ void setView(ImageView)
++ Image getViewImage()
++ void setViewImage(Image)
++ Image getBackGroundImage()
++ void setBackGroundImage(Image)
++ Image getButtonImage()
++ void setButtonImage(Image)
++ String getDescription()
++ void setDescription(String)
++ int getCooldownTime()
++ void setCooldownTime(int)
++ void setUsingSkill(boolean)
++ void setSkillReady(boolean)
++ boolean isUsingSkill()
++ boolean isSkillReady()
++ void setTargetPos(double,double)
++ double getTargetPosX()
++ double getTargetPoxY()
++ double getSpeed()
++ void setSpeed(double)
++ ItemView getCurrentSpawnItem()
++ void setSpawnItemList(ArrayList<Supplier<ItemView>>)
++ ArrayList<Supplier<ItemView>> getSpawnItemList()
++ void setUseRandomSpin(boolean)
++ ArrayList<Double> getProbability()
++ void setProbability(ArrayList<Double>)
+}
+
+
+class Main.Cookies.TomYumCookie {
+- boolean rainReady
++ <<Create>> TomYumCookie()
++ void useSkill()
++ void updateSkill(double)
++ double getCooldownProgress()
++ boolean isSkillReady()
++ void consumeRain()
+}
+
+
+class Main.Cookies.SampleCookie {
++ <<Create>> SampleCookie(int,String,int,String)
++ void useSkill()
++ Animate createCookie()
+}
+
+class Main.Cookies.BobaCookie {
++ <<Create>> BobaCookie()
++ Animate createCookie()
++ void update(double)
++ void useSkill()
++ double getCooldownProgress()
+}
+
+class Main.Pets.Chilly {
++ <<Create>> Chilly()
++ void useSkill()
+}
+
+class Main.Pets.SamplePet {
++ <<Create>> SamplePet(int,String,String,String)
++ void useSkill()
+}
+
+class Main.Pets.Salad {
++ <<Create>> Salad()
++ void useSkill()
+}
+
+class Main.Pets.Moji {
++ <<Create>> Moji()
++ void useSkill()
+}
+
+abstract class Main.Cookies.Cookie {
+# Animate cookie
+# String imgURL
+# boolean invincible
+# double invincibleTimer
+# double invincibleDuration
+# Pane gameLayer
+# Rectangle hitBox
+- DoubleProperty hitboxRatio
+- double slideHitboxRatio
+- double velocity
+- int jumpCount
+- boolean onGround
+# boolean hasCooldown
+# double cooldownTimer
+# double skillCooldown
+# int skillCounter
+- boolean isMagnetic
+- boolean isSpeeding
+# double damageTimer
+- boolean isDead
+- double deathTimer
+~ int id
+~ int maxHp
+~ int hp
+~ int score
+~ double skillTimer
+~ String boxImageId
+~ String skillImageId
+~ String name
+~ String description
+~ Image profileImg
++ <<Create>> Cookie(int,String,int,String)
++ int get_Id()
++ int get_Hp()
++ String get_Bid()
++ String get_Sid()
++ String get_Name()
++ String get_Desc()
++ int get_Score()
++ void setScore(int)
++ {abstract}void useSkill()
++ void takeDamage(int)
++ void takeDamageByTime()
++ void setHp(int)
++ void heal(int)
++ void die()
+# void playSkill(double)
++ Animate createCookie()
++ boolean isHasCooldown()
++ void setHasCooldown(boolean)
++ int getMaxHp()
++ Image getProfileImg()
++ void setProfileImg(Image)
++ void update(double)
++ void jump()
++ void slide()
++ void upFromSlide()
++ void setHitbox()
++ void setInvincible(double)
++ void reset()
++ double getCooldownTimer()
++ void setCooldownTimer(double)
++ double getSkillCooldown()
++ void setSkillCooldown(double)
++ int getSkillCounter()
++ void setSkillCounter(int)
++ boolean isInvincible()
+- boolean isPerformingSkill()
+# Pane getParentLayer()
++ void setGameLayer(Pane)
+# int getMaxJump()
++ Rectangle getHitBox()
++ void setImgURL(String)
++ double getCooldownProgress()
++ Animate getCookie()
++ void setCookie(Animate)
++ boolean isOnGround()
++ boolean isMagnetic()
++ void setMagnetic(boolean)
++ void setSpeeding(boolean)
++ boolean isSpeeding()
++ boolean isDead()
++ void setDead(boolean)
+}
+
+
+class Main.Cookies.CrossiantCookie {
+- int croissantCycle
+- boolean croissantReady
+- OutlineTextImage counterText
++ <<Create>> CrossiantCookie()
++ Animate createCookie()
++ void onJellyCollected()
++ boolean isCroissantReady()
++ CroissantType consumeCroissant()
++ void useSkill()
+}
+
+
+
+
+Main.Cookies.Cookie <|-- Main.Cookies.TomYumCookie
+Main.Cookies.Cookie <|-- Main.Cookies.SampleCookie
+Main.Cookies.Cookie <|-- Main.Cookies.BobaCookie
+Main.Pets.Pet <|-- Main.Pets.Chilly
+Main.Pets.Pet <|-- Main.Pets.SamplePet
+Main.Pets.Pet <|-- Main.Pets.Salad
+Main.Pets.Pet <|-- Main.Pets.Moji
+Main.Cookies.Cookie <|-- Main.Cookies.CrossiantCookie
+@enduml

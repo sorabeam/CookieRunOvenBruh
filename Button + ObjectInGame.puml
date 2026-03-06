@@ -1,0 +1,379 @@
+@startuml
+class Main.Button.PetsButton {
+~ ImageView img
+~ Image petImage
+~ String name
+~ Pet pet
++ <<Create>> PetsButton(Pet,int,double)
+- OutlineTextImage setText(String,int,double)
+- FavoriteButton buildFav()
++ ImageView getImg()
++ void setImg(ImageView)
++ Image getPetImage()
++ void setPetImage(Image)
++ Image getBackGround()
++ void setBackGround(Image)
++ String getName()
++ void setName(String)
++ String getDescription()
++ void setDescription(String)
++ Pet getPet()
++ void setPet(Pet)
+}
+
+
+class Main.Button.FavoriteButton {
++ <<Create>> FavoriteButton()
++ void setHeight(double)
+}
+
+class Main.ObjectInGame.Items.HealingPotion {
+- int healingStat
++ <<Create>> HealingPotion()
++ int getHealingStat()
++ void setHealingStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.SpawnAction {
++ Type type
++ long delay
++ String name
++ int height
++ <<Create>> SpawnAction(Type,long,String,int)
++ {static} List<SpawnAction> combine(Object)
++ {static} SpawnAction jelly(long,int,int)
++ {static} List<SpawnAction> jellyWave(long,int,int)
++ {static} SpawnAction obstacle(long,int,int,int)
++ {static} SpawnAction item(long,int,String)
+}
+
+
+enum Main.ObjectInGame.Type {
++  OBSTACLE
++  ITEM
++  JELLY
+}
+
+class Main.ObjectInGame.Items.Magnetic {
+- int activeTime
++ <<Create>> Magnetic()
++ void interact(Cookie)
++ int getActiveTime()
++ void setActiveTime(int)
+}
+
+
+class Main.ObjectInGame.SpawnerLayout {
+~ {static} int level
++ {static} List<SpawnAction> basicJump
++ {static} List<SpawnAction> doubleJump
++ {static} List<SpawnAction> basicSlice
++ {static} List<SpawnAction> advancedJump
++ {static} List<SpawnAction> bigJump3
++ {static} List<List<SpawnAction>> getSpawnLayout()
+}
+
+
+class Main.ObjectInGame.Obstacle.BaseObstacle {
+- String name
+- int damage
++ <<Create>> BaseObstacle(String)
++ void interact(Cookie)
++ String getName()
++ void setName(String)
++ int getDamage()
++ void setDamage(int)
+}
+
+
+class Main.Button.CharacterButton {
+- String name
+- String description
+- String record
+- Image image
+- Cookie cookie
++ <<Create>> CharacterButton(ImageView,String,String,String,Image,Cookie)
++ void handleClick()
++ String getName()
++ String getDescription()
++ String getRecord()
++ Image getImage()
++ Cookie getCookie()
++ void setName(String)
++ void setDescription(String)
++ void setRecord(String)
++ void setImage(Image)
++ void setCookie(Cookie)
+}
+
+
+class Main.ObjectInGame.Items.Vegetable {
++ <<Create>> Vegetable()
++ void interact(Cookie)
+}
+
+class Main.Button.SettingsPopUpButton {
+- Pane root
+- StackPane overlay
+- boolean isOpen
++ <<Create>> SettingsPopUpButton(ImageView,Pane)
++ void handleClick()
+- void showSetting()
+- void deleteThis(BaseButton)
+- void runItBack(BaseButton)
++ Boolean getOpen()
++ void setOpen(Boolean)
+}
+
+
+class Main.ObjectInGame.Items.Croissant {
+- double vx
++ double vy
+- double gravity
++ boolean hasBounced
+- CroissantType type
++ <<Create>> Croissant(CroissantType,double)
+- {static} String getImageName(CroissantType)
++ void updatePhysics(double,ItemView,double)
++ void interact(Cookie)
++ void setSpeed(double,double)
+}
+
+
+class Main.Button.NavigationButton {
+- GameState switchState
++ <<Create>> NavigationButton(ImageView,GameState)
++ void handleClick()
++ GameState getSwitchState()
+}
+
+
+class Main.ObjectInGame.Items.Chicken {
++ <<Create>> Chicken()
++ void interact(Cookie)
+}
+
+class Main.ObjectInGame.Items.SpeedBoost {
+- int speedStat
++ <<Create>> SpeedBoost()
++ int getSpeedStat()
++ void setSpeedStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.Items.BigHealingPotion {
+- int healingStat
++ <<Create>> BigHealingPotion()
++ int getHealingStat()
++ void setHealingStat(int)
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.Items.StickyMochi {
++ <<Create>> StickyMochi()
++ void interact(Cookie)
+}
+
+interface Main.ObjectInGame.Interactable {
+~ void interact(Cookie)
+}
+
+class Main.Button.NavSettingButton {
+- OutlineTextImage outlineTextImage
+- String txt
+- SettingsPopUpButton settingsPopupButton
++ <<Create>> NavSettingButton(GameState,String,SettingsPopUpButton)
+- DropShadow setShadow()
++ void handleClick()
++ void setInset(Insets)
++ String getTxt()
+}
+
+
+class Main.ObjectInGame.Items.Pearl {
+- double speed
++ <<Create>> Pearl(double,double)
++ void update(double)
+}
+
+
+class Main.ObjectInGame.Items.Tomato {
++ <<Create>> Tomato()
++ void interact(Cookie)
+}
+
+class Main.ObjectInGame.Jelly.JellyView {
+- BaseJelly jelly
+- double vx
+- double vy
+- boolean falling
+- double gravity
+- boolean hasBounced
++ <<Create>> JellyView(BaseJelly,double,double)
++ void update(double)
++ void pullToPlayer(Cookie,double)
++ void setFalling(boolean)
++ BaseJelly getJelly()
++ void setSpeed(double,double)
++ void setSpeedX(double)
+}
+
+
+class Main.ObjectInGame.Items.ItemView {
+- BaseItem item
+- double vx
+- double vy
++ <<Create>> ItemView(BaseItem,double,double)
++ void update(double)
++ int getHealAmount()
++ BaseItem getItem()
++ void setSpeed(double,double)
+}
+
+
+abstract class Main.ObjectInGame.Items.BaseItem {
+- String name
++ <<Create>> BaseItem(String)
++ String getName()
++ void setName(String)
+}
+
+
+class Main.ObjectInGame.Obstacle.ObstacleView {
+- BaseObstacle obstacle
+- double vx
+- double vy
++ <<Create>> ObstacleView(BaseObstacle,double,double)
++ void update(double)
++ void setSpeed(double,double)
++ BaseObstacle getObstacle()
+}
+
+
+interface Main.Button.Clickable {
+~ void handleClick()
+~ void onHoverEnter()
+~ void onHoverExit()
+}
+
+class Main.Button.MapSelectionButton {
+- int mapNo
+- MapPopupButton targetButton
++ <<Create>> MapSelectionButton(ImageView,MapPopupButton,int)
++ void handleClick()
+}
+
+
+enum Main.ObjectInGame.Items.CroissantType {
++  ORIGINAL
++  BUTTER
++  STRAWBERRY
+}
+
+class Main.Button.MapPopupButton {
+- StackPane overlay
+- StackPane root
+- MapSelectionButton map1
+- MapSelectionButton map2
+- MapSelectionButton map3
++ <<Create>> MapPopupButton(ImageView,StackPane)
++ void setImg(ImageView)
++ void handleClick()
+- void showMap()
+- void deleteThis(MapSelectionButton)
+}
+
+
+class Main.ObjectInGame.Items.ChillyBoost {
+- double speedMul
+- int boostTime
++ <<Create>> ChillyBoost()
++ void interact(Cookie)
+}
+
+
+class Main.ObjectInGame.Spawner {
+- Pane gameLayer
+- Cookie cookie
+- {static} double DEFAULT_SPEED
+- {static} double speed
+- int begin
+- List<List<SpawnAction>> spawnSets
+- int currentSetIndex
+- int currentActionIndex
+- long lastSpawnTime
+- int[] tutorialPatterns
++ <<Create>> Spawner(Pane,Cookie)
++ void update(long,double)
+- void spawnBySet(long)
+- void updateObstacles(double)
+- void updateItem(double)
+- void updateJelly(double)
+- void spawnCroissant(CroissantType)
++ void spawnIngredientRain()
+- void checkCollision(Cookie)
++ {static} void setSpeed(double)
++ {static} double getSpeed()
++ {static} void resetSpeed()
++ {static} double getDefaultSpeed()
+}
+
+
+class Main.ObjectInGame.Jelly.BaseJelly {
+- String name
+- int score
++ <<Create>> BaseJelly(String)
++ void interact(Cookie)
++ String getName()
++ void setName(String)
++ int getScore()
++ void setScore(int)
+}
+
+
+class Main.Button.BaseButton {
+- boolean isHovering
+- boolean clicked
++ <<Create>> BaseButton(ImageView)
++ void handleClick()
++ void onHoverEnter()
++ void onHoverExit()
+- void scaleTo(double)
++ void initializesButton()
+}
+
+
+
+
+Main.Button.BaseButton <|-- Main.Button.PetsButton
+Main.Button.BaseButton <|-- Main.Button.FavoriteButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.HealingPotion
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Magnetic
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Obstacle.BaseObstacle
+Main.Button.BaseButton <|-- Main.Button.CharacterButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Vegetable
+Main.Button.BaseButton <|-- Main.Button.SettingsPopUpButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Croissant
+Main.Button.BaseButton <|-- Main.Button.NavigationButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Chicken
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.SpeedBoost
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.BigHealingPotion
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.StickyMochi
+Main.Button.NavigationButton <|-- Main.Button.NavSettingButton
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Items.Pearl
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.Tomato
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Jelly.JellyView
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Items.ItemView
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Items.BaseItem
+javafx.scene.image.ImageView <|-- Main.ObjectInGame.Obstacle.ObstacleView
+Main.Button.BaseButton <|-- Main.Button.MapSelectionButton
+Main.Button.BaseButton <|-- Main.Button.MapPopupButton
+Main.ObjectInGame.Items.BaseItem <|-- Main.ObjectInGame.Items.ChillyBoost
+Main.ObjectInGame.Interactable <|.. Main.ObjectInGame.Jelly.BaseJelly
+Main.Button.Clickable <|.. Main.Button.BaseButton
+javafx.scene.control.Button <|-- Main.Button.BaseButton
+@enduml
