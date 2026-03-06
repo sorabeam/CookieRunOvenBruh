@@ -1,4 +1,4 @@
-package Main.UI.MainUI;
+package Main.UI.MainMenuUI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

@@ -1,6 +1,6 @@
 package Main.Button;
 
-import Main.Media.MediaPlayer;
+import Main.MediaPlayer;
 import javafx.animation.ScaleTransition;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;

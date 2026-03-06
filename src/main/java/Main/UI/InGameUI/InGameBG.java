@@ -55,8 +55,6 @@ public class InGameBG extends StackPane {
         start();
     }
 
-    // ================= LOOP =================
-
     private void createLoop(){
 
         timer = new AnimationTimer() {
@@ -88,8 +86,6 @@ public class InGameBG extends StackPane {
         };
     }
 
-    // ================= POSITION FIX =================
-
     private void recalculatePositions(){
 
         double x1 = bg1.getTranslateX();
@@ -108,8 +104,6 @@ public class InGameBG extends StackPane {
         }
     }
 
-    // ================= CONTROL =================
-
     public void start(){
         if (timer != null) {
             lastTime = 0;   // reset delta
@@ -120,13 +114,6 @@ public class InGameBG extends StackPane {
     public void stop(){
         if (timer != null) {
             timer.stop();
-        }
-    }
-
-    public void resume(){
-        if (timer != null) {
-            lastTime = 0;   // ป้องกัน dt กระโดด
-            timer.start();
         }
     }
 }

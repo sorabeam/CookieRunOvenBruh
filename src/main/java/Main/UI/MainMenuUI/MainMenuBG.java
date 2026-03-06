@@ -1,4 +1,4 @@
-package Main.UI.MainUI;
+package Main.UI.MainMenuUI;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,7 +14,6 @@ public class MainMenuBG extends StackPane {
 
         ImageView MBg = Asset.createBackgroundView("BgLobby",1,1);
 
-        // bind กับตัวเอง
         MBg.fitWidthProperty().bind(widthProperty());
         MBg.fitHeightProperty().bind(heightProperty());
 

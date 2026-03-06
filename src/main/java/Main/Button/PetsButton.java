@@ -30,7 +30,7 @@ public class PetsButton extends BaseButton{
         super.setGraphic(img);
 
         OutlineTextImage txt = setText(name,txtSize,MarginBtm);
-        FavoriteButton fav = BuildFav();
+        FavoriteButton fav = buildFav();
         StackPane newImg = new StackPane(fav,img,txt);
         super.setGraphic(newImg);
 
@@ -46,7 +46,7 @@ public class PetsButton extends BaseButton{
         return txt;
     }
 
-    private FavoriteButton BuildFav(){
+    private FavoriteButton buildFav(){
 
         FavoriteButton fav = new FavoriteButton();
         fav.setHeight(50);

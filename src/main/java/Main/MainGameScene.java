@@ -2,7 +2,6 @@ package Main;
 
 import Main.GameLogic.GameLogic;
 import Main.GameLogic.GameState;
-import Main.Media.MediaPlayer;
 import Main.Scene.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -36,7 +35,6 @@ public class MainGameScene extends Application {
 
         scene = new Scene(root, BASE_WIDTH, BASE_HEIGHT);
         stage.setScene(scene);
-        GameLogic.setApp(this);
 
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             updateScale(scalableLayer);

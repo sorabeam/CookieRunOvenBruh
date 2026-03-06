@@ -10,13 +10,13 @@ import javafx.scene.paint.Color;
 import Main.Asset;
 import Main.Image.OutlineTextImage;
 
-public class NavSettingBtn extends NavigationButton {
+public class NavSettingButton extends NavigationButton {
 
     private final OutlineTextImage outlineTextImage;
     private final String txt;
     private final SettingsPopUpButton settingsPopupButton;
 
-    public NavSettingBtn(GameState switchState , String txt, SettingsPopUpButton settingsPopupButton) {
+    public NavSettingButton(GameState switchState , String txt, SettingsPopUpButton settingsPopupButton) {
 
         super(Asset.createImageView("SBtnBg",0,400),switchState);
         this.txt = txt;

@@ -15,7 +15,6 @@ public class CooldownBar extends StackPane {
     public Rectangle frame;
     public Rectangle background;
     public Rectangle fill;
-    private Cookie cookie;
 
     public CooldownBar(Cookie cookie) {
         frame = new Rectangle(84, 12);

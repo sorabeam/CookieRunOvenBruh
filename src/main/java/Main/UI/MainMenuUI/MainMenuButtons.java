@@ -1,4 +1,4 @@
-package Main.UI.MainUI;
+package Main.UI.MainMenuUI;
 
 import Main.GameLogic.GameState;
 import javafx.geometry.Insets;

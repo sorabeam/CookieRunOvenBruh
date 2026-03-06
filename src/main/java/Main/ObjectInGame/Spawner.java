@@ -1,11 +1,9 @@
 package Main.ObjectInGame;
 
 import Main.Cookies.Cookie;
-import Main.Media.MediaPlayer;
+import Main.MediaPlayer;
 import Main.Cookies.CrossiantCookie;
 import Main.GameLogic.GameLogic;
-import Main.ObjectInGame.Items.*;
-import Main.ObjectInGame.Items.*;
 import Main.ObjectInGame.Items.*;
 import Main.ObjectInGame.Jelly.BaseJelly;
 import Main.ObjectInGame.Jelly.JellyView;
