@@ -90,13 +90,18 @@ public abstract class Cookie {
     public void takeDamage(int damage){
         if(isDead) return;
         hp -= damage;
-        GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
-        System.out.println("Cookie take " + damage + " damage");
+        //GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
+        if(GameLogic.getCurrentGameScene() != null && GameLogic.getHpBar() != null){
+            GameLogic.getHpBar().updateHpBar(
+                    GameLogic.getCurrentGameScene().getDeltatime()
+            );
+        }
 
-        System.out.println(hp);
         MediaPlayer.getInstance().playSFX("Hit");
 
-        cookie.changeAnimationState(AnimationType.TAKE_DAMAGE);
+        if(cookie != null){
+            cookie.changeAnimationState(AnimationType.TAKE_DAMAGE);
+        }
         damageTimer = 0.5;
         setInvincible(1);
 
@@ -120,10 +125,12 @@ public abstract class Cookie {
     }
 
     public void heal(int healunit){
-
-        GameLogic.getHpBar().updateHpBar(GameLogic.getCurrentGameScene().getDeltatime());
-        hp = Math.min(maxHp,hp + healunit);;
-        System.out.println("Cookie get " + healunit + " heathPoint");
+        if(GameLogic.getHpBar() != null && GameLogic.getCurrentGameScene() != null){
+            GameLogic.getHpBar().updateHpBar(
+                    GameLogic.getCurrentGameScene().getDeltatime()
+            );
+        }
+        hp = Math.min(maxHp, hp + healunit);
     }
 
     public void die(){
@@ -132,7 +139,9 @@ public abstract class Cookie {
         isDead = true;
         deathTimer = 3;
 
-        cookie.changeAnimationState(AnimationType.DIE);
+        if(cookie != null){
+            cookie.changeAnimationState(AnimationType.DIE);
+        }
 
         velocity = -5;
         GameLogic.getCurrentGameScene().stopEnvironment();
@@ -141,7 +150,10 @@ public abstract class Cookie {
     protected void playSkill(double duration) {
 
         skillTimer = duration;
-        cookie.changeAnimationState(AnimationType.SKILL);
+
+        if(cookie != null){
+            cookie.changeAnimationState(AnimationType.SKILL);
+        }
 
     }
 
