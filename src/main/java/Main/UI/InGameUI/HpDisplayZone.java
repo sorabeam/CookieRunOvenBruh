@@ -14,7 +14,6 @@ public class HpDisplayZone extends StackPane {
 
     int max_hp;
     int current_hp;
-    double percent;
 
     double barWidth = 980;
     double barHeight = 32;

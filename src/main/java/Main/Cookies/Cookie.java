@@ -3,7 +3,7 @@ package Main.Cookies;
 import Main.Animation.Animate;
 import Main.Animation.AnimationType;
 import Main.Asset;
-import Main.Media.MediaPlayer;
+import Main.MediaPlayer;
 import Main.GameLogic.GameLogic;
 import Main.GameLogic.GameState;
 import Main.ObjectInGame.Spawner;

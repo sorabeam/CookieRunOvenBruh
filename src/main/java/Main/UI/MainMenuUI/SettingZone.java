@@ -1,4 +1,4 @@
-package Main.UI.MainUI;
+package Main.UI.MainMenuUI;
 
 import Main.Button.SettingsPopUpButton;
 import javafx.geometry.Insets;

@@ -2,7 +2,7 @@ package Main.Scene;
 
 import Main.Animation.Animate;
 import Main.CharacterData;
-import Main.UI.MainUI.*;
+import Main.UI.MainMenuUI.*;
 
 import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;

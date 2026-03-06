@@ -15,7 +15,6 @@ public class CookieSelectBG extends StackPane {
 
         ImageView MBg = Asset.createBackgroundView("CBG",1,1);
 
-        // bind กับตัวเอง
         MBg.fitWidthProperty().bind(widthProperty());
         MBg.fitHeightProperty().bind(heightProperty());
 

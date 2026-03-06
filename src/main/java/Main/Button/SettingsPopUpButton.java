@@ -2,7 +2,7 @@ package Main.Button;
 
 import Main.Asset;
 import Main.Image.OutlineTextImage;
-import Main.Media.MediaPlayer;
+import Main.MediaPlayer;
 import Main.Scene.GameplayScene;
 import Main.GameLogic.GameLogic;
 import Main.GameLogic.GameState;
@@ -170,19 +170,19 @@ public class SettingsPopUpButton extends BaseButton{
 //        NavSettingBtn play = new NavSettingBtn(GameState.INGAME,"PLAY",this);
 //        play.setInset(new Insets(24,0,0,82));
 
-        NavSettingBtn selectPets = new NavSettingBtn(GameState.SELECT_PET, "Pets",this);
+        NavSettingButton selectPets = new NavSettingButton(GameState.SELECT_PET, "Pets",this);
         selectPets.setInset(new Insets(24,0,0,86));
 
-        NavSettingBtn selectChar = new NavSettingBtn(GameState.SELECT_CHAR, "Cookies",this);
+        NavSettingButton selectChar = new NavSettingButton(GameState.SELECT_CHAR, "Cookies",this);
         selectChar.setInset(new Insets(24,0,0,62));
 
-        NavSettingBtn menu = new NavSettingBtn(GameState.INTRO,"Menu",this);
+        NavSettingButton menu = new NavSettingButton(GameState.INTRO,"Menu",this);
         menu.setInset(new Insets(24,0,0,79));
 
-        NavSettingBtn leave = new NavSettingBtn(null,"Leave",this);
+        NavSettingButton leave = new NavSettingButton(null,"Leave",this);
         leave.setInset(new Insets(24,0,0,80));
 
-        NavSettingBtn resumeBtn = new NavSettingBtn(null,"Resume",this);
+        NavSettingButton resumeBtn = new NavSettingButton(null,"Resume",this);
         resumeBtn.setInset(new Insets(24,0,0,62));
 
 
@@ -223,9 +223,9 @@ public class SettingsPopUpButton extends BaseButton{
             oldAction.handle(e);
             }
 
-            if (((NavSettingBtn)button).getSwitchState() == null ){
+            if (((NavSettingButton)button).getSwitchState() == null ){
 
-                if (Objects.equals(((NavSettingBtn) button).getTxt(), "Leave")) {
+                if (Objects.equals(((NavSettingButton) button).getTxt(), "Leave")) {
                     System.exit(0);
                 }
 
@@ -233,7 +233,7 @@ public class SettingsPopUpButton extends BaseButton{
                 return;
             }
 
-            if(((NavSettingBtn) button).getSwitchState() == GameLogic.getGameState()) {
+            if(((NavSettingButton) button).getSwitchState() == GameLogic.getGameState()) {
                 root.getChildren().remove(overlay);
                 return;
             }

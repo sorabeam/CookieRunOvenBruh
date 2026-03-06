@@ -9,7 +9,6 @@ import Main.Asset;
 import Main.Image.OutlineTextImage;
 
 public class ShowScore extends StackPane {
-    int iscore;
     ImageView fadeBg = Asset.createImageView("ScoreBG",100,0);
     OutlineTextImage score = new OutlineTextImage("0 Score",'M',30);
 
@@ -31,10 +30,5 @@ public class ShowScore extends StackPane {
                 fadeBg,
                 score
         );
-    }
-
-    public void setScore(int nscore){
-        iscore = nscore;
-        score.setText(GameLogic.getScore() + " Score");
     }
 }

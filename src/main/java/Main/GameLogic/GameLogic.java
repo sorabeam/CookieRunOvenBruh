@@ -17,8 +17,6 @@ public class GameLogic {
     private static final IntegerProperty SCORE = new SimpleIntegerProperty(0);
     private static int bestScore;
     private static double multiplier = 1;
-    private static MainGameScene app;
-    private static int cookieCountMod = 0;
     private static int map = 1;
     private static HpDisplayZone hpBar;
 
@@ -99,31 +97,6 @@ public class GameLogic {
         return stage;
     }
 
-    // MULTIPLIER
-    public static double getMultiplier() {
-        return multiplier;
-    }
-
-    public static void setMultiplier(double value) {
-        multiplier = value;
-    }
-
-    public static void setApp(MainGameScene application){
-        app = application;
-    }
-
-    public static MainGameScene getApp(){
-        return app;
-    }
-
-    public static int getCookieCountMod() {
-        return cookieCountMod;
-    }
-
-    public static void setCookieCountMod(int cookieCountMod) {
-        GameLogic.cookieCountMod = cookieCountMod;
-    }
-
     public static int getMap() {
         return map;
     }
@@ -131,7 +104,6 @@ public class GameLogic {
     public static void setMap(int mapNo) {
         map = Math.max(1,mapNo);
     }
-
 
     public static StackPane getGameroot() {
         return gameRoot;
@@ -141,9 +113,6 @@ public class GameLogic {
         GameLogic.gameRoot = gameRoot;
     }
 
-    public static void setBestScore(int bestScore) {
-        GameLogic.bestScore = bestScore;
-    }
 
     public static HpDisplayZone getHpBar() {
         return hpBar;

@@ -1,4 +1,4 @@
-package Main.Media;
+package Main;
 
 import Main.GameLogic.GameLogic;
 import javafx.scene.media.AudioClip;
