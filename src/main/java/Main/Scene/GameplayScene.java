@@ -88,8 +88,6 @@ public class GameplayScene extends BaseScene {
         spawner =
                 new Spawner(
                         gameLayer,
-                        scene.getWidth(),
-                        scene.getHeight(),
                         player
                 );
 

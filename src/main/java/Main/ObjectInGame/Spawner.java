@@ -19,8 +19,6 @@ import java.util.Objects;
 public class Spawner {
 
     private final Pane gameLayer;
-    private final double sceneWidth;
-    private final double sceneHeight;
     private final Cookie cookie;
     private static final double DEFAULT_SPEED = -350;
     private static double speed = DEFAULT_SPEED;
@@ -34,10 +32,8 @@ public class Spawner {
 
     private final int[] tutorialPatterns = {3,4,9};
 
-    public Spawner(Pane gameLayer, double sceneWidth, double sceneHeight, Cookie cookie) {
+    public Spawner(Pane gameLayer, Cookie cookie) {
         this.gameLayer = gameLayer;
-        this.sceneWidth = sceneWidth;
-        this.sceneHeight = sceneHeight;
         this.cookie = cookie;
     }
 
